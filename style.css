@@ -238,3 +238,24 @@ input[type=color]{width:40px;height:32px;border:1px solid var(--line2);border-ra
 
 #race{position:fixed;inset:0;z-index:100;background:#000;display:none}#race.on{display:block}
 #race .overlay{z-index:5}
+
+.kp-more{background:none;border:1px solid var(--line2);border-radius:6px;color:var(--cyan);font:600 10px var(--display);letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;cursor:pointer}
+.kp-sub,.kp-extra{display:none}.kp-open .kp-sub{display:block;font:600 10px var(--display);letter-spacing:.12em;text-transform:uppercase;color:var(--text3)}.kp-open .kp-extra{display:block}
+.kp-key.active{border-color:var(--green)}.kp-key.active small{color:var(--green)}
+/* builders */
+.builder{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(340px,.9fr);gap:24px;align-items:start}
+.builder .preview{position:sticky;top:0;display:flex;flex-direction:column;gap:16px}
+.bstage{background:linear-gradient(#141b24,#0d1218);border:1px solid var(--line);border-radius:16px;padding:20px;min-height:220px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.bstage .scaled{transition:width .2s,height .2s;display:flex;align-items:center;justify-content:center}
+.bstage svg{width:100%;height:100%}
+.brow{display:grid;grid-template-columns:150px minmax(0,1fr) 92px;align-items:center;gap:12px;min-height:44px}
+.brow input[type=range]{width:100%}
+.brow .val{min-width:0;text-align:right}
+.bgroup{display:flex;flex-direction:column;gap:6px;padding:14px 0;border-bottom:1px solid var(--line)}
+.bgroup:last-child{border-bottom:0}
+.typegrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:8px}
+.typegrid button{background:var(--bg2);border:1px solid var(--line);border-radius:10px;color:var(--text2);padding:10px 8px;display:flex;flex-direction:column;align-items:center;gap:4px;font:600 12px var(--display);letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
+.typegrid button svg{width:76px;height:44px}
+.typegrid button[aria-pressed=true]{border-color:var(--amber);color:var(--amber);background:var(--amber-dim)}
+.bstats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:1000px){.builder{grid-template-columns:1fr}.builder .preview{position:static}.brow{grid-template-columns:110px minmax(0,1fr) 80px}}

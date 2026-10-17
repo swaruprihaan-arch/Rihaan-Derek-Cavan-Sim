@@ -81,10 +81,21 @@ test('pages pass automated semantic accessibility checks (layout checks excluded
  w.HTMLCanvasElement.prototype.getContext=()=>null;
  w.eval(require('axe-core').source);
  const failures=[];
- for(const path of ['choose','racing','home','hangar','aircraft/b738','liveries/b738','fly/route','fly/weather','fly/time','fly/load','missions/career','missions/challenges','tutorial','settings/graphics','settings/controls','settings/audio','settings/data']){
+ for(const path of ['choose','racing','race/garage','race/tracks','race/howto','race/settings','home','hangar','aircraft/b738','liveries/b738','fly/route','fly/weather','fly/time','fly/load','missions/career','missions/challenges','tutorial','settings/graphics','settings/controls','settings/audio','settings/data']){
   nav(path);const result=await w.axe.run(w.document,{rules:{'color-contrast':{enabled:false}}});
   for(const v of result.violations)failures.push({path,id:v.id,nodes:v.nodes.slice(0,3).map(n=>n.target)});
  }
  assert.deepEqual(failures,[]);
 }));
 test('tab arrow keys select sections without trapping normal Tab',()=>scenario(async({w,nav,$,key})=>{nav('fly/route');key($('[data-tab="route"]'),'ArrowRight');await new Promise(r=>setTimeout(r,10));assert($('#wmetar'));assert.equal(w.document.activeElement.dataset.tab,'weather');assert.equal(key(w.document.activeElement,'Tab'),true);}));
+test('racing garage, paint and track selections work with keyboard and persist',()=>scenario(({w,nav,$,key})=>{
+ nav('race/garage');for(const car of w.CT_RACE.CARS){key($('[data-car="'+car.id+'"]'),' ');assert.equal(w.CT_RACE.state().car,car.id);}
+ const swatch=$('[data-col]');swatch.click();assert.equal($('#gcust').value.toLowerCase(),swatch.dataset.col.toLowerCase());assert.equal(JSON.parse(w.localStorage.getItem('contrail.race')).color,swatch.dataset.col);
+ nav('race/tracks');for(const track of w.CT_RACE.TRACKS){key($('[data-tr="'+track.id+'"]'),' ');assert.equal(w.CT_RACE.state().track,track.id);}
+ $('#rl').value=10;$('#rl').dispatchEvent(new w.Event('input'));$('#ro').value=0;$('#ro').dispatchEvent(new w.Event('input'));assert.equal(w.CT_RACE.state().laps,10);assert.equal(w.CT_RACE.state().opp,0);
+ nav('race/unknown');assert($('#r-go'));assert.equal($('.nav [aria-current="page"]').getAttribute('href'),'#/race');assert.equal($('.brand').getAttribute('href'),'#/race');nav('home');assert.equal($('.brand').getAttribute('href'),'#/home');
+}));
+test('racing reset requires confirmation and preserves configuration',()=>scenario(({w,nav,$})=>{
+ const s=w.CT_RACE.state();s.races=7;s.wins=3;s.track='city';s.laps=8;s.units='mph';nav('race/settings');$('#rreset').click();assert($('[role="dialog"]'));$('[data-x]').click();assert.equal(s.races,7);$('#rreset').click();$('[data-ok]').click();assert.equal(s.races,0);assert.equal(s.wins,0);assert.equal(s.track,'city');assert.equal(s.laps,8);assert.equal(s.units,'mph');
+}));
+test('saved cloud base persists and out-of-range performance settings are bounded',()=>scenario(({w,nav,$})=>{const s=w.CT_UI.state();assert.equal(s.weather.cloudBase,7700);assert.equal(s.settings.trafficDensity,8);assert.equal(s.settings.fov,40);assert.equal(s.settings.renderScale,150);nav('fly/weather');assert.equal(+$('#w-cloudBase').value,7700);},{weather:{cloudBase:7700},settings:{trafficDensity:1e6,fov:-1,renderScale:1e6}}));

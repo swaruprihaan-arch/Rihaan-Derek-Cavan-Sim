@@ -1,16 +1,19 @@
 {
-  "result": "37 tests passed",
+  "result": "51 tests passed",
   "source_sha256": {
-    "app.js": "f998ff1492304a31a14ae21b46a1297cb3a58b87cd78a62d0ab5c790cabe6706",
+    "app.js": "44c7206ab562f3a35dadcc36d29522c0922c7e692c9dd899b8c60fa89472917d",
     "art.js": "dfb3d4386674d19cb85413ced1f5de40e70ad1d55d1948200312946787c4cbfa",
     "data.js": "ec29735443467f25898daef05c661cf786aefebc72158872da85eee99d81ab6c",
+    "design/project/images/launch-flight.jpg": "960eb1a58c3020fbdad375aa8d5e7583dcbcaf356fcb542f4a9000f6b61c91b0",
+    "design/project/images/launch-race.jpg": "a9025fe848cc3d65b37911623c2734c9391f20cf2ae845281e8c68a17810427c",
     "ext.js": "9816dcbc96f26c762b04ab883ed325be082895adf879797d70449ed1b3576332",
-    "index.html": "fc667451c4ad23717513222a1649cb87436f2bd97b1ab9d49166454dd2b0940c",
+    "index.html": "f774b340b054008e2a254ad791480daa9b592eb8dff6064444fdc77680d54101",
     "keypad.js": "57f0829ccc650bfc54456a57ce670797ce2b97890c63d8df93ad187e8b4b189e",
-    "polish.css": "e794d227dfa74fa1ae79e917e59e4fa22ee1027bd4e23e7b34b61efd4fe74a6e",
-    "portal.css": "4e0bb2304cb9fa55fd4e101f7df64ba73a3dac0cae2107cbe998d75fb7940df0",
-    "portal.js": "2d3cfcb31eef543d6b264fe45c4a6aa067768c0f2c34dca6e25ccadd86aa11cf",
+    "polish.css": "84f3c9d0f8e852a5808323bfed9ae352d4167de93228069477f8cf92e79db901",
+    "portal.css": "f15bbe412c5611cfd11bffb0025864e1ab0f998c5d8ccb51a4a9a68ed3a255aa",
+    "portal.js": "a8b82363700b053a9081629649fab0260c44c999853adaa584df7303a0872274",
+    "race.js": "b1919cd97cdee998707ada5b5f3205f29ae7217f733d67e09dbf1cbc747c6d2e",
     "sim.js": "72c7dc152d1e5d0854ff75439b7dc31a4551acccf4c005638df6fd7922d4d9a4",
-    "style.css": "2a3e1ca0ad66e374f0779fa51a6f26c264637dbef0301b45ebf1249c662d9889"
+    "style.css": "d24ff2c589339b8cfa47cddc145297afed6d8b9fe61b5a3f56ba5be6ced8c17b"
   }
 }

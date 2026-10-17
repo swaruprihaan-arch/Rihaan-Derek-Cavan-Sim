@@ -11,7 +11,7 @@ Run `npm ci` once, then `npm test` from the project root. Dependencies are devel
 - Custom livery creation, blank names, safe SVG registration text, keyboard selection and storage failure.
 - Key-binding swaps, cancellation, multiple capture requests and navigation away from capture.
 - Confirmation dialog labelling, focus trap/cancel, reset and resume-data removal.
-- Automated axe semantic accessibility checks across 17 pages, plus tab keyboard behavior. Color contrast is disabled because JSDOM cannot render layout.
+- Automated axe semantic accessibility checks across 21 pages, plus tab keyboard behavior. Color contrast is disabled because JSDOM cannot render layout.
 - All aircraft mesh positions and dimensions; all airport terrain/runway samples.
 - All aircraft in runway, approach and airborne physics starts (129 scenarios), checking finite state. This does not certify aerodynamic realism.
 - Full scene initialization and camera math for six representative flight models using real Three.js geometry and a mocked WebGL renderer/2D canvas.
@@ -32,4 +32,6 @@ Flight startup errors now provide an exit. Cancelled or superseded startup does 
 
 The available Chrome profile's managed web filter blocked the local preview. No filter settings were changed. Safari observation also failed with a screen-capture error. Therefore, this audit does **not** claim verified screenshots, actual responsive geometry, WebGL shader rendering/performance, audio, physical gamepad behavior, or touch behavior on a real phone. The automated renderer mocks cannot substitute for those checks.
 
-Racing is still a clearly labelled preview in the audited portal; there is no racing engine in this snapshot. Other contributors are editing the shared project, so rerun this suite after their changes arrive.
+The racing engine is now included in this audit. Added checks cover all eight cars on all five tracks in dry and wet conditions (80 combinations), all camera modes, a 12-car wet-night field, countdown behavior, lap completion, time formatting, results persistence, garage/paint/track controls, confirmed progress reset, and startup/restart/disposal failures.
+
+The second pass fixed racing startup cancellation/error handling, stale results on restart, late result callbacks, malformed saved state, minute-boundary timing, native keyboard access, missing Space activation on car/track cards, paint-control synchronization, racing-home navigation, and backward motion during the countdown. Racing progress reset now asks for confirmation and preserves configuration. Flight cloud-base persistence and bounded performance settings were also checked and corrected. Other contributors are editing the shared project, so rerun this suite after their changes arrive.

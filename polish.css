@@ -100,3 +100,6 @@ input[type=range]:focus-visible{outline:2px solid var(--amber);outline-offset:7p
 .nav{min-width:0}.nav a{flex-shrink:0}
 @media(max-width:1000px) and (min-width:761px){.topbar{height:auto;min-height:76px;flex-wrap:wrap;padding-block:12px}.nav{order:3;width:100%;justify-content:center}.topright{margin-left:auto}}
 @media(max-width:760px){.nav{overflow-x:auto;justify-content:flex-start;padding-bottom:4px}.footbar .right{min-width:0}.footbar .right>.muted{overflow-wrap:anywhere;min-width:0}.empty{padding:24px 16px}}
+
+.race-start-error{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:24px;text-align:center;background:var(--bg0)}
+.race-start-error p{max-width:440px;color:var(--text2)}

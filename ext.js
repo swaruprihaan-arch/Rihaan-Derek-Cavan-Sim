@@ -264,6 +264,37 @@
   });
 
 
+
+  /* ---------- Landing lights + smoke trail ---------- */
+  window.CT_EXT.push(function lightsSmoke(S, T) {
+    const L = S.model.length, lamp = new T.SpotLight(0xfff4d8, 0, 900, .35, .5, 1.2);
+    lamp.position.set(0, 0, -L * .3); const tgt = new T.Object3D(); tgt.position.set(0, -8, -L * .3 - 100);
+    S.model.group.add(lamp, tgt); lamp.target = tgt;
+    const glow = new T.Mesh(new T.SphereGeometry(.35 * (S.ac.scale || 1), 8, 6), new T.MeshBasicMaterial({ color: 0xfff4d8 })); glow.position.copy(lamp.position); glow.visible = false; S.model.group.add(glow);
+    const MAX = 400, pos = new Float32Array(MAX * 3), geo = new T.BufferGeometry(); geo.setAttribute('position', new T.BufferAttribute(pos, 3)); geo.setDrawRange(0, 0);
+    const pts = new T.Points(geo, new T.PointsMaterial({ color: 0xffffff, size: 6, transparent: true, opacity: .55, depthWrite: false }));
+    pts.frustumCulled = false; S.scene.add(pts);
+    let n = 0, head = 0, acc = 0, colIdx = 0; const cols = [0xffffff, 0xff5040, 0x4080ff, 0x5BD68A, 0xF5B942];
+    S.lightsOn = S.night; lamp.intensity = S.lightsOn ? 300 : 0; glow.visible = !!S.lightsOn;
+    return {
+      key(e) {
+        if (e.repeat) return false;
+        if (e.code === 'KeyL') { S.lightsOn = !S.lightsOn; lamp.intensity = S.lightsOn ? 300 : 0; glow.visible = S.lightsOn; S.message(S.lightsOn ? 'Landing lights on' : 'Landing lights off', 1.2); return true; }
+        if (e.code === 'KeyN') { if (!S.smokeOn) { S.smokeOn = true; } else { colIdx++; if (colIdx >= cols.length) { S.smokeOn = false; colIdx = 0; } } pts.material.color.set(cols[colIdx]); S.message(S.smokeOn ? 'Smoke on — press N to change colour' : 'Smoke off', 1.4); return true; }
+        return false;
+      },
+      frame(dt, paused) {
+        if (paused || !S.smokeOn) return;
+        acc += dt; if (acc < .04) return; acc = 0;
+        const back = S.s.p.clone().addScaledVector(S.attitude().f, -L * .55);
+        pos[head * 3] = back.x; pos[head * 3 + 1] = back.y; pos[head * 3 + 2] = back.z;
+        head = (head + 1) % MAX; n = Math.min(MAX, n + 1); geo.setDrawRange(0, n); geo.attributes.position.needsUpdate = true;
+      },
+      reset() { n = 0; head = 0; geo.setDrawRange(0, 0); },
+      dispose() { S.scene.remove(pts); geo.dispose(); }
+    };
+  });
+
   /* ---------- On-screen keyboard (flight) ---------- */
   window.CT_EXT.push(function keypadExt(S) {
     if (!window.CT_KEYPAD || S.st.keypad === false) return null;
@@ -279,7 +310,19 @@
       { code: kb.descend, label: 'go down', row: 2, col: 0, w: 1.5 }, { code: kb.climb, label: 'go up', row: 2, col: 1.5, w: 1.5 },
       { code: kb.brakes, label: 'brake', row: 0, col: 3.3 }, { code: kb.camera, label: 'camera', row: 1, col: 3.3 }, { code: 'Escape', label: 'pause', row: 2, col: 3.3 }
     ];
-    const pad = window.CT_KEYPAD(S.root, keys, { title: heli ? 'Helicopter keys' : 'Flight keys' });
+    const more = heli ? [
+      { code: 'KeyL', label: 'lights', row: 0, col: 0, more: 1 }, { code: 'KeyN', label: 'smoke', row: 0, col: 1, more: 1 }, { code: kb.hud, label: 'HUD', row: 0, col: 2, more: 1 }, { code: 'KeyM', label: 'map', row: 0, col: 3, more: 1 },
+      { code: kb.lookBack, label: 'look back', row: 1, col: 0, more: 1 }, { code: kb.timeAccel, label: 'sim ×2', row: 1, col: 1, more: 1 }, { code: 'Tab', label: 'menu', row: 1, col: 2, more: 1 }, { code: 'F1', label: 'help', row: 1, col: 3, more: 1 },
+      { code: 'Digit1', label: 'cockpit', row: 2, col: 0, more: 1 }, { code: 'Digit2', label: 'chase', row: 2, col: 1, more: 1 }, { code: 'Digit3', label: 'orbit', row: 2, col: 2, more: 1 }, { code: 'Digit4', label: 'tower', row: 2, col: 3, more: 1 }
+    ] : [
+      { code: kb.gear, label: 'gear', row: 0, col: 0, more: 1 }, { code: kb.flapsDown, label: 'flaps +', row: 0, col: 1, more: 1 }, { code: kb.flapsUp, label: 'flaps −', row: 0, col: 2, more: 1 }, { code: kb.spoilers, label: 'air brake', row: 0, col: 3, more: 1 },
+      { code: 'KeyZ', label: 'autopilot', row: 1, col: 0, more: 1 }, { code: 'KeyL', label: 'lights', row: 1, col: 1, more: 1 }, { code: 'KeyN', label: 'smoke', row: 1, col: 2, more: 1 }, { code: kb.hud, label: 'HUD', row: 1, col: 3, more: 1 },
+      { code: 'BracketLeft', cap: '[', label: 'trim dn', row: 2, col: 0, more: 1 }, { code: 'BracketRight', cap: ']', label: 'trim up', row: 2, col: 1, more: 1 }, { code: kb.lookBack, label: 'look back', row: 2, col: 2, more: 1 }, { code: kb.timeAccel, label: 'sim ×2', row: 2, col: 3, more: 1 },
+      { code: 'Digit1', label: 'cockpit', row: 3, col: 0, more: 1 }, { code: 'Digit2', label: 'chase', row: 3, col: 1, more: 1 }, { code: 'Digit3', label: 'orbit', row: 3, col: 2, more: 1 }, { code: 'Digit4', label: 'tower', row: 3, col: 3, more: 1 },
+      { code: 'KeyM', label: 'map', row: 4, col: 0, more: 1 }, { code: 'Tab', label: 'menu', row: 4, col: 1, more: 1 }, { code: 'F1', label: 'help', row: 4, col: 2, more: 1 }, { code: kb.pause, label: 'pause', row: 4, col: 3, more: 1 }
+    ];
+    const pad = window.CT_KEYPAD(S.root, keys.concat(more), { title: heli ? 'Helicopter keys' : 'Flight keys' });
+    S.activeKeys = () => { const o = {}, st = S.s, ap = (S.ext || []).find(x => x.ap !== undefined); o[kb.gear] = S.retract && st.gearT > .5; o[kb.flapsDown] = st.flapsT > 0; o[kb.spoilers] = !!st.spoiler; o.KeyZ = !!(ap && ap.ap); o.KeyL = !!S.lightsOn; o.KeyN = !!S.smokeOn; o[kb.hud] = S.hudOn; o.KeyM = S.mini && S.mini.style.display !== 'none'; o[kb.timeAccel] = S.timeScale > 1; o.Digit1 = S.camMode === 'cockpit'; o.Digit2 = S.camMode === 'chase'; o.Digit3 = S.camMode === 'orbit'; o.Digit4 = S.camMode === 'tower'; o.Tab = !!document.querySelector('#fl-quick.on'); return o; };
     S.keypad = pad;
     // move the minimap/ILS out of the keypad's corner
     const ils = S.root.querySelector('#fl-ils'); if (ils) ils.style.top = '35%';

@@ -9,7 +9,7 @@
   const defaults = () => ({
     acId: 'b738', liveryByAc: {}, regByAc: {}, custom: {}, favs: ['b738', 'f16'],
     flight: { dep: 'KSEA', arr: 'KSFO', rwy: '16L', start: 'runway', hour: 14.5, fuelPct: 70, payloadPct: 50, cruise: 350 },
-    weather: Object.assign({}, D.WEATHER_PRESETS[1], { preset: 'few' }),
+    weather: Object.assign({}, D.WEATHER_PRESETS[1], { preset: 'few', cloudBase: 4300 }),
     settings: {
       quality: 'medium', viewDist: 40, renderScale: 100, fov: 65, shadows: false, clouds: true, aa: true, shake: true, minimap: true,
       keys: Object.assign({}, D.DEFAULT_KEYS), keysVersion: D.KEYS_VERSION, sensitivity: 100, expo: 30, deadzone: 8, invertPitch: false, mouseYoke: false,
@@ -36,10 +36,18 @@
       const d = defaults();
       if (s.settings && s.settings.keysVersion !== D.KEYS_VERSION) { s.settings.keys = Object.assign({}, D.DEFAULT_KEYS); s.settings.keysVersion = D.KEYS_VERSION; }
       const result = mergeSaved(d, s);
+      const bound = (object, limits) => { for (const [key, lo, hi] of limits) if (Number.isFinite(object[key])) object[key] = Math.max(lo, Math.min(hi, object[key])); };
+      bound(result.settings, [['viewDist',10,80],['renderScale',50,150],['fov',40,100],['trafficDensity',1,8],['sensitivity',30,200],['expo',0,100],['deadzone',0,30],['volume',0,100]]);
+      result.settings.trafficDensity = Math.round(result.settings.trafficDensity);
+      bound(result.flight, [['hour',0,23.75],['fuelPct',5,100],['payloadPct',0,100]]);
+      bound(result.weather, [['clouds',0,100],['cloudBase',500,12000],['vis',.5,60],['windDir',0,359],['windSpd',0,50],['turb',0,100],['precip',0,100],['temp',-30,45],['qnh',960,1050]]);
+      const initial = defaults();
+      for (const [key, choices] of Object.entries({quality:['low','medium','high','ultra'],camera:['chase','cockpit','orbit','tower','flyby'],difficulty:['easy','normal','hard'],units:['imperial','metric']})) if (!choices.includes(result.settings[key])) result.settings[key] = initial.settings[key];
+      if (!/^#[0-9a-f]{6}$/i.test(result.settings.hudColor)) result.settings.hudColor = initial.settings.hudColor;
       result.favs = result.favs.filter(id => D.AIRCRAFT.some(a => a.id === id));
       result.log = result.log.filter(l => isRecord(l) && typeof l.ac === 'string' && Number.isFinite(l.time) && Number.isFinite(l.date) && (!l.touch || Number.isFinite(l.touch.fpm)));
       for (const [id, list] of Object.entries(result.custom)) {
-        result.custom[id] = Array.isArray(list) ? list.filter(l => isRecord(l) && typeof l.id === 'string' && typeof l.name === 'string' && isRecord(l.c) && ['body','belly','accent','tail','engine','logo','wing'].every(k => /^#[0-9a-f]{6}$/i.test(l.c[k]))) : [];
+        result.custom[id] = Array.isArray(list) ? list.filter(l => isRecord(l) && typeof l.id === 'string' && /^[a-z0-9-]+$/i.test(l.id) && typeof l.name === 'string' && isRecord(l.c) && ['body','belly','accent','tail','engine','logo','wing'].every(k => /^#[0-9a-f]{6}$/i.test(l.c[k]))) : [];
       }
       for (const [id, value] of Object.entries(result.regByAc)) if (typeof value !== 'string') delete result.regByAc[id];
       for (const [id, value] of Object.entries(result.loadout)) if (!['clean','a2a','strike','sead','ferry'].includes(value)) delete result.loadout[id];
@@ -118,13 +126,14 @@
     if (closeModal) closeModal();
     const parts = (location.hash.replace(/^#\/?/, '') || 'choose').split('/');
     if (parts[0] === 'racing') parts[0] = 'race';
+    if (parts[0] === 'race' && !['garage','tracks','howto','settings','build'].includes(parts[1])) parts.length = 1;
     const portal = parts[0] === 'choose';
     setNav(parts[0] === 'race' ? 'race' : 'fly');
     document.body.classList.toggle('portal-mode', portal);
     document.title = portal ? 'SIM — Choose your simulator' : parts[0] === 'race' ? 'CONTRAIL Racing' : 'CONTRAIL — Flight Simulator';
     if (portal) { window.CT_PORTAL.render($('#page'), parts[0]); return; }
     const r = routes[parts[0]] ? parts[0] : 'home';
-    const tab = r === 'race' ? (parts[1] ? 'race/' + parts[1] : 'race') : { home: 'home', hangar: 'hangar', aircraft: 'hangar', liveries: 'hangar', fly: 'fly', missions: 'missions', tutorial: 'tutorial', settings: 'settings' }[r];
+    const tab = r === 'race' ? (parts[1] ? 'race/' + parts[1] : 'race') : { home: 'home', hangar: 'hangar', build: 'hangar', aircraft: 'hangar', liveries: 'hangar', fly: 'fly', missions: 'missions', tutorial: 'tutorial', settings: 'settings' }[r];
     $$('[data-nav]').forEach(a => a.dataset.nav === tab ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current'));
     const page = $('#page'); page.scrollTop = 0;
     routes[r](page, parts.slice(1));
@@ -136,6 +145,7 @@
     const nav = $('.nav'); if (!nav || mode === navMode) return; navMode = mode;
     const list = mode === 'race' ? RACE_NAV : NAV;
     nav.innerHTML = list.map(([k, l]) => `<a href="#/${k}" data-nav="${k}">${l}</a>`).join('');
+    const brand = $('.brand'); if (brand) { brand.href = mode === 'race' ? '#/race' : '#/home'; brand.setAttribute('aria-label', mode === 'race' ? 'CONTRAIL Racing home' : 'CONTRAIL home'); }
     const b = $('.brand b'); if (b) b.textContent = mode === 'race' ? 'CONTRAIL RACING' : 'CONTRAIL';
   }
 
@@ -208,19 +218,20 @@
   let hangarQ = '', hangarCat = 'All', hangarSort = 'name', hangarFav = false, hangarTag = '';
   routes.hangar = (page, args) => {
     if (args[0]) { routes.aircraft(page, args); return; }
-    const counts = {}; D.CATEGORIES.forEach(c => counts[c] = c === 'All' ? D.AIRCRAFT.length : D.AIRCRAFT.filter(a => a.cat === c).length);
+    const counts = {}; D.CATEGORIES.forEach(c => counts[c] = c === 'All' ? D.AIRCRAFT.length : c === 'Custom' ? D.AIRCRAFT.filter(a => a.custom).length : D.AIRCRAFT.filter(a => a.cat === c).length);
     page.innerHTML = `${head('Hangar', 'Aircraft', `
+        <a class="btn" href="#/build" id="hbuild">${I('brush', 18)}Build your own</a>
         <label class="search">${I('search', 18)}<input id="hq" type="text" placeholder="Search aircraft" aria-label="Search aircraft" value="${esc(hangarQ)}"></label>
         <select class="select" id="hs" aria-label="Sort"><option value="name">Sort: Name</option><option value="speed">Sort: Speed</option><option value="range">Sort: Range</option><option value="seats">Sort: Seats</option><option value="mfr">Sort: Manufacturer</option></select>
         <div class="seg" id="htag">${['', 'Included', 'Expansion', 'Study', 'New'].map(t => `<button type="button" data-t="${t}" aria-pressed="${hangarTag === t}">${t || 'All'}</button>`).join('')}</div>
         <button class="ibtn ${hangarFav ? 'on' : ''}" id="hfav" type="button" aria-pressed="${hangarFav}" aria-label="Favourites only" title="Favourites only">${I('star')}</button>`)}
       <div class="split" style="flex:1">
-        <nav class="side stack" style="gap:2px" aria-label="Categories">${D.CATEGORIES.map(c => `<a href="#/hangar" data-c="${c}" class="${c === hangarCat ? 'on' : ''}">${c === 'All' ? 'All aircraft' : c === 'Helicopter' ? 'Helicopters' : c === 'Glider' ? 'Gliders' : c === 'Warbird' ? 'Warbirds & Vintage' : c === 'Airliner' ? 'Airliners' : c}<span class="c">${counts[c]}</span></a>`).join('')}</nav>
+        <nav class="side stack" style="gap:2px" aria-label="Categories">${D.CATEGORIES.map(c => `<a href="#/hangar" data-c="${c}" class="${c === hangarCat ? 'on' : ''}">${c === 'All' ? 'All aircraft' : c === 'Helicopter' ? 'Helicopters' : c === 'Glider' ? 'Gliders' : c === 'Warbird' ? 'Warbirds & Vintage' : c === 'Airliner' ? 'Airliners' : c === 'Custom' ? 'Your designs' : c}<span class="c">${counts[c]}</span></a>`).join('')}</nav>
         <div class="stack"><div class="muted" id="hcount"></div><div class="acgrid" id="hgrid"></div></div>
       </div>`;
     $('#hs').value = hangarSort;
     const draw = () => {
-      let list = D.AIRCRAFT.filter(a => (hangarCat === 'All' || a.cat === hangarCat) && (!hangarFav || ST.favs.includes(a.id)) && (!hangarTag || a.tags.includes(hangarTag)));
+      let list = D.AIRCRAFT.filter(a => (hangarCat === 'All' || (hangarCat === 'Custom' ? a.custom : a.cat === hangarCat)) && (!hangarFav || ST.favs.includes(a.id)) && (!hangarTag || a.tags.includes(hangarTag)));
       const q = hangarQ.trim().toLowerCase(); if (q) list = list.filter(a => (a.name + ' ' + a.mfr + ' ' + a.cat + ' ' + a.id).toLowerCase().includes(q));
       const num = s => parseFloat(String(s).replace(/[^\d.]/g, '')) || 0;
       const key = { name: a => a.name, mfr: a => a.mfr + a.name, speed: a => -cruiseKt(a), range: a => -num(a.range), seats: a => -num(a.seats) }[hangarSort];
@@ -255,7 +266,7 @@
   routes.aircraft = (page, args) => {
     const ac = acById(args[0]), fm = D.FM[ac.fm], lv = (ac.id === ST.acId ? curLivery(ac) : (liveriesFor(ac).find(l => l.id === ST.liveryByAc[ac.id]) || liveriesFor(ac)[0]));
     const twr = fm.T ? (fm.T / (fm.m * 9.81)).toFixed(2) : '—';
-    page.innerHTML = `${head(`Hangar · ${esc(ac.cat)}`, esc(ac.name), `<a class="btn ghost" href="#/hangar">${I('back', 18)}All aircraft</a><button class="ibtn ${ST.favs.includes(ac.id) ? 'on' : ''}" id="dfav" type="button" aria-label="Favourite">${I('star')}</button>`)}
+    page.innerHTML = `${head(`Hangar · ${esc(ac.cat)}`, esc(ac.name), `${ac.custom ? `<a class="btn sec" href="#/build/${ac.id}">${I('brush', 18)}Edit design</a>` : ''}<a class="btn ghost" href="#/hangar">${I('back', 18)}All aircraft</a><button class="ibtn ${ST.favs.includes(ac.id) ? 'on' : ''}" id="dfav" type="button" aria-label="Favourite">${I('star')}</button>`)}
       <div class="split3">
         <div class="stack">
           <div class="profile" style="height:300px">${ART.profile(ac, lv.c, regFor(ac))}</div>
@@ -715,8 +726,9 @@
   /* ---------------- boot ---------------- */
   document.addEventListener('DOMContentLoaded', () => {
     chrome();
-    window.CT_H = { $, $$, esc, head, foot, toast, go, I };
+    window.CT_H = { $, $$, esc, head, foot, toast, go, I, modal };
     window.CT_RACE && window.CT_RACE.registerPages();
+    window.CT_BUILD && window.CT_BUILD.registerPages();
     const switcher = document.createElement('a');
     switcher.href = '#/choose'; switcher.className = 'sim-switch'; switcher.textContent = 'Simulators';
     $('.topbar').prepend(switcher);

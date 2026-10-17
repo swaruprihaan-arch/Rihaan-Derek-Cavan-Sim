@@ -5,7 +5,8 @@ test('actual HTML script order boots, assets exist, scripts and styles parse',as
  const w=dom.window;try{await new Promise(r=>w.addEventListener('load',r,{once:true}));
  for(const link of w.document.querySelectorAll('link[rel="stylesheet"]')){const path=link.getAttribute('href');if(path.startsWith('https:'))continue;assert(fs.existsSync(path),path);const style=w.document.createElement('style');style.textContent=fs.readFileSync(path,'utf8');w.document.head.appendChild(style);assert(style.sheet,path);}
  for(const el of w.document.querySelectorAll('script[src]')){const path=el.getAttribute('src');assert(fs.existsSync(path),path);const source=fs.readFileSync(path,'utf8');assert.doesNotThrow(()=>new vm.Script(source),path);w.eval(source);}
- w.document.dispatchEvent(new w.Event('DOMContentLoaded'));assert(w.CT_UI);assert(w.CT_SIM);assert(w.CT_KEYPAD);assert.equal(w.document.querySelectorAll('.sim-choice').length,2);assert.deepEqual(errors,[]);
+ w.document.dispatchEvent(new w.Event('DOMContentLoaded'));assert(w.CT_UI);assert(w.CT_SIM);assert(w.CT_KEYPAD);assert.equal(w.document.querySelectorAll('.sim-choice').length,2);for(const img of w.document.querySelectorAll('img[src]')){assert(fs.existsSync(img.getAttribute('src')),img.src);assert(img.alt);}
+ assert.deepEqual(errors,[]);
  }finally{w.close();}
 });
 test('on-screen keypad presses, releases, highlights and cleans up',()=>{

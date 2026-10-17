@@ -240,11 +240,12 @@
       else { wheel(0, -R * 1.6, -L * .32, .22 * s); wheel(R * 1.5, -R * 1.6, -L * .02, .28 * s); wheel(-R * 1.5, -R * 1.6, -L * .02, .28 * s); }
     }
     // nav lights
+    const lm = ac.lenMul || 1, sm = ac.spanMul || 1; if (lm !== 1 || sm !== 1) g.scale.set(sm, (lm + 1) / 2, lm);
     const navL = new THREE.Mesh(new THREE.SphereGeometry(.18 * s, 8, 6), new THREE.MeshBasicMaterial({ color: '#ff3030' }));
     const navR = new THREE.Mesh(new THREE.SphereGeometry(.18 * s, 8, 6), new THREE.MeshBasicMaterial({ color: '#30ff60' }));
     const strobe = new THREE.Mesh(new THREE.SphereGeometry(.22 * s, 8, 6), new THREE.MeshBasicMaterial({ color: '#ffffff' }));
     const box = new THREE.Box3().setFromObject(g);
-    navL.position.set(box.min.x, 0, 0); navR.position.set(box.max.x, 0, 0); strobe.position.set(0, box.max.y, box.max.z * .8);
+    navL.position.set(box.min.x / sm, 0, 0); navR.position.set(box.max.x / sm, 0, 0); strobe.position.set(0, box.max.y / ((lm + 1) / 2), box.max.z * .8 / lm);
     g.add(navL, navR, strobe);
     return { group: g, gear, props, rotor, tailRotor, flame, strobe, bottom: box.min.y, length: box.max.z - box.min.z, span: box.max.x - box.min.x };
   }
@@ -331,7 +332,7 @@
   class Session {
     constructor(cfg, onExit, root) {
       this.cfg = cfg; this.onExit = onExit; this.root = root;
-      this.st = cfg.settings; this.ac = cfg.ac; this.fm = Object.assign({}, D.FM[cfg.ac.fm]);
+      this.st = cfg.settings; this.ac = cfg.ac; this.fm = Object.assign({}, D.FM[cfg.ac.fm], cfg.ac.fmOver || {});
       this.keys = {}; this.paused = false; this.ended = false; this.timeScale = 1; this.camMode = cfg.settings.camera || 'chase';
       this.hudOn = true; this.orbit = { yaw: Math.PI * .85, pitch: .15, dist: 1 }; this.log = [];
     }
@@ -343,13 +344,13 @@
       this.terrain = makeTerrain(ap.terrain, this.hdg, this.rwyLen, seedOf(ap.icao));
       // renderer
       const canvas = document.createElement('canvas'); canvas.className = 'gl'; this.root.prepend(canvas); this.canvas = canvas;
-      const r = new T.WebGLRenderer({ canvas, antialias: st.aa !== false, powerPreference: 'high-performance' });
+      const r = new T.WebGLRenderer({ canvas, antialias: st.aa !== false, powerPreference: 'high-performance', logarithmicDepthBuffer: true }); // log depth: stops runway/terrain z-fighting with a 120 km far plane
       r.setPixelRatio(Math.min(2, window.devicePixelRatio || 1) * (st.renderScale || 100) / 100);
       r.shadowMap.enabled = !!st.shadows; r.shadowMap.type = T.PCFSoftShadowMap;
       r.outputColorSpace = T.SRGBColorSpace; r.toneMapping = T.ACESFilmicToneMapping; r.toneMappingExposure = 1.0;
       this.renderer = r;
       const scene = new T.Scene(); this.scene = scene;
-      const cam = new T.PerspectiveCamera(st.fov || 65, 1, .5, 120000); this.camera = cam;
+      const cam = new T.PerspectiveCamera(st.fov || 65, 1, 1.0, 120000); this.camera = cam; // near 1 m: better depth precision at distance
       this.viewDist = (st.viewDist || 40) * 1000;
       // lights
       this.hemi = new T.HemisphereLight(0xbfd8ff, 0x3a3226, .9); scene.add(this.hemi);
@@ -381,7 +382,7 @@
       this.model = buildAircraftMesh(this.ac, cfg.livery);
       scene.add(this.model.group);
       this.gearH = -this.model.bottom; // distance from origin to wheel bottom
-      this.retract = !['ga', 'bush', 'aerobatic', 'glider', 'gliderPerf', 'heli', 'heliLight', 'heliHeavy', 'gaFast'].includes(this.ac.fm) && !this.ac.floats;
+      this.retract = this.ac.gearFixed !== undefined ? !this.ac.gearFixed && !this.fm.heli : !['ga', 'bush', 'aerobatic', 'glider', 'gliderPerf', 'heli', 'heliLight', 'heliHeavy', 'gaFast'].includes(this.ac.fm) && !this.ac.floats;
       // mission objects
       this.mission = cfg.mission || null;
       this.setTime(cfg.hour);
@@ -619,7 +620,7 @@
       const fm = this.fm, rho = 1.225 * Math.exp(-alt / 8500);
       const prop = ['ga', 'gaFast', 'gaTwin', 'aerobatic', 'bush', 'warbird', 'dc3', 'turboprop', 'transport', 'sturboprop'].includes(this.ac.fm);
       if (prop) return Math.pow(rho / 1.225, .7) * clamp(1.15 - V / (fm.vne * 1.25), .25, 1.1);
-      return Math.pow(rho / 1.225, .75) * (1 - V / 900);
+      return Math.pow(rho / 1.225, .75) * Math.max(.6, 1 - V / 900);
     }
     setAttitude(h, p, b) { this.s.q.setFromEuler(new THREE.Euler(p, -h, -b, 'YXZ')); }
     attitude() {
@@ -665,10 +666,10 @@
         const s = this.s;
         if (a === 'pause') this.togglePause();
         else if (this.paused) return;
-        else if (a === 'gear') { if (this.gearJam) this.message('Gear failure — no response', 2); else if (this.retract) { if (s.onGround && s.gearT) { this.message('Weight on wheels — gear locked', 2); } else { s.gearT = s.gearT ? 0 : 1; this.message(s.gearT ? 'Gear down' : 'Gear up', 1.5); this.audio && this.audio.beep(440, .2); } } else this.message('Fixed gear', 1.2); }
+        else if (a === 'gear') { this.manualGear = true; if (this.gearJam) this.message('Gear failure — no response', 2); else if (this.retract) { if (s.onGround && s.gearT) { this.message('Weight on wheels — gear locked', 2); } else { s.gearT = s.gearT ? 0 : 1; this.message(s.gearT ? 'Gear down' : 'Gear up', 1.5); this.audio && this.audio.beep(440, .2); } } else this.message('Fixed gear', 1.2); }
         else if ((a === 'flapsDown' || a === 'flapsUp') && this.flapJam) this.message('Flap failure — jammed', 2);
-        else if (a === 'flapsDown') { s.flapsT = clamp(Math.round((s.flapsT + .25) * 4) / 4, 0, 1); this.message(`Flaps ${Math.round(s.flapsT * 100)}%`, 1.2); }
-        else if (a === 'flapsUp') { s.flapsT = clamp(Math.round((s.flapsT - .25) * 4) / 4, 0, 1); this.message(`Flaps ${Math.round(s.flapsT * 100)}%`, 1.2); }
+        else if (a === 'flapsDown') { this.manualFlaps = true; s.flapsT = clamp(Math.round((s.flapsT + .25) * 4) / 4, 0, 1); this.message(`Flaps ${Math.round(s.flapsT * 100)}%`, 1.2); }
+        else if (a === 'flapsUp') { this.manualFlaps = true; s.flapsT = clamp(Math.round((s.flapsT - .25) * 4) / 4, 0, 1); this.message(`Flaps ${Math.round(s.flapsT * 100)}%`, 1.2); }
         else if (a === 'spoilers') { s.spoiler = s.spoiler ? 0 : 1; this.message(s.spoiler ? 'Speed brakes out' : 'Speed brakes in', 1.2); }
         else if (a === 'camera') this.cycleCamera();
         else if (a === 'hud') { this.hudOn = !this.hudOn; }
@@ -781,8 +782,8 @@
       const m = this.mass();
       if (st.autoSystems !== false && !this.ended) {
         // Simple mode: gear, flaps and brakes look after themselves
-        if (this.retract && !this.gearJam) { if (!s.onGround && s.agl * FT > 300 && s.vs > 0) s.gearT = 0; if (s.gearT === 0 && (s.agl * FT < 900 && s.vs < -1 || s.ias * KT < this.vref() * KT * 1.15)) s.gearT = 1; }
-        if (!fm.heli && fm.flapCl > .1 && !this.flapJam) { const vr = this.vref(); s.flapsT = s.onGround ? (s.thr > .3 || s.ias > 5 ? .5 : s.flapsT) : s.ias < vr * 1.35 ? 1 : s.ias < vr * 1.7 ? .5 : 0; }
+        if (this.retract && !this.gearJam && !this.manualGear) { if (!s.onGround && s.agl * FT > 300 && s.vs > 0) s.gearT = 0; if (s.gearT === 0 && (s.agl * FT < 900 && s.vs < -1 || s.ias * KT < this.vref() * KT * 1.15)) s.gearT = 1; }
+        if (!fm.heli && fm.flapCl > .1 && !this.flapJam && !this.manualFlaps) { const vr = this.vref(); s.flapsT = s.onGround ? (s.thr > .3 || s.ias > 5 ? .5 : s.flapsT) : s.ias < vr * 1.35 ? 1 : s.ias < vr * 1.7 ? .5 : 0; }
         if (s.onGround && s.thr < .05 && s.airT > 5 && !fm.heli) s.brake = Math.max(s.brake, .8);
       }
       s.flaps += clamp(s.flapsT - s.flaps, -dt * .25, dt * .25);
@@ -1051,7 +1052,7 @@
       if (this.smoke) { const pa = this.smoke.geometry.attributes.position; for (let i = 0; i < pa.count; i++) { let y = pa.getY(i) + dt * 6; if (y > this.s.p.y + 80) y = this.s.p.y; pa.setY(i, y); } pa.needsUpdate = true; }
       this.updateCamera(dt);
       (this.ext || []).forEach(x => x.frame && x.frame(dt, this.paused));
-      if (this.keypad) this.keypad.update(this.keys, this.suggestKeys ? this.suggestKeys() : []);
+      if (this.keypad) this.keypad.update(this.keys, this.suggestKeys ? this.suggestKeys() : [], this.activeKeys ? this.activeKeys() : {});
       this.sun.position.copy(this.camera.position).addScaledVector(this.sunDir, 800); this.sun.target.position.copy(s.p);
       this.model.group.visible = this.camMode !== 'cockpit';
       this.renderer.render(this.scene, this.camera);

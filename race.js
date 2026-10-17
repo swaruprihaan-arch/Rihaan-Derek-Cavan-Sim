@@ -36,12 +36,43 @@
     return out;
   }
 
+  /* ---------------- custom cars ---------------- */
+  const CKEY = 'contrail.customCars';
+  const CTYPES = { hatch: 'Hatchback', sports: 'Coupe', muscle: 'Muscle', gt: 'GT racer', hyper: 'Hypercar', rally: 'Rally', truck: 'Pickup', open: 'Single-seater' };
+  const CLIM = { top: [80, 450], zero: [1.8, 15], grip: [4, 14], brake: [.5, 2], off: [.2, 1], len: [2.5, 7], wid: [1.4, 2.6], hgt: [.8, 2.4], wt: [500, 3500], power: [50, 1500] };
+  function carFromParams(p, id) {
+    const acc = 27.8 / p.zero * 1.25 * clamp(1300 / p.wt, .6, 1.6) ** .15;
+    return { id, custom: true, name: (p.name || 'My car').slice(0, 30), cls: 'Custom', type: p.type, top: p.top, acc, grip: p.grip, brake: p.brake, off: p.off, color: p.color, len: p.len, wid: p.wid, hgt: p.hgt, wt: p.wt, desc: `Your own ${CTYPES[p.type].toLowerCase()} — ${Math.round(p.top)} km/h, 0–100 in ${p.zero.toFixed(1)} s.`, params: Object.assign({}, p) };
+  }
+  function carDefaults(type) {
+    const b = CARS.find(c => c.type === type && !c.custom) || CARS[3];
+    return { type, name: 'My ' + CTYPES[type], top: b.top, zero: +(27.8 / b.acc * 1.25).toFixed(1), grip: b.grip, brake: b.brake, off: b.off, len: b.len, wid: b.wid, hgt: b.hgt, wt: { hatch: 1150, sports: 1400, muscle: 1700, gt: 1300, hyper: 1400, rally: 1250, truck: 2300, open: 750 }[type], color: b.color };
+  }
+  function validCar(x) { if (!x || typeof x.id !== 'string' || !/^cc-[a-z0-9]+$/.test(x.id) || !x.params || !CTYPES[x.params.type]) return false; for (const k in CLIM) if (!Number.isFinite(x.params[k === 'power' ? 'top' : k]) && k !== 'power') return false; return /^#[0-9a-f]{6}$/i.test(x.params.color); }
+  let customCars = []; try { const a = JSON.parse(localStorage.getItem(CKEY) || '[]'); customCars = Array.isArray(a) ? a.filter(validCar) : []; } catch (e) { }
+  function registerCars() { for (let i = CARS.length - 1; i >= 0; i--) if (CARS[i].custom) CARS.splice(i, 1); customCars.forEach(c => { const p = Object.assign(carDefaults(c.params.type), c.params); for (const k in CLIM) if (k in p) p[k] = clamp(p[k], CLIM[k][0], CLIM[k][1]); CARS.push(carFromParams(p, c.id)); }); }
+  registerCars();
+  const saveCars = () => { try { localStorage.setItem(CKEY, JSON.stringify(customCars)); } catch (e) { } };
+
   /* ---------------- persistence ---------------- */
   const KEY = 'contrail.race';
   const defaults = () => ({ car: 'sports', color: '', track: 'coast', laps: 3, opp: 5, diff: 'normal', time: 'auto', weather: 'dry', units: 'kmh', cam: 'chase', keypad: true, assist: true, sound: true, volume: 70, races: 0, wins: 0, podiums: 0, best: {}, history: [] });
-  function load() { try { return Object.assign(defaults(), JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) { return defaults(); } }
+  function load() {
+    const d = defaults();
+    try {
+      const raw = JSON.parse(localStorage.getItem(KEY) || '{}');
+      if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return d;
+      for (const key of Object.keys(d)) if (typeof d[key] !== 'object' && typeof raw[key] === typeof d[key] && (typeof raw[key] !== 'number' || Number.isFinite(raw[key]))) d[key] = raw[key];
+      for (const [key, lo, hi] of [['laps',1,10],['opp',0,11],['volume',0,100],['races',0,1e9],['wins',0,1e9],['podiums',0,1e9]]) d[key] = Math.round(clamp(d[key],lo,hi));
+      for (const [key, values] of Object.entries({car:CARS.map(c=>c.id),track:TRACKS.map(t=>t.id),diff:['easy','normal','hard','pro'],time:['auto','day','sunset','night'],weather:['dry','rain'],units:['kmh','mph'],cam:['chase','far','hood']})) if (!values.includes(d[key])) d[key] = defaults()[key];
+      if (!/^#[0-9a-f]{6}$/i.test(d.color)) d.color = '';
+      if (raw.best && typeof raw.best === 'object') for (const t of TRACKS) { const best = raw.best[t.id]; if (best && Number.isFinite(best.t) && best.t > 0 && CARS.some(c=>c.id===best.car)) d.best[t.id] = {t:best.t,car:best.car}; }
+      if (Array.isArray(raw.history)) d.history = raw.history.filter(h=>h && Number.isFinite(h.date) && Number.isFinite(h.time) && Number.isFinite(h.pos) && Number.isFinite(h.of)).slice(-60);
+      return d;
+    } catch (e) { return d; }
+  }
   let RS = load();
-  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(RS)); } catch (e) { } };
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(RS)); } catch (e) { window.CT_H?.toast('Could not save racing progress'); } };
   const carById = id => CARS.find(c => c.id === id) || CARS[0];
   const trackById = id => TRACKS.find(t => t.id === id) || TRACKS[0];
   const carColor = c => (RS.car === c.id && RS.color) ? RS.color : c.color;
@@ -146,23 +177,38 @@
 
   /* ---------------- race session ---------------- */
   let R = null;
-  const KEYS = { gas: 'KeyW', brake: 'KeyS', left: 'KeyA', right: 'KeyD', hand: 'Space', boost: 'ShiftLeft', reset: 'KeyR', cam: 'KeyV', back: 'KeyC' };
+  const KEYS = { gas: 'KeyW', brake: 'KeyS', left: 'KeyA', right: 'KeyD', hand: 'Space', boost: 'ShiftLeft', reset: 'KeyR', cam: 'KeyV', back: 'KeyC', horn: 'KeyH', lights: 'KeyL', cruise: 'KeyX', shiftUp: 'KeyE', shiftDown: 'KeyQ', gearbox: 'KeyG', limiter: 'KeyB', lookL: 'KeyZ', lookR: 'KeyF', map: 'KeyM', restart: 'KeyT' };
 
+  let launchVersion = 0;
   async function start(cfg, onExit) {
     stop();
+    const version = launchVersion;
     let root = document.getElementById('race');
     if (!root) { root = document.createElement('div'); root.id = 'race'; document.body.appendChild(root); }
     root.innerHTML = `<div id="r-loading" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;background:#0A0D12;z-index:6;font-family:var(--display);letter-spacing:.14em;text-transform:uppercase;color:var(--text2)"><div>Building track…</div><div class="mono muted" id="r-ld" style="font-size:12px"></div></div>`;
-    root.classList.add('on');
-    try { THREE = await window.CT_SIM.preload(); } catch (e) {
-      root.querySelector('#r-ld').textContent = 'Could not load the 3D engine (needs internet the first time). ' + e.message;
-      root.querySelector('#r-loading').insertAdjacentHTML('beforeend', '<button class="btn sec" type="button" id="r-bail">Back</button>');
-      root.querySelector('#r-bail').onclick = () => { stop(); onExit && onExit(null); }; return;
+    root.classList.add('on'); root.setAttribute('role', 'region'); root.setAttribute('aria-label', 'Race view');
+    const app = document.getElementById('app'); if (app) app.inert = true;
+    try {
+      THREE = await window.CT_SIM.preload();
+      if (version !== launchVersion) return;
+      await new Promise(r => setTimeout(r, 30));
+      if (version !== launchVersion) return;
+      R = new Race(cfg, onExit, root); window.__race = R; R.init();
+    } catch (e) {
+      if (version !== launchVersion) return;
+      if (R) { R.dispose(); R = null; } window.__race = null;
+      root.innerHTML = '<div class="race-start-error" role="alert"><h2>Unable to start race</h2><p>The 3D engine could not start. Check your connection and that WebGL is available in your browser.</p><button class="btn sec" type="button" id="r-bail">Back to menu</button></div>';
+      console.error('Race startup failed:', e);
+      const back = root.querySelector('#r-bail'); back.onclick = () => { stop(); onExit && onExit(null); document.getElementById('page')?.focus(); }; back.focus();
     }
-    await new Promise(r => setTimeout(r, 30));
-    R = new Race(cfg, onExit, root); window.__race = R; R.init();
   }
-  function stop() { if (R) { R.dispose(); R = null; } const root = document.getElementById('race'); if (root) { root.classList.remove('on'); root.innerHTML = ''; } window.__race = null; }
+  function stop() {
+    launchVersion++;
+    if (R) { R.dispose(); R = null; }
+    const root = document.getElementById('race'); if (root) { root.classList.remove('on'); root.innerHTML = ''; }
+    const app = document.getElementById('app'); if (app) app.inert = false;
+    window.__race = null;
+  }
 
   class Race {
     constructor(cfg, onExit, root) { this.cfg = cfg; this.onExit = onExit; this.root = root; this.keys = {}; this.paused = false; this.camMode = RS.cam || 'chase'; }
@@ -290,7 +336,7 @@
       const T = THREE, cfg = this.cfg, n = cfg.opp;
       this.cars = [];
       const me = { car: cfg.car, color: cfg.color, ai: false, name: 'You' };
-      const pool = CARS.filter(c => c.id !== cfg.car.id), names = ['Nova', 'Raptor', 'Blaze', 'Kai', 'Vega', 'Orion', 'Jett', 'Luna', 'Rex', 'Storm', 'Ace'];
+      const pool = CARS.filter(c => c.id !== cfg.car.id && !c.custom), names = ['Nova', 'Raptor', 'Blaze', 'Kai', 'Vega', 'Orion', 'Jett', 'Luna', 'Rex', 'Storm', 'Ace'];
       const grid = [];
       for (let i = 0; i < n; i++) { const c = cfg.sameClass ? cfg.car : pool[i % pool.length]; grid.push({ car: c, color: COLORS[(i * 5 + 2) % COLORS.length], ai: true, name: names[i % names.length] }); }
       const playerSlot = Math.min(n, cfg.gridPos === 'front' ? 0 : cfg.gridPos === 'back' ? n : Math.floor(n / 2));
@@ -301,15 +347,16 @@
         this.cars.push(Object.assign(g, { mesh: m, i, slot: i, pos: new T.Vector3(), vel: new T.Vector3(), heading: 0, steer: 0, idx: 0, lap: 0, check: true, lapStart: 0, laps: [], best: Infinity, finished: false, finishT: 0, skill: skill * (.97 + (i % 4) * .015), lane: ((i % 3) - 1) * 2.4, rpm: 0, gear: 1, wrongT: 0, boost: 1, offT: 0 }));
       });
       this.me = this.cars.find(c => !c.ai);
-      if (this.timeOfDay() === 'night') { const L = new T.SpotLight(0xfff2d0, 90, 120, .45, .5, 1.2); L.position.set(0, 1.2, -2); const tgt = new T.Object3D(); tgt.position.set(0, 0, -30); this.me.mesh.group.add(L, tgt); L.target = tgt; }
+      { const L = new T.SpotLight(0xfff2d0, 0, 120, .45, .5, 1.2); L.position.set(0, 1.2, -this.me.car.len / 2); const tgt = new T.Object3D(); tgt.position.set(0, 0, -30); this.me.mesh.group.add(L, tgt); L.target = tgt; this.headlamp = L; this.lightsOn = this.timeOfDay() === 'night'; this.applyLights(); }
     }
     reset() {
+      clearTimeout(this.finishTimer); this.result = null; this.keys = {}; this._lit = 0; this.cruise = 0; this.limiter = false;
       const N = this.N;
       this.cars.forEach((c, k) => {
         const row = Math.floor(k / 2), side = k % 2 ? -1 : 1, idx = (N - 3 - row * 3) % N;
         const p = this.P[idx], n = this.Nn[idx], t = this.Tn[idx];
         c.pos.set(p.x + n.x * side * this.W * .22, p.y, p.z + n.z * side * this.W * .22); c.vel.set(0, 0, 0);
-        c.heading = Math.atan2(t.x, -t.z); c.idx = idx; c.lap = 0; c.check = true; c.laps = []; c.best = Infinity; c.finished = false; c.finishT = 0; c.steer = 0; c.wrongT = 0; c.offT = 0; c.boostLeft = 1;
+        c.heading = Math.atan2(t.x, -t.z); c.idx = idx; c._prevIdx = idx; c.lapStart = 0; c.place = null; c.estT = undefined; c.lap = 0; c.check = true; c.laps = []; c.best = Infinity; c.finished = false; c.finishT = 0; c.steer = 0; c.wrongT = 0; c.offT = 0; c.boostLeft = 1;
       });
       this.t = 0; this.phase = 'count'; this.countT = 0; this.raceT = 0; this.resultShown = false; this.boostMeter = 1;
       this.root.querySelector('#r-end').classList.remove('on'); this.camSmooth = null;
@@ -319,6 +366,7 @@
     /* ---------- input ---------- */
     bindInput() {
       this._kd = e => {
+        if (e.code !== 'Escape' && e.target?.closest?.('button,input,select,textarea')) return;
         if (e.code === 'Escape') { e.preventDefault(); if (!this.resultShown) this.togglePause(); return; }
         if (this.paused) return;
         if (Object.values(KEYS).includes(e.code) || e.code.startsWith('Arrow') || e.code === 'KeyK' || e.code === 'KeyP') e.preventDefault(); else return;
@@ -327,6 +375,16 @@
         if (e.code === KEYS.reset) this.resetCar(this.me);
         if (e.code === 'KeyK') this.keypad && this.keypad.toggle();
         if (e.code === 'KeyP') this.togglePause();
+        const me = this.me;
+        if (e.code === KEYS.horn) this.honk();
+        if (e.code === KEYS.lights) { this.lightsOn = !this.lightsOn; this.applyLights(); this.flash(this.lightsOn ? 'Headlights on' : 'Headlights off', .8, 30); }
+        if (e.code === KEYS.cruise) { this.cruise = this.cruise ? 0 : Math.max(8, Math.abs(me.vf || 0)); this.flash(this.cruise ? `Cruise ${Math.round(this.cruise * (RS.units === 'mph' ? MPH : KMH))}` : 'Cruise off', .9, 30); }
+        if (e.code === KEYS.gearbox) { this.manual = !this.manual; me.mgear = Math.max(1, me.gear || 1); this.flash(this.manual ? 'Manual gears — Q / E to shift' : 'Automatic gears', 1.2, 30); }
+        if (e.code === KEYS.shiftUp) { if (!this.manual) { this.manual = true; me.mgear = Math.max(1, me.gear || 1); } me.mgear = Math.min(6, (me.mgear || 1) + 1); this.audio && this.audio.beep(660, .05); }
+        if (e.code === KEYS.shiftDown) { if (!this.manual) { this.manual = true; me.mgear = Math.max(1, me.gear || 1); } me.mgear = Math.max(1, (me.mgear || 1) - 1); this.audio && this.audio.beep(520, .05); }
+        if (e.code === KEYS.limiter) { this.limiter = !this.limiter; this.flash(this.limiter ? 'Pit limiter 80 km/h' : 'Limiter off', .9, 30); }
+        if (e.code === KEYS.map) { const m = this.root.querySelector('#r-mini'); m.style.display = m.style.display === 'none' ? '' : 'none'; }
+        if (e.code === KEYS.restart) this.menu('restart');
       };
       this._ku = e => { this.keys[e.code] = false; };
       this._bl = () => { this.keys = {}; if (!this.paused && !this.resultShown) this.togglePause(true); };
@@ -338,7 +396,15 @@
       else if (a === 'restart') { this.reset(); this.togglePause(false); }
       else if (a === 'exit') { const res = this.result || null; const cb = this.onExit; stop(); cb && cb(res); }
     }
-    togglePause(v) { this.paused = v === undefined ? !this.paused : v; this.root.querySelector('#r-pause').classList.toggle('on', this.paused); if (this.audio) this.paused ? this.audio.ctx.suspend() : this.audio.ctx.resume(); }
+    togglePause(v) { this.paused = v === undefined ? !this.paused : v; this.keys = {}; if (this.paused) this.root.querySelector('#r-pause [data-r="resume"]').focus(); else { this.canvas.tabIndex = -1; this.canvas.focus(); } this.root.querySelector('#r-pause').classList.toggle('on', this.paused); if (this.audio) this.paused ? this.audio.ctx.suspend() : this.audio.ctx.resume(); }
+    honk() {
+      if (!this.audio) return; const ctx = this.audio.ctx, o = ctx.createOscillator(), o2 = ctx.createOscillator(), g = ctx.createGain();
+      o.type = o2.type = 'square'; o.frequency.value = 415; o2.frequency.value = 523; g.gain.setValueAtTime(.12, ctx.currentTime); g.gain.setTargetAtTime(0, ctx.currentTime + .35, .05);
+      o.connect(g); o2.connect(g); g.connect(ctx.destination); o.start(); o2.start(); o.stop(ctx.currentTime + .6); o2.stop(ctx.currentTime + .6);
+      // cars just ahead move over
+      this.cars.forEach(o3 => { if (o3.ai && o3.pos.distanceTo(this.me.pos) < 25) o3.lane = clamp(o3.lane + (o3.lane >= 0 ? 2.5 : -2.5), -this.W * .32, this.W * .32); });
+    }
+    applyLights() { if (this.headlamp) this.headlamp.intensity = this.lightsOn ? 110 : 0; this.me.mesh.group.traverse(o => { if (o.material && o.material.emissive && o.material.color && o.material.color.getHex() === 0xfff6d8) o.material.emissiveIntensity = this.lightsOn ? 3 : 1.2; }); }
     resetCar(c) {
       const p = this.P[c.idx], t = this.Tn[c.idx];
       c.pos.set(p.x, p.y, p.z); c.vel.set(0, 0, 0); c.heading = Math.atan2(t.x, -t.z); c.wrongT = 0; c.offT = 0;
@@ -358,7 +424,11 @@
         const k = this.keys;
         if (c.finished) return { gas: 0, brake: .4, steer: 0, hand: 0, boost: 0 };
         const steerIn = (k[KEYS.right] || k.ArrowRight ? 1 : 0) - (k[KEYS.left] || k.ArrowLeft ? 1 : 0);
-        return { gas: k[KEYS.gas] || k.ArrowUp ? 1 : 0, brake: k[KEYS.brake] || k.ArrowDown ? 1 : 0, steer: steerIn, hand: k[KEYS.hand] ? 1 : 0, boost: k[KEYS.boost] ? 1 : 0 };
+        let gas = k[KEYS.gas] || k.ArrowUp ? 1 : 0, brake = k[KEYS.brake] || k.ArrowDown ? 1 : 0;
+        if (brake && this.cruise) { this.cruise = 0; this.flash('Cruise off', .7, 30); }
+        if (this.cruise && !gas && !brake) gas = Math.abs(c.vf || 0) < this.cruise ? 1 : 0;
+        if (this.limiter && Math.abs(c.vf || 0) > 80 / KMH) gas = 0;
+        return { gas, brake, steer: steerIn, hand: k[KEYS.hand] ? 1 : 0, boost: k[KEYS.boost] ? 1 : 0 };
       }
       // AI: aim at a point ahead on its lane, brake for corners ahead
       const N = this.N, v = c.vel.length(), look = Math.round((12 + v * .9) / 4);
@@ -381,6 +451,7 @@
       return { gas: v < vt ? 1 : 0, brake: v > vt + 2 ? clamp((v - vt) / 8, 0, 1) : 0, steer: clamp(dh * 2.2, -1, 1), hand: 0, boost: 0 };
     }
     stepCar(c, dt) {
+      if (this.phase === 'count' || (c.finished && c.vel.length() < 1)) { c.vel.set(0, 0, 0); c.vf = 0; c.rpm = .2; c.rpmIn = 0; c.braking = true; return; }
       const car = c.car, ctl = this.controlsFor(c, dt);
       const fwd = { x: Math.sin(c.heading), z: -Math.cos(c.heading) }, right = { x: Math.cos(c.heading), z: Math.sin(c.heading) };
       let vf = c.vel.x * fwd.x + c.vel.z * fwd.z, vl = c.vel.x * right.x + c.vel.z * right.z;
@@ -398,7 +469,12 @@
       c.boosting = boosting;
       // longitudinal
       let a = 0;
-      if (ctl.gas) a += car.acc * (boosting ? 1.5 : 1) * clamp(1 - Math.pow(Math.max(vf, 0) / vmax, 1.7), -.5, 1);
+      if (!c.ai && this.manual) { // manual gearbox: each gear has a speed band; wrong gear = weak pull
+        const g = c.mgear || 1, top = vmax, lo = top * (g - 1) / 6.5, hi = top * g / 5.6;
+        const band = vf < lo ? .35 : vf > hi ? 0 : 1 - .3 * (g - 1) / 5;
+        if (ctl.gas) a += car.acc * 1.12 * band * (boosting ? 1.5 : 1) * clamp(1 - Math.pow(Math.max(vf, 0) / Math.min(vmax, hi * 1.02), 2), -.5, 1);
+        if (vf > hi * 1.02) a -= (vf - hi) * .8;
+      } else if (ctl.gas) a += car.acc * (boosting ? 1.5 : 1) * clamp(1 - Math.pow(Math.max(vf, 0) / vmax, 1.7), -.5, 1);
       if (ctl.brake) { if (vf > 1) a -= 13 * car.brake * rain * ctl.brake; else if (!c.ai) a -= 5; }
       if (!ctl.gas && !ctl.brake) a -= Math.sign(vf) * 1.4;
       a -= vf * Math.abs(vf) * .0009 + (onRoad ? 0 : vf * .25 * (1 - car.off));
@@ -457,26 +533,27 @@
       c.vf = vf; c.rpmIn = ctl.gas; c.braking = !!ctl.brake;
       c.gear = Math.max(1, Math.min(6, 1 + Math.floor(Math.abs(vf) / (car.top / KMH) * 6)));
       c.rpm = vf < 0 ? .3 : clamp(.25 + ((Math.abs(vf) / (car.top / KMH) * 6) % 1) * .75 * (c.gear < 6 ? 1 : 1.2), .2, 1);
+      if (!c.ai && this.manual) { const g = c.mgear || 1, hi = car.top / KMH * g / 5.6; c.gear = g; c.rpm = clamp(Math.abs(vf) / hi, .15, 1.05); }
     }
     collide() {
       const cs = this.cars;
       for (let a = 0; a < cs.length; a++) for (let b = a + 1; b < cs.length; b++) {
-        const A = cs[a], B = cs[b], dx = B.pos.x - A.pos.x, dz = B.pos.z - A.pos.z, d = Math.hypot(dx, dz), min = 2.3;
+        const A = cs[a], B = cs[b], dx = B.pos.x - A.pos.x, dz = B.pos.z - A.pos.z, d = Math.hypot(dx, dz), min = (A.car.wid + B.car.wid) / 2 + .35 + Math.max(0, (A.car.len + B.car.len) / 2 - 4.4) * .3;
         if (d < min && d > 1e-3) {
           const nx = dx / d, nz = dz / d, push = (min - d) / 2;
           A.pos.x -= nx * push; A.pos.z -= nz * push; B.pos.x += nx * push; B.pos.z += nz * push;
           const rv = (B.vel.x - A.vel.x) * nx + (B.vel.z - A.vel.z) * nz;
-          if (rv < 0) { const j = -rv * .65; A.vel.x -= nx * j; A.vel.z -= nz * j; B.vel.x += nx * j; B.vel.z += nz * j; if (A === this.me || B === this.me) { this.shake = Math.min(1, -rv / 10); this.audio && this.audio.beep(140, .1); } }
+          if (rv < 0) { const ma = A.car.wt || 1300, mb = B.car.wt || 1300, j = -rv * 1.3; A.vel.x -= nx * j * mb / (ma + mb); A.vel.z -= nz * j * mb / (ma + mb); B.vel.x += nx * j * ma / (ma + mb); B.vel.z += nz * j * ma / (ma + mb); if (A === this.me || B === this.me) { this.shake = Math.min(1, -rv / 10); this.audio && this.audio.beep(140, .1); } }
         }
       }
     }
     playerFinished() {
       const place = this.me.place;
       this.flash(place === 1 ? 'You win!' : `Finished ${ord(place)}`, 3, 64);
-      setTimeout(() => this.showResults(), 2600);
+      clearTimeout(this.finishTimer); this.finishTimer = setTimeout(() => this.showResults(), 2600);
     }
     showResults() {
-      if (this.resultShown) return; this.resultShown = true;
+      if (this.disposed || this.resultShown) return; this.resultShown = true;
       const N = this.N, total = (this.cfg.laps) * N;
       this.cars.forEach(c => { if (!c.finished) { const done = Math.max(1, (c.lap - 1) * N + c.idx), avg = done / Math.max(1, this.raceT - (c.laps.length ? 0 : 0)); c.estT = this.raceT + Math.max(0, total - done) / Math.max(avg, .1); } });
       const ft = c => c.finished ? c.finishT : c.estT;
@@ -508,7 +585,7 @@
       }
       // meshes
       this.cars.forEach(c => {
-        const g = c.mesh.group; g.position.copy(c.pos); g.rotation.set(Math.atan(c.slope || 0), -c.heading + Math.PI, 0, 'YXZ');
+        const g = c.mesh.group; g.position.copy(c.pos); g.rotation.set(-Math.atan(c.slope || 0), -c.heading, 0, 'YXZ');
         c.mesh.wheels.forEach(w => { w.w.rotation.x -= (c.vf || 0) * dt / .35; if (w.front) w.holder.rotation.y = -c.steer; });
         c.mesh.tail.emissiveIntensity = c.braking ? 2.5 : .6;
       });
@@ -522,6 +599,8 @@
     updateCamera(dt) {
       const c = this.me, cam = this.camera, f = { x: Math.sin(c.heading), z: -Math.cos(c.heading) };
       const back = this.keys[KEYS.back] ? -1 : 1;
+      const side = (this.keys[KEYS.lookR] ? 1 : 0) - (this.keys[KEYS.lookL] ? 1 : 0);
+      if (side) { const r = { x: Math.cos(c.heading), z: Math.sin(c.heading) }; cam.position.set(c.pos.x - r.x * side * .2, c.pos.y + c.car.hgt * .9 + .3, c.pos.z - r.z * side * .2); cam.lookAt(c.pos.x + r.x * side * 30, c.pos.y + 1, c.pos.z + r.z * side * 30); cam.fov = 70; cam.updateProjectionMatrix(); return; }
       if (this.camMode === 'hood') {
         cam.position.set(c.pos.x + f.x * .6, c.pos.y + c.car.hgt * .9 + .2, c.pos.z + f.z * .6);
         cam.lookAt(c.pos.x + f.x * 30 * back, c.pos.y + .8, c.pos.z + f.z * 30 * back);
@@ -543,13 +622,17 @@
         <div class="rpanel" id="r-pos"></div><div class="rpanel" id="r-time"></div><div class="rpanel" id="r-speed"></div>
         <div class="rpanel" id="r-msg"></div><div class="rpanel" id="r-warn"></div>
         <canvas class="rmini" id="r-mini" width="400" height="400"></canvas>
-        <div class="overlay" id="r-pause"><div class="card"><div class="eyebrow">Paused</div><h3>Race paused</h3><div class="btns"><button class="btn" type="button" data-r="resume">Resume</button><button class="btn sec" type="button" data-r="restart">Restart race</button><button class="btn ghost" type="button" data-r="exit">Quit to menu</button></div></div></div>
-        <div class="overlay" id="r-end"><div class="card" style="width:min(640px,94vw)"><div class="eyebrow">${this.cfg.track.name} · ${this.cfg.laps} laps</div><h3 id="r-etitle"></h3><div id="r-ebody"></div><div class="btns"><button class="btn" type="button" data-r="restart">Race again</button><button class="btn ghost" type="button" data-r="exit">Back to menu</button></div></div></div>`);
+        <div class="overlay" id="r-pause"><div class="card"><div class="eyebrow">Paused</div><h2 class="section-heading">Race paused</h2><div class="btns"><button class="btn" type="button" data-r="resume">Resume</button><button class="btn sec" type="button" data-r="restart">Restart race</button><button class="btn ghost" type="button" data-r="exit">Quit to menu</button></div></div></div>
+        <div class="overlay" id="r-end"><div class="card" style="width:min(640px,94vw)"><div class="eyebrow">${this.cfg.track.name} · ${this.cfg.laps} laps</div><h2 class="section-heading" id="r-etitle"></h2><div id="r-ebody"></div><div class="btns"><button class="btn" type="button" data-r="restart">Race again</button><button class="btn ghost" type="button" data-r="exit">Back to menu</button></div></div></div>`);
       const keys = [
         { code: KEYS.gas, label: 'gas', row: 0, col: 1 },
         { code: KEYS.left, label: 'left', row: 1, col: 0 }, { code: KEYS.brake, label: 'brake', row: 1, col: 1 }, { code: KEYS.right, label: 'right', row: 1, col: 2 },
         { code: KEYS.boost, label: 'boost', row: 2, col: 0, w: 1.4 }, { code: KEYS.hand, label: 'drift', row: 2, col: 1.4, w: 1.6 },
-        { code: KEYS.reset, label: 'reset', row: 0, col: 3.3 }, { code: KEYS.cam, label: 'camera', row: 1, col: 3.3 }, { code: 'Escape', label: 'pause', row: 2, col: 3.3 }
+        { code: KEYS.reset, label: 'reset', row: 0, col: 3.3 }, { code: KEYS.cam, label: 'camera', row: 1, col: 3.3 }, { code: 'Escape', label: 'pause', row: 2, col: 3.3 },
+        { code: KEYS.shiftDown, label: 'gear −', row: 0, col: 0, more: 1 }, { code: KEYS.shiftUp, label: 'gear +', row: 0, col: 1, more: 1 }, { code: KEYS.gearbox, label: 'manual', row: 0, col: 2, more: 1 }, { code: KEYS.cruise, label: 'cruise', row: 0, col: 3, more: 1 },
+        { code: KEYS.horn, label: 'horn', row: 1, col: 0, more: 1 }, { code: KEYS.lights, label: 'lights', row: 1, col: 1, more: 1 }, { code: KEYS.limiter, label: 'limiter', row: 1, col: 2, more: 1 }, { code: KEYS.map, label: 'map', row: 1, col: 3, more: 1 },
+        { code: KEYS.lookL, label: 'look L', row: 2, col: 0, more: 1 }, { code: KEYS.back, label: 'look back', row: 2, col: 1, more: 1 }, { code: KEYS.lookR, label: 'look R', row: 2, col: 2, more: 1 }, { code: KEYS.restart, label: 'restart', row: 2, col: 3, more: 1 },
+        { code: 'ArrowUp', label: 'gas', row: 3, col: 1, more: 1 }, { code: 'ArrowLeft', label: 'left', row: 3, col: 0, more: 1 }, { code: 'ArrowDown', label: 'brake', row: 3, col: 2, more: 1 }, { code: 'ArrowRight', label: 'right', row: 3, col: 3, more: 1 }
       ];
       this.keypad = window.CT_KEYPAD ? window.CT_KEYPAD(this.root, keys, { title: 'Driving keys', visible: RS.keypad !== false }) : null;
       this.mctx = this.root.querySelector('#r-mini').getContext('2d');
@@ -572,7 +655,7 @@
       return out;
     }
     updateHud(dt) {
-      if (this.keypad) this.keypad.update(this.keys, this.suggest());
+      if (this.keypad) this.keypad.update(this.keys, this.suggest(), { [KEYS.cruise]: !!this.cruise, [KEYS.gearbox]: !!this.manual, [KEYS.lights]: !!this.lightsOn, [KEYS.limiter]: !!this.limiter, [KEYS.map]: this.root.querySelector('#r-mini').style.display !== 'none' });
       const m = this.root.querySelector('#r-msg'); if (this._msgT !== undefined) { this._msgT -= dt; m.style.opacity = clamp(this._msgT * 2, 0, 1); }
       this._ht = (this._ht || 0) + dt; if (this._ht < .1) return; this._ht = 0;
       const c = this.me, N = this.N, n = this.cars.length;
@@ -595,21 +678,21 @@
       this.cars.forEach(o => { x.fillStyle = o === c ? '#F5B942' : o.color; x.beginPath(); x.arc(o.pos.x * mm.s + mm.ox, o.pos.z * mm.s + mm.oz, o === c ? 9 : 6, 0, 7); x.fill(); if (o === c) { x.strokeStyle = '#0A0D12'; x.lineWidth = 2; x.stroke(); } });
     }
     dispose() {
-      this.alive = false; cancelAnimationFrame(this.raf);
+      this.disposed = true; clearTimeout(this.finishTimer); this.alive = false; cancelAnimationFrame(this.raf);
       window.removeEventListener('keydown', this._kd); window.removeEventListener('keyup', this._ku); window.removeEventListener('blur', this._bl); window.removeEventListener('resize', this._rs);
       this.audio && this.audio.close(); this.keypad && this.keypad.dispose();
-      if (this.renderer) { this.scene.traverse(o => { if (o.geometry) o.geometry.dispose(); if (o.material) (Array.isArray(o.material) ? o.material : [o.material]).forEach(m => { m.map && m.map.dispose(); m.dispose(); }); }); this.renderer.dispose(); }
+      if (this.scene) { this.scene.traverse(o => { if (o.geometry) o.geometry.dispose(); if (o.material) (Array.isArray(o.material) ? o.material : [o.material]).forEach(m => { m.map && m.map.dispose(); m.dispose(); }); }); } if (this.renderer) this.renderer.dispose();
     }
   }
   function mulberry(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
-  function fmt(t) { if (!isFinite(t) || t <= 0) return '0:00.00'; const m = Math.floor(t / 60), s = t % 60; return `${m}:${s.toFixed(2).padStart(5, '0')}`; }
+  function fmt(t) { if (!isFinite(t) || t <= 0) return '0:00.00'; const ticks = Math.round(t * 100), m = Math.floor(ticks / 6000), s = (ticks % 6000) / 100; return `${m}:${s.toFixed(2).padStart(5, '0')}`; }
   const ord = n => n + (['th', 'st', 'nd', 'rd'][(n % 100 - 20) % 10] || ['th', 'st', 'nd', 'rd'][n % 100] || 'th');
 
   /* ---------------- menu pages ---------------- */
   function launchRace(over) {
     const car = carById(RS.car), cfg = Object.assign({ car, color: carColor(car), track: trackById(RS.track), laps: RS.laps, opp: RS.opp, diff: RS.diff, time: RS.time, weather: RS.weather }, over || {});
     document.activeElement && document.activeElement.blur();
-    start(cfg, res => {
+    return start(cfg, res => {
       if (res) {
         RS.races++; if (res.pos === 1) RS.wins++; if (res.pos <= 3) RS.podiums++;
         if (isFinite(res.best) && (!RS.best[res.track] || res.best < RS.best[res.track].t)) RS.best[res.track] = { t: res.best, car: res.car };
@@ -632,6 +715,7 @@
       if (sub === 'tracks') return tracks(page);
       if (sub === 'howto') return howto(page);
       if (sub === 'settings') return settingsPage(page);
+      if (sub === 'build') return builder(page, args[1]);
       const car = carById(RS.car), tr = trackById(RS.track);
       page.innerHTML = `
         <section class="hero" style="background:linear-gradient(180deg,#1b1410 0%,#3b2a1c 52%,#5a3d26 66%,#1b1d21 66.2%,#0f1114 100%)">
@@ -663,22 +747,87 @@
       foot([['W', 'Gas'], ['A D', 'Steer']], `<button class="btn" type="button" id="f-go">${I('play', 18)}Race now</button>`);
       $('#f-go').onclick = () => launchRace();
     };
+    function builder(page, editId) {
+      const editing = customCars.find(c => c.id === editId);
+      let p = editing ? Object.assign(carDefaults(editing.params.type), editing.params) : carDefaults('sports');
+      const row = (id, label, min, max, step, hint) => `<div class="brow"><label for="${id}">${label}${hint ? `<small class="muted" style="display:block;font-size:12px">${hint}</small>` : ''}</label><input type="range" id="${id}" min="${min}" max="${max}" step="${step}" value="${p[id.slice(2)]}" aria-label="${label}"><span class="val" id="${id}-v"></span></div>`;
+      const render = () => {
+        page.innerHTML = `${head('Racing · Build', editing ? 'Edit your car' : 'Build your own car', `<a class="btn ghost" href="#/race/garage">${I('back', 18)}Garage</a>`)}
+          <div class="builder">
+            <div class="stack">
+              <section class="card"><span class="eyebrow">1 · Choose a body</span>
+                <div class="typegrid" id="ctype">${Object.entries(CTYPES).map(([k, l]) => `<button type="button" data-t="${k}" aria-pressed="${p.type === k}">${carSVG({ type: k, name: l }, p.type === k ? p.color : '#7B8999')}${l}</button>`).join('')}</div>
+              </section>
+              <section class="card" style="gap:0"><span class="eyebrow" style="margin-bottom:6px">2 · Choose the numbers</span>
+                <div class="bgroup"><div class="brow"><label for="c-name">Name</label><input class="field" id="c-name" type="text" maxlength="30" value="${esc(p.name)}" style="grid-column:span 2"></div></div>
+                <div class="bgroup">
+                  ${row('c-top', 'Top speed', CLIM.top[0], CLIM.top[1], 5)}
+                  ${row('c-zero', '0–100 km/h', CLIM.zero[0], CLIM.zero[1], .1, 'Lower = faster acceleration')}
+                  ${row('c-grip', 'Grip', CLIM.grip[0], CLIM.grip[1], .1, 'Corner speed (low grip drifts)')}
+                  ${row('c-brake', 'Brakes', CLIM.brake[0], CLIM.brake[1], .05)}
+                  ${row('c-off', 'Off-road', CLIM.off[0], CLIM.off[1], .05, 'Speed kept on grass and sand')}
+                </div>
+                <div class="bgroup">
+                  ${row('c-len', 'Length', CLIM.len[0], CLIM.len[1], .05)}
+                  ${row('c-wid', 'Width', CLIM.wid[0], CLIM.wid[1], .05)}
+                  ${row('c-hgt', 'Height', CLIM.hgt[0], CLIM.hgt[1], .05)}
+                  ${row('c-wt', 'Weight', CLIM.wt[0], CLIM.wt[1], 10, 'Heavier cars win bumps but accelerate slower')}
+                </div>
+                <div class="bgroup"><span class="eyebrow">Paint</span><div class="hstack" id="ccol">${COLORS.map(c => `<button class="swatch" type="button" data-col="${c}" aria-label="Colour ${c}" aria-pressed="${p.color.toLowerCase() === c.toLowerCase()}" style="background:${c}"></button>`).join('')}<input type="color" id="ccust" value="${p.color}" aria-label="Custom colour"></div></div>
+              </section>
+            </div>
+            <div class="preview">
+              <div class="bstage" style="height:240px"><div class="scaled" id="c-prev"></div></div>
+              <section class="card"><span class="eyebrow">Performance</span><div id="c-stats" class="stack" style="gap:8px"></div><div class="bstats" id="c-nums"></div></section>
+              <div class="hstack"><button class="btn" type="button" id="c-race">${I('play', 18)}Save & race</button><button class="btn sec" type="button" id="c-save">Save to garage</button>${editing ? `<button class="btn danger" type="button" id="c-del">${I('trash', 16)}Delete</button>` : ''}</div>
+            </div>
+          </div>`;
+        bind(); update();
+      };
+      const update = () => {
+        const car = carFromParams(p, 'preview');
+        const v = { 'c-top': Math.round(p.top) + ' km/h', 'c-zero': p.zero.toFixed(1) + ' s', 'c-grip': p.grip.toFixed(1), 'c-brake': p.brake.toFixed(2) + '×', 'c-off': Math.round(p.off * 100) + '%', 'c-len': p.len.toFixed(2) + ' m', 'c-wid': p.wid.toFixed(2) + ' m', 'c-hgt': p.hgt.toFixed(2) + ' m', 'c-wt': Math.round(p.wt) + ' kg' };
+        for (const k in v) { const e = $('#' + k + '-v'); if (e) e.textContent = v[k]; }
+        const pv = $('#c-prev'); pv.style.width = clamp(30 + p.len * 10, 35, 100) + '%'; pv.style.height = clamp(40 + p.hgt * 25, 45, 100) + '%'; pv.innerHTML = carSVG(car, p.color).replace('viewBox="0 0 240 90"', 'viewBox="0 0 240 90" preserveAspectRatio="none"');
+        $('#c-stats').innerHTML = carStats(car);
+        const corner = Math.sqrt(p.grip / 8 * 1.35 * 9.81 * 60) * 3.6;
+        $('#c-nums').innerHTML = [['Top speed', Math.round(p.top) + ' km/h'], ['0–100', p.zero.toFixed(1) + ' s'], ['Corner speed', Math.round(corner) + ' km/h'], ['Size', `${p.len.toFixed(1)} × ${p.wid.toFixed(1)} m`], ['Weight', Math.round(p.wt) + ' kg'], ['Class', CTYPES[p.type]]].map(([l, x]) => `<div class="stat"><span class="eyebrow">${l}</span><span class="mono" style="font-size:15px">${x}</span></div>`).join('');
+      };
+      const bind = () => {
+        $$('#ctype button').forEach(b => b.onclick = () => { const keep = { name: p.name, color: p.color }; p = Object.assign(carDefaults(b.dataset.t), { color: keep.color, name: /^My /.test(keep.name) ? 'My ' + CTYPES[b.dataset.t] : keep.name }); render(); });
+        ['top', 'zero', 'grip', 'brake', 'off', 'len', 'wid', 'hgt', 'wt'].forEach(k => { const e = $('#c-' + k); e.oninput = () => { p[k] = +e.value; update(); }; });
+        $('#c-name').oninput = e => p.name = e.target.value;
+        const setCol = c => { p.color = c; $$('#ccol .swatch').forEach(x => x.setAttribute('aria-pressed', x.dataset.col.toLowerCase() === c.toLowerCase())); const tb = $(`#ctype button[data-t="${p.type}"]`); if (tb) tb.innerHTML = carSVG({ type: p.type, name: '' }, c) + CTYPES[p.type]; update(); };
+        $$('#ccol .swatch').forEach(b => b.onclick = () => setCol(b.dataset.col)); $('#ccust').oninput = e => setCol(e.target.value);
+        const store = () => {
+          const id = editing ? editing.id : 'cc-' + Date.now().toString(36);
+          const rec = { id, params: Object.assign({}, p, { name: (p.name || '').trim().slice(0, 30) || 'My car' }) };
+          const i = customCars.findIndex(c => c.id === id); if (i >= 0) customCars[i] = rec; else customCars.push(rec);
+          saveCars(); registerCars(); RS.car = id; RS.color = ''; save(); return id;
+        };
+        $('#c-save').onclick = () => { store(); toast('Saved to your garage'); go('#/race/garage'); };
+        $('#c-race').onclick = () => { store(); launchRace(); };
+        if ($('#c-del')) $('#c-del').onclick = () => { customCars = customCars.filter(c => c.id !== editing.id); saveCars(); registerCars(); if (RS.car === editing.id) RS.car = 'sports'; save(); toast('Car deleted'); go('#/race/garage'); };
+      };
+      render();
+      foot([], `<button class="btn" type="button" id="f-go">${I('play', 18)}Save & race</button>`); $('#f-go').onclick = () => $('#c-race').click();
+    }
     function garage(page) {
       const sel = carById(RS.car);
-      page.innerHTML = `${head('Racing · Garage', 'Choose your car', `<span class="muted">${CARS.length} cars</span>`)}
+      page.innerHTML = `${head('Racing · Garage', 'Choose your car', `<a class="btn" href="#/race/build">${I('brush', 18)}Build your own car</a><span class="muted">${CARS.length} cars</span>`)}
         <div class="split3">
           <div class="acgrid" id="cgrid">${CARS.map(c => `<div class="ac ${c.id === sel.id ? 'sel' : ''}" data-car="${c.id}" role="button" tabindex="0"><div class="hstack" style="justify-content:space-between"><span class="badge">${esc(c.cls)}</span><span class="mono muted" style="font-size:12px">${c.top} km/h</span></div><div class="pic" style="height:90px;display:flex;align-items:center">${carSVG(c, c.id === sel.id ? carColor(c) : c.color)}</div><div class="nm">${esc(c.name)}</div>${carStats(c)}</div>`).join('')}</div>
-          <section class="card" style="align-self:start"><span class="eyebrow">${esc(sel.cls)}</span><h3>${esc(sel.name)}</h3>
+          <section class="card" style="align-self:start"><span class="eyebrow">${esc(sel.cls)}</span><h2 class="section-heading">${esc(sel.name)}</h2>
             <div class="profile" style="height:150px" id="gprev">${carSVG(sel, carColor(sel))}</div>
             <p style="margin:0">${esc(sel.desc)}</p>
             ${carStats(sel)}
             <span class="eyebrow">Paint</span>
             <div class="hstack" id="gcol">${COLORS.map(c => `<button class="swatch" type="button" data-col="${c}" aria-label="Colour ${c}" aria-pressed="${carColor(sel).toLowerCase() === c.toLowerCase()}" style="background:${c}"></button>`).join('')}<input type="color" id="gcust" value="${carColor(sel)}" aria-label="Custom colour"></div>
-            <button class="btn" type="button" id="g-go">${I('play', 18)}Race with this car</button>
+            <div class="hstack"><button class="btn" type="button" id="g-go">${I('play', 18)}Race with this car</button>${sel.custom ? `<a class="btn sec" href="#/race/build/${sel.id}">${I('brush', 16)}Edit</a>` : ''}</div>
           </section>
         </div>`;
-      $$('[data-car]').forEach(el => { const f = () => { RS.car = el.dataset.car; RS.color = ''; save(); garage(page); }; el.onclick = f; el.onkeydown = e => { if (e.key === 'Enter') f(); }; });
-      const setCol = c => { RS.color = c; save(); $('#gprev').innerHTML = carSVG(sel, c); $$('#gcol .swatch').forEach(b => b.setAttribute('aria-pressed', b.dataset.col.toLowerCase() === c.toLowerCase())); const card = $(`[data-car="${sel.id}"] .pic`); if (card) card.innerHTML = carSVG(sel, c); };
+      $$('[data-car]').forEach(el => { const f = () => { RS.car = el.dataset.car; RS.color = ''; save(); garage(page); }; el.onclick = f; el.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); f(); } }; });
+      const setCol = c => { RS.color = c; $('#gcust').value = c; save(); $('#gprev').innerHTML = carSVG(sel, c); $$('#gcol .swatch').forEach(b => b.setAttribute('aria-pressed', b.dataset.col.toLowerCase() === c.toLowerCase())); const card = $(`[data-car="${sel.id}"] .pic`); if (card) card.innerHTML = carSVG(sel, c); };
       $$('#gcol .swatch').forEach(b => b.onclick = () => setCol(b.dataset.col));
       $('#gcust').oninput = e => setCol(e.target.value);
       $('#g-go').onclick = () => launchRace();
@@ -690,7 +839,7 @@
       page.innerHTML = `${head('Racing · Tracks', 'Choose a track', '')}
         <div class="split3">
           <div class="acgrid" id="tgrid">${TRACKS.map(t => `<div class="ac ${t.id === sel.id ? 'sel' : ''}" data-tr="${t.id}" role="button" tabindex="0"><div class="hstack" style="justify-content:space-between"><span class="badge">${{ day: 'Day', sunset: 'Sunset', night: 'Night' }[t.time]}</span>${RS.best[t.id] ? `<span class="badge green">${fmt(RS.best[t.id].t)}</span>` : ''}</div><div class="pic" style="height:130px">${trackSVG(t, 200)}</div><div class="nm">${esc(t.name)}</div><div class="muted" style="font-size:13px">${esc(t.desc)}</div></div>`).join('')}</div>
-          <section class="card" style="align-self:start"><span class="eyebrow">Race settings</span><h3>${esc(sel.name)}</h3>
+          <section class="card" style="align-self:start"><span class="eyebrow">Race settings</span><h2 class="section-heading">${esc(sel.name)}</h2>
             <div class="row" style="padding:6px 0"><label class="lbl" for="rl">Laps</label><span class="ctl"><input type="range" id="rl" min="1" max="10" value="${RS.laps}" style="width:150px"><span class="val" id="rl-v">${RS.laps}</span></span></div>
             <div class="row" style="padding:6px 0"><label class="lbl" for="ro">Opponents</label><span class="ctl"><input type="range" id="ro" min="0" max="11" value="${RS.opp}" style="width:150px"><span class="val" id="ro-v">${RS.opp}</span></span></div>
             <div class="stack" style="gap:6px"><span class="eyebrow">AI difficulty</span>${seg('diff', [['easy', 'Easy'], ['normal', 'Normal'], ['hard', 'Hard'], ['pro', 'Pro']], RS.diff)}</div>
@@ -699,7 +848,7 @@
             <button class="btn" type="button" id="t-go">${I('play', 18)}Race here</button>
           </section>
         </div>`;
-      $$('[data-tr]').forEach(el => { const f = () => { RS.track = el.dataset.tr; save(); tracks(page); }; el.onclick = f; el.onkeydown = e => { if (e.key === 'Enter') f(); }; });
+      $$('[data-tr]').forEach(el => { const f = () => { RS.track = el.dataset.tr; save(); tracks(page); }; el.onclick = f; el.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); f(); } }; });
       [['rl', 'laps'], ['ro', 'opp']].forEach(([id, k]) => { const i = $('#' + id); i.oninput = () => { RS[k] = +i.value; $('#' + id + '-v').textContent = i.value; save(); }; });
       $$('[data-rs]').forEach(g => $$('button', g).forEach(b => b.onclick = () => { RS[g.dataset.rs] = b.dataset.v; save(); $$('button', g).forEach(x => x.setAttribute('aria-pressed', x === b)); }));
       $('#t-go').onclick = () => launchRace();
@@ -708,12 +857,12 @@
     function howto(page) {
       page.innerHTML = `${head('Racing · Tutorial', 'How to drive', `<button class="btn" type="button" id="h-go">${I('play', 18)}Practice lap</button>`)}
         <div class="grid g3">
-          <section class="card"><span class="eyebrow">Step 1</span><h3>Drive with WASD</h3>
+          <section class="card"><span class="eyebrow">Step 1</span><h2 class="section-heading">Drive with WASD</h2>
             <div style="display:grid;grid-template-columns:repeat(3,auto);gap:8px;justify-content:center"><span></span>${keyCap(KEYS.gas, 'gas')}<span></span>${keyCap(KEYS.left, 'left')}${keyCap(KEYS.brake, 'brake')}${keyCap(KEYS.right, 'right')}</div>
             <p class="muted" style="margin:0">Hold <kbd>W</kbd> to go, <kbd>S</kbd> to brake (keep holding to reverse), <kbd>A</kbd> / <kbd>D</kbd> to steer. Arrow keys work too.</p></section>
-          <section class="card"><span class="eyebrow">Step 2</span><h3>Corners</h3>
+          <section class="card"><span class="eyebrow">Step 2</span><h2 class="section-heading">Corners</h2>
             <p style="margin:0">Brake <b>before</b> the corner, steer through it, then press <kbd>W</kbd> again as the road straightens. The keyboard in the corner lights up <b class="cyan">blue</b> to tell you when to brake and which way to turn.</p></section>
-          <section class="card"><span class="eyebrow">Step 3</span><h3>Tricks</h3>
+          <section class="card"><span class="eyebrow">Step 3</span><h2 class="section-heading">Tricks</h2>
             <div class="hstack" style="gap:18px;justify-content:center">${keyCap(KEYS.boost, 'boost')}${keyCap(KEYS.hand, 'drift')}${keyCap(KEYS.reset, 'reset')}</div>
             <p class="muted" style="margin:0"><kbd>Shift</kbd> uses boost (blue bar refills over time). <kbd>Space</kbd> pulls the handbrake to slide round hairpins. <kbd>R</kbd> puts you back on the road if you get stuck or turned around.</p></section>
         </div>
@@ -735,10 +884,10 @@
         </section>`;
       $$('[data-sw]').forEach(b => b.onclick = () => { const on = b.getAttribute('aria-checked') !== 'true'; b.setAttribute('aria-checked', on); RS[b.dataset.sw] = on; save(); });
       $$('#su button').forEach(b => b.onclick = () => { RS.units = b.dataset.v; save(); $$('#su button').forEach(x => x.setAttribute('aria-pressed', x === b)); });
-      $('#rreset').onclick = () => { const keep = { car: RS.car, color: RS.color }; RS = Object.assign(defaults(), keep); save(); toast('Racing progress reset'); settingsPage(page); };
+      $('#rreset').onclick = () => H.modal('Reset racing progress?', () => { Object.assign(RS, {races:0,wins:0,podiums:0,best:{},history:[]}); save(); toast('Racing progress reset'); settingsPage(page); });
       foot([], `<button class="btn" type="button" id="f-go">${I('play', 18)}Race now</button>`); $('#f-go').onclick = () => launchRace();
     }
   }
 
-  window.CT_RACE = { start, stop, launch: launchRace, get session() { return R; }, CARS, TRACKS, carSVG, trackSVG, registerPages, state: () => RS };
+  window.CT_RACE = { start, stop, launch: launchRace, get session() { return R; }, CARS, TRACKS, carSVG, trackSVG, registerPages, state: () => RS, customCars: () => customCars, carFromParams };
 })();
