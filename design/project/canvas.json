@@ -1,0 +1,166 @@
+{
+ "v": 3,
+ "createdOnFiles": {
+  "v": 1,
+  "at": "2026-10-16T22:48:11Z"
+ },
+ "title": "Flight Simulator UI",
+ "launch": {
+  "view": "canvas"
+ },
+ "pages": [],
+ "boards": {
+  "Main.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 1600,
+   "h": 900,
+   "title": "Main menu"
+  },
+  "Hangar.dc.html": {
+   "x": 1680,
+   "y": 0,
+   "w": 1600,
+   "h": 900,
+   "title": "Hangar · Aircraft browser"
+  },
+  "AircraftAirliner.dc.html": {
+   "x": 3360,
+   "y": 0,
+   "w": 1600,
+   "h": 900,
+   "title": "Aircraft · 737-800 configuration"
+  },
+  "AircraftFighter.dc.html": {
+   "x": 5040,
+   "y": 0,
+   "w": 1600,
+   "h": 900,
+   "title": "Aircraft · F-16C loadout"
+  },
+  "Liveries.dc.html": {
+   "x": 0,
+   "y": 1200,
+   "w": 1600,
+   "h": 900,
+   "title": "Livery gallery"
+  },
+  "LiveryEditor.dc.html": {
+   "x": 1680,
+   "y": 1200,
+   "w": 1600,
+   "h": 900,
+   "title": "Livery editor"
+  },
+  "FlightPlanner.dc.html": {
+   "x": 3360,
+   "y": 1200,
+   "w": 1600,
+   "h": 900,
+   "title": "Flight planner · Route"
+  },
+  "FlightSetup.dc.html": {
+   "x": 5040,
+   "y": 1200,
+   "w": 1600,
+   "h": 900,
+   "title": "Flight briefing"
+  },
+  "Weather.dc.html": {
+   "x": 0,
+   "y": 2400,
+   "w": 1600,
+   "h": 900,
+   "title": "Weather lab"
+  },
+  "SettingsGraphics.dc.html": {
+   "x": 1680,
+   "y": 2400,
+   "w": 1600,
+   "h": 900,
+   "title": "Settings · Graphics"
+  },
+  "SettingsControls.dc.html": {
+   "x": 3360,
+   "y": 2400,
+   "w": 1600,
+   "h": 900,
+   "title": "Settings · Controls"
+  },
+  "SettingsRealism.dc.html": {
+   "x": 5040,
+   "y": 2400,
+   "w": 1600,
+   "h": 900,
+   "title": "Settings · Realism & assistance"
+  },
+  "Missions.dc.html": {
+   "x": 0,
+   "y": 3600,
+   "w": 1600,
+   "h": 900,
+   "title": "Missions & training"
+  },
+  "InFlight.dc.html": {
+   "x": 1680,
+   "y": 3600,
+   "w": 1600,
+   "h": 900,
+   "title": "In flight · HUD & quick panel"
+  }
+ },
+ "order": [
+  "Main.dc.html",
+  "Hangar.dc.html",
+  "AircraftAirliner.dc.html",
+  "AircraftFighter.dc.html",
+  "Liveries.dc.html",
+  "LiveryEditor.dc.html",
+  "FlightPlanner.dc.html",
+  "FlightSetup.dc.html",
+  "Weather.dc.html",
+  "SettingsGraphics.dc.html",
+  "SettingsControls.dc.html",
+  "SettingsRealism.dc.html",
+  "Missions.dc.html",
+  "InFlight.dc.html"
+ ],
+ "notes": {
+  "canvas-title": {
+   "x": 0,
+   "y": -470,
+   "text": "CONTRAIL — Flight simulator UI",
+   "kind": "title1",
+   "maxW": 6640
+  },
+  "row-1": {
+   "x": 0,
+   "y": -250,
+   "text": "01 · Home & Hangar",
+   "kind": "title1",
+   "maxW": 6640
+  },
+  "row-2": {
+   "x": 0,
+   "y": 950,
+   "text": "02 · Liveries & Flight planning",
+   "kind": "title1",
+   "maxW": 6640
+  },
+  "row-3": {
+   "x": 0,
+   "y": 2150,
+   "text": "03 · Weather & Settings",
+   "kind": "title1",
+   "maxW": 6640
+  },
+  "row-4": {
+   "x": 0,
+   "y": 3350,
+   "text": "04 · Missions & In-flight",
+   "kind": "title1",
+   "maxW": 6640
+  }
+ },
+ "designSystems": []
+}

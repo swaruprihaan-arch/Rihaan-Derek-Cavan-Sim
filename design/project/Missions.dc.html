@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CONTRAIL — Missions</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+body{margin:0;background:#0A0D12}
+x-dc *{box-sizing:border-box}
+a{color:#E6EBF0;text-decoration:none}a:hover{color:#F5B942}
+button{font:inherit;color:inherit;cursor:pointer}
+input{font:inherit;color:inherit}
+input[type=range]{-webkit-appearance:none;appearance:none;height:4px;border-radius:2px;margin:0;padding:0;border:0;outline:none;background:#394655;flex:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:#E6EBF0;border:2px solid #0A0D12;box-shadow:0 0 0 1px #394655}
+input[type=checkbox],input[type=radio]{-webkit-appearance:none;appearance:none;width:18px;height:18px;margin:0;border:1px solid #394655;background:#161D26;position:relative;flex:none}
+input[type=checkbox]{border-radius:3px}
+input[type=radio]{border-radius:50%}
+input[type=checkbox]:checked,input[type=radio]:checked{background:#F5B942;border-color:#F5B942}
+input[type=checkbox]:checked::after{content:"";position:absolute;left:5px;top:1px;width:5px;height:10px;border:solid #1A1200;border-width:0 2px 2px 0;transform:rotate(45deg)}
+input[type=radio]:checked::after{content:"";position:absolute;left:4px;top:4px;width:8px;height:8px;border-radius:50%;background:#1A1200}
+:focus-visible{outline:2px solid #F5B942;outline-offset:2px}
+</style>
+</helmet>
+<div style="width:1600px;height:900px;background:#0A0D12;color:#E6EBF0;font-family:Barlow,'Helvetica Neue',Arial,sans-serif;font-size:15px;line-height:1.4;display:flex;flex-direction:column;overflow:hidden;position:relative">
+<header style="height:64px;flex:none;display:flex;align-items:center;gap:48px;padding:0 40px;border-bottom:1px solid #27313D;background:#0A0D12">
+<a href="#" aria-label="CONTRAIL home" style="display:flex;align-items:center;gap:12px;color:#E6EBF0">
+<svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="23.6 6.6 21.48 17.21 20.42 9.78 12.99 8.72" fill="currentColor" stroke-linejoin="miter"></polygon><path d="M12.64 11.2 L4.15 19.68"></path><path d="M19 17.56 L14.76 21.8"></path></svg>
+<span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:700;font-size:26px;letter-spacing:0.2em;line-height:1">CONTRAIL</span>
+<span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:11px;color:#7B8999;letter-spacing:0.04em;margin-top:3px">v1.4.2</span>
+</a>
+<nav aria-label="Primary" style="display:flex;align-items:stretch;gap:36px;height:64px">
+<a href="#" style="display:flex;align-items:center;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:18px;letter-spacing:0.1em;text-transform:uppercase;color:#A3AFBC;border-top:2px solid transparent;border-bottom:2px solid transparent">Home</a>
+<a href="#" style="display:flex;align-items:center;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:18px;letter-spacing:0.1em;text-transform:uppercase;color:#A3AFBC;border-top:2px solid transparent;border-bottom:2px solid transparent">Hangar</a>
+<a href="#" style="display:flex;align-items:center;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:18px;letter-spacing:0.1em;text-transform:uppercase;color:#A3AFBC;border-top:2px solid transparent;border-bottom:2px solid transparent">Fly</a>
+<a href="#" aria-current="page" style="display:flex;align-items:center;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:18px;letter-spacing:0.1em;text-transform:uppercase;color:#F5B942;border-top:2px solid transparent;border-bottom:2px solid #F5B942">Missions</a>
+<a href="#" style="display:flex;align-items:center;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:18px;letter-spacing:0.1em;text-transform:uppercase;color:#A3AFBC;border-top:2px solid transparent;border-bottom:2px solid transparent">Settings</a>
+</nav>
+<div style="margin-left:auto;display:flex;align-items:center;gap:28px">
+<div style="display:flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:0.08em;color:#5BD68A"><span style="width:8px;height:8px;border-radius:50%;background:#5BD68A;display:block"></span>ONLINE</div>
+<div style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:14px;color:#A3AFBC">14:32Z</div>
+<a href="#" style="display:flex;align-items:center;gap:12px;color:#E6EBF0">
+<span style="width:34px;height:34px;border-radius:50%;background:#1E2733;border:1px solid #394655;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.06em">ML</span>
+<span style="display:flex;flex-direction:column;line-height:1.2"><span style="font-size:14px;font-weight:500">Capt. Mara Lindqvist</span><span style="font-size:12px;color:#7B8999">1,284 h logged</span></span>
+</a>
+</div>
+</header>
+<main style="flex:1;min-height:0;display:flex;flex-direction:column;padding:24px 40px 24px;gap:20px;overflow:hidden">
+<div style="display:flex;align-items:flex-end;gap:24px;flex:none">
+<div style="display:flex;flex-direction:column;gap:4px">
+<span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#7B8999">Missions</span>
+<h1 style="margin:0;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:36px;letter-spacing:0.04em;text-transform:uppercase;line-height:1">Missions &amp; training</h1>
+</div>
+<nav aria-label="Sections" style="margin-left:auto;display:flex;gap:28px;border-bottom:1px solid #27313D">
+<button type="button" role="tab" aria-selected="false" style="height:40px;padding:0;background:none;border:0;border-bottom:2px solid transparent;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:16px;letter-spacing:0.08em;text-transform:uppercase;color:#A3AFBC;white-space:nowrap">Flight school</button>
+<button type="button" role="tab" aria-selected="true" style="height:40px;padding:0;background:none;border:0;border-bottom:2px solid #F5B942;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:16px;letter-spacing:0.08em;text-transform:uppercase;color:#F5B942;white-space:nowrap">Career</button>
+<button type="button" role="tab" aria-selected="false" style="height:40px;padding:0;background:none;border:0;border-bottom:2px solid transparent;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:16px;letter-spacing:0.08em;text-transform:uppercase;color:#A3AFBC;white-space:nowrap">Challenges</button>
+<button type="button" role="tab" aria-selected="false" style="height:40px;padding:0;background:none;border:0;border-bottom:2px solid transparent;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:16px;letter-spacing:0.08em;text-transform:uppercase;color:#A3AFBC;white-space:nowrap">Bush trips</button>
+<button type="button" role="tab" aria-selected="false" style="height:40px;padding:0;background:none;border:0;border-bottom:2px solid transparent;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:16px;letter-spacing:0.08em;text-transform:uppercase;color:#A3AFBC;white-space:nowrap">Community</button>
+</nav>
+</div>
+<div style="flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:24px">
+<div style="min-width:0;min-height:0;display:flex;flex-direction:column;gap:20px">
+<section style="height:120px;flex:none;background:#10151C;border:1px solid #27313D;border-radius:6px;padding:20px;display:flex;align-items:center;gap:24px">
+<div style="width:440px;flex:none;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;align-items:center;gap:12px"><h2 style="margin:0;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:18px;letter-spacing:0.06em;text-transform:uppercase;line-height:1">Career</h2><span style="margin-left:auto;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:13px;color:#A3AFBC;white-space:nowrap">18,420 / 25,000 XP</span></div>
+<div style="display:flex;align-items:center;gap:10px;color:#F5B942"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="16" r="5"></circle><path d="M9 11.3 5 3h4.5l2.5 5 2.5-5H19l-4 8.3"></path><circle cx="12" cy="16" r="0.5"></circle></svg><span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:24px;line-height:1;color:#E6EBF0;white-space:nowrap">Captain · Level 24</span></div>
+<div style="height:6px;background:#27313D;border-radius:3px"><div style="height:6px;width:74%;background:#F5B942;border-radius:3px"></div></div>
+</div>
+<div style="width:1px;align-self:stretch;background:#27313D;flex:none"></div>
+<div style="flex:1;min-width:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px">
+<div style="min-width:0;display:flex;flex-direction:column;gap:4px"><span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#7B8999;white-space:nowrap">Total time</span><span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:22px;line-height:1.1;color:#E6EBF0;white-space:nowrap">1,284<span style="font-size:13px;color:#7B8999;margin-left:4px">h</span></span></div>
+<div style="border-left:1px solid #27313D;padding-left:24px;min-width:0;display:flex;flex-direction:column;gap:4px"><span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#7B8999;white-space:nowrap">Landings</span><span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:22px;line-height:1.1;color:#E6EBF0;white-space:nowrap">412</span></div>
+<div style="border-left:1px solid #27313D;padding-left:24px;min-width:0;display:flex;flex-direction:column;gap:4px"><span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#7B8999;white-space:nowrap">On time</span><span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:22px;line-height:1.1;color:#E6EBF0;white-space:nowrap">98.6<span style="font-size:13px;color:#7B8999;margin-left:4px">%</span></span></div>
+<div style="border-left:1px solid #27313D;padding-left:24px;min-width:0;display:flex;flex-direction:column;gap:4px"><span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#7B8999;white-space:nowrap">Avg touchdown</span><span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:22px;line-height:1.1;color:#E6EBF0;white-space:nowrap">−142<span style="font-size:13px;color:#7B8999;margin-left:4px">fpm</span></span></div>
+</div>
+</section>
+<div style="flex:1;min-height:0;display:flex;flex-direction:column;gap:12px">
+<span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#7B8999">Contracts · 12 available</span>
+<div style="flex:1;min-height:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:16px">
+<a href="#" style="min-width:0;min-height:0;background:#10151C;border:1px solid #27313D;border-radius:6px;outline:2px solid #F5B942;outline-offset:-2px;padding:16px;display:flex;flex-direction:column;gap:10px;color:#E6EBF0">
+<div style="flex:1;min-height:0;display:flex;gap:12px">
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
+<div style="display:flex;align-items:center;gap:8px"><span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border-radius:999px;white-space:nowrap;background:#1E2733;color:#A3AFBC">Scheduled</span><span style="margin-left:auto;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border-radius:999px;white-space:nowrap;background:rgba(87,199,219,0.14);color:#57C7DB">Available</span></div>
+<span style="margin-top:auto;font-size:16px;font-weight:600;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Meridian 417 · KSEA → KSFO</span>
+<span style="font-size:13px;color:#7B8999;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Boeing 737-800</span>
+</div>
+<div style="width:88px;flex:none;background:#161D26;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#57C7DB;--sil-fill:#161D26"><div style="width:84px;height:70px"><svg viewBox="0 0 240 200" width="100%" height="100%" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M120 80 L32 124 L32 131 L84 119 L120 119 L156 119 L208 131 L208 124 L120 80 Z" style="fill:var(--sil-fill,#10151C)"></path><path d="M120 158 L87 178 L87 184 L120 184 L153 184 L153 178 L120 158 Z" style="fill:var(--sil-fill,#10151C)"></path><path d="M86 88 C86 84 98 84 98 88 L98 108 C98 112 86 112 86 108 Z" style="fill:var(--sil-fill,#10151C)"></path><path d="M154 88 C154 84 142 84 142 88 L142 108 C142 112 154 112 154 108 Z" style="fill:var(--sil-fill,#10151C)"></path><path d="M120 10 C115 10 110 18 110 30 L110 148 C110 160 114 176 117 190 L123 190 C126 176 130 160 130 148 L130 30 C130 18 125 10 120 10 Z" style="fill:var(--sil-fill,#10151C)"></path><path d="M120 23 L113 23 L115 28 L120 28 L125 28 L127 23 L120 23 Z" style="fill:var(--sil-fill,#10151C)"></path><path d="M120 146 L120 184"></path></svg></div></div>
+</div>
+<div style="height:1px;background:#27313D;flex:none"></div>
+<div style="display:flex;align-items:center;gap:12px;height:20px;flex:none">
+<span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:13px;color:#E6EBF0;white-space:nowrap">$12,400 · 860 XP</span>
+<span style="display:flex;align-items:center;gap:3px;flex:none"><span style="width:4px;height:14px;border-radius:1px;background:#F5B942;display:block"></span><span style="width:4px;height:14px;border-radius:1px;background:#F5B942;display:block"></span><span style="width:4px;height:14px;border-radius:1px;background:#F5B942;display:block"></span><span style="width:4px;height:14px;border-radius:1px;background:#394655;display:block"></span><span style="width:4px;height:14px;border-radius:1px;background:#394655;display:block"></span></span>
+<span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:13px;color:#A3AFBC;white-space:nowrap">2 h 05 m</span>
+<span style="margin-left:auto;display:flex;color:#7B8999"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Weather: rain"><path d="M6.5 14h10a3.25 3.25 0 0 0 0-6.5 5 5 0 0 0-9.8.6A2.95 2.95 0 0 0 6.5 14z"></path><path d="m8.5 17-1 3.5"></path><path d="m12.5 17-1 3.5"></path><path d="m16.5 17-1 3.5"></path></svg></span>
+</div>
+</a>
+<a href="#" style="min-width:0;min-height:0;background:#10151C;border:1px solid #27313D;border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:10px;color:#E6EBF0">
+<div style="flex:1;min-height:0;display:flex;gap:12px">
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
+<div style="display:flex;align-items:center;gap:8px"><span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border-radius:999px;white-space:nowrap;background:#1E2733;color:#A3AFBC">Cargo</span><span style="margin-left:auto;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border-radius:999px;white-space:nowrap;background:rgba(87,199,219,0.14);color:#57C7DB">Available</span></div>
+<span style="margin-top:auto;font-size:16px;font-weight:600;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Night freight · KOAK → KPDX</span>
+<span style="font-size:13px;color:#7B8999;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Boeing 737-800F</span>
+</div>
+<div style="width:88px;flex:none;background:#161D26;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#57C7DB;--sil-fill:#161D26"><div style="width:84px;height:70px"><svg viewBox="0 0 240 200" width="100%" height="100%" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M120 80 L32 124 L32 131 L84 119 L120 119 L156 119 L208 131 L208 124 L120 80 Z" style="fill:var(--sil-fill,#10151C)"></path><path d="M120 158 L87 178 L87 184 L120 184 L153 184 L153 178 L120 158 Z" style="fill:var(--sil-fill,#10151C)"></path><path d="M86 88 C86 84 98 84 98 88 L98 108 C98 112 86 112 86 108 Z" style="fill:var(--sil-fill,#10151C)"></path><path d="M154 88 C154 84 142 84 142 88 L142 108 C142 112 154 112 154 108 Z" style="fill:var(--sil-fill,#10151C)"></path><path d="M120 10 C115 10 110 18 110 30 L110 148 C110 160 114 176 117 190 L123 190 C126 176 130 160 130 148 L130 30 C130 18 125 10 120 10 Z" style="fill:var(--sil-fill,#10151C)"></path><path d="M120 23 L113 23 L115 28 L120 28 L125 28 L127 23 L120 23 Z" style="fill:var(--sil-fill,#10151C)"></path><path d="M120 146 L120 184"></path></svg></div></div>
+</div>
+<div style="height:1px;background:#27313D;flex:none"></div>
+<div style="display:flex;align-items:center;gap:12px;height:20px;flex:none">
+<span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:13px;color:#E6EBF0;white-space:nowrap">$9,800 · 640 XP</span>
+<span style="display:flex;align-items:center;gap:3px;flex:none"><span style="width:4px;height:14px;border-radius:1px;background:#F5B942;display:block"></span><span style="width:4px;height:14px;border-radius:1px;background:#F5B942;display:block"></span><span style="width:4px;height:14px;border-radius:1px;background:#F5B942;display:block"></span><span style="width:4px;height:14px;border-radius:1px;background:#F5B942;display:block"></span><span style="width:4px;height:14px;border-radius:1px;background:#394655;display:block"></span></span>
+<span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:13px;color:#A3AFBC;white-space:nowrap">1 h 40 m</span>
+<span style="margin-left:auto;display:flex;color:#7B8999"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Weather: cloudy"><path d="M6 19.5h11a4 4 0 0 0 0-8 5.6 5.6 0 0 0-11 .5A3.75 3.75 0 0 0 6 19.5z"></path></svg></span>
+</div>
+</a>
+<a href="#" style="min-width:0;min-height:0;background:#10151C;border:1px solid #27313D;border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:10px;color:#E6EBF0">
+<div style="flex:1;min-height:0;display:flex;gap:12px">
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
+<div style="display:flex;align-items:center;gap:8px"><span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border-radius:999px;white-space:nowrap;background:#1E2733;color:#A3AFBC">Charter</span><span style="margin-left:auto;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border-radius:999px;white-space:nowrap;background:rgba(87,199,219,0.14);color:#57C7DB">Available</span></div>
+<span style="margin-top:auto;font-size:16px;font-weight:600;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Island charter · PHNL → PHOG</span>
+<span style="font-size:13px;color:#7B8999;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Pilatus PC-12 NGX</span>
+</div>
+<div style="width:88px;flex:none;background:#161D26;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#57C7DB;--sil-fill:#161D26"><div style="width:84px;height:70px"><svg viewBox="0 0 240 200" width="100%" height="100%" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M120 86 L25 92 L25 108 L120 120 L215 108 L215 92 L120 86 Z" style="fill:var(--sil-fill,#10151C)"></path><path d="M120 30 C114 30 112 42 112 54 L112 140 C112 152 115 170 117 184 L123 184 C125 170 128 152 128 140 L128 54 C128 42 126 30 120 30 Z" style="fill:var(--sil-fill,#10151C)"></path><path d="M120 50 L114 50 L116 56 L120 56 L124 56 L126 50 L120 50 Z" style="fill:var(--sil-fill,#10151C)"></path><path d="M120 160 L90 166 L90 173 L120 176 L150 173 L150 166 L120 160 Z" style="fill:var(--sil-fill,#10151C)"></path><path d="M120 138 L120 176"></path><circle cx="120" cy="31" r="17" stroke-width="1.5"></circle><circle cx="120" cy="31" r="3" style="fill:var(--sil-fill,#10151C)"></circle></svg></div></div>
+</div>
+<div style="height:1px;background:#27313D;flex:none"></div>
+<div style="display:flex;align-items:center;gap:12px;height:20px;flex:none">
+<span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:13px;color:#E6EBF0;white-space:nowrap">$4,200 · 310 XP</span>
+<span style="display:flex;align-items:center;gap:3px;flex:none"><span style="width:4px;height:14px;border-radius:1px;background:#F5B942;display:block"></span><span style="width:4px;height:14px;border-radius:1px;background:#F5B942;display:block"></span><span style="width:4px;height:14px;border-radius:1px;background:#394655;display:block"></span><span style="width:4px;height:14px;border-radius:1px;background:#394655;display:block"></span><span style="width:4px;height:14px;border-radius:1px;background:#394655;display:block"></span></span>
+<span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:13px;color:#A3AFBC;white-space:nowrap">0 h 45 m</span>
+<span style="margin-left:auto;display:flex;color:#7B8999"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Weather: clear"><circle cx="12" cy="12" r="4"></circle><path d="M12 2.5V5"></path><path d="M12 19v2.5"></path><path d="M2.5 12H5"></path><path d="M19 12h2.5"></path><path d="m5.28 5.28 1.77 1.77"></path><path d="m16.95 16.95 1.77 1.77"></path><path d="m5.28 18.72 1.77-1.77"></path><path d="m16.95 7.05 1.77-1.77"></path></svg></span>
+</div>
+</a>
+<a href="#" style="min-width:0;min-height:0;background:#10151C;border:1px solid #27313D;border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:10px;color:#E6EBF0">
+<div style="flex:1;min-height:0;display:flex;gap:12px">
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
+<div style="display:flex;align-items:center;gap:8px"><span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border-radius:999px;white-space:nowrap;background:#1E2733;color:#A3AFBC">Medevac</span><span style="margin-left:auto;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border-radius:999px;white-space:nowrap;background:rgba(87,199,219,0.14);color:#57C7DB">Available</span></div>
+<span style="margin-top:auto;font-size:16px;font-weight:600;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Mountain medevac · KASE</span>
+<span style="font-size:13px;color:#7B8999;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Airbus H135</span>
+</div>
+<div style="width:88px;flex:none;background:#161D26;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#57C7DB;--sil-fill:#161D26"><div style="width:84px;height:70px"><svg viewBox="0 0 240 200" width="100%" height="100%" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M120 162 L104 162 L104 167 L120 167 L136 167 L136 162 L120 162 Z" style="fill:var(--sil-fill,#10151C)"></path><path d="M120 40 C108 40 102 56 102 74 L102 90 C102 108 110 120 115 126 L115 176 C115 180 117 184 120 184 C123 184 125 180 125 176 L125 126 C130 120 138 108 138 90 L138 74 C138 56 132 40 120 40 Z" style="fill:var(--sil-fill,#10151C)"></path><path d="M120 46 C112 46 107 54 106 62 L106 70 L120 70 L134 70 L134 62 C133 54 128 46 120 46 Z" style="fill:var(--sil-fill,#10151C)"></path><path d="M97 66 L97 112"></path><path d="M143 66 L143 112"></path><circle cx="120" cy="180" r="8" stroke-width="1.5"></circle><circle cx="120" cy="92" r="82" stroke-width="1.5"></circle><path d="M120 92 L62 34"></path><path d="M120 92 L178 34"></path><path d="M120 92 L62 150"></path><path d="M120 92 L178 150"></path><circle cx="120" cy="92" r="5" style="fill:var(--sil-fill,#10151C)"></circle></svg></div></div>
+</div>
+<div style="height:1px;background:#27313D;flex:none"></div>
+<div style="display:flex;align-items:center;gap:12px;height:20px;flex:none">
+<span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:13px;color:#E6EBF0;white-space:nowrap">$6,100 · 520 XP</span>
+<span style="display:flex;align-items:center;gap:3px;flex:none"><span style="width:4px;height:14px;border-radius:1px;background:#F5B942;display:block"></span><span style="width:4px;height:14px;border-radius:1px;background:#F5B942;display:block"></span><span style="width:4px;height:14px;border-radius:1px;background:#F5B942;display:block"></span><span style="width:4px;height:14px;border-radius:1px;background:#F5B942;display:block"></span><span style="width:4px;height:14px;border-radius:1px;background:#F5B942;display:block"></span></span>
+<span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:13px;color:#A3AFBC;white-space:nowrap">0 h 35 m</span>
+<span style="margin-left:auto;display:flex;color:#7B8999"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Weather: snow"><path d="M6.5 14h10a3.25 3.25 0 0 0 0-6.5 5 5 0 0 0-9.8.6A2.95 2.95 0 0 0 6.5 14z"></path><circle cx="8" cy="17.5" r="0.5"></circle><circle cx="12" cy="17.5" r="0.5"></circle><circle cx="16" cy="17.5" r="0.5"></circle><circle cx="10" cy="21" r="0.5"></circle><circle cx="14" cy="21" r="0.5"></circle></svg></span>
+</div>
+</a>
+<a href="#" style="min-width:0;min-height:0;background:#10151C;border:1px solid #27313D;border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:10px;color:#E6EBF0">
+<div style="flex:1;min-height:0;display:flex;gap:12px">
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
+<div style="display:flex;align-items:center;gap:8px"><span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border-radius:999px;white-space:nowrap;background:#1E2733;color:#A3AFBC">Exercise</span><span style="margin-left:auto;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border-radius:999px;white-space:nowrap;background:rgba(245,185,66,0.14);color:#F5B942">In progress</span></div>
+<span style="margin-top:auto;font-size:16px;font-weight:600;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Red Flag 26-1 · KLSV</span>
+<span style="font-size:13px;color:#7B8999;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">F-16C Fighting Falcon</span>
+</div>
+<div style="width:88px;flex:none;background:#161D26;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#57C7DB;--sil-fill:#161D26"><div style="width:84px;height:70px"><svg viewBox="0 0 240 200" width="100%" height="100%" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M120 85 L50 141 L50 148 L120 148 L190 148 L190 141 L120 85 Z" style="fill:var(--sil-fill,#10151C)"></path><path d="M120 152 L86 180 L86 188 L120 188 L154 188 L154 180 L120 152 Z" style="fill:var(--sil-fill,#10151C)"></path><path d="M120 10 C117 10 114 26 113 40 L112 62 C111 76 106 88 102 100 L102 152 C102 170 110 186 114 190 L126 190 C130 186 138 170 138 152 L138 100 C134 88 129 76 128 62 L127 40 C126 26 123 10 120 10 Z" style="fill:var(--sil-fill,#10151C)"></path><path d="M120 40 C116 40 114 46 114 52 L114 66 C114 70 117 72 120 72 C123 72 126 70 126 66 L126 52 C126 46 124 40 120 40 Z" style="fill:var(--sil-fill,#10151C)"></path><path d="M120 128 L120 180"></path></svg></div></div>
+</div>
+<div style="height:1px;background:#27313D;flex:none"></div>
+<div style="display:flex;align-items:center;gap:12px;height:20px;flex:none">
+<span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:13px;color:#E6EBF0;white-space:nowrap">1,400 XP</span>
+<span style="display:flex;align-items:center;gap:3px;flex:none"><span style="width:4px;height:14px;border-radius:1px;background:#F5B942;display:block"></span><span style="width:4px;height:14px;border-radius:1px;background:#F5B942;display:block"></span><span style="width:4px;height:14px;border-radius:1px;background:#F5B942;display:block"></span><span style="width:4px;height:14px;border-radius:1px;background:#F5B942;display:block"></span><span style="width:4px;height:14px;border-radius:1px;background:#F5B942;display:block"></span></span>
+<span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:13px;color:#A3AFBC;white-space:nowrap">1 h 20 m</span>
+<span style="margin-left:auto;display:flex;color:#7B8999"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Weather: clear"><circle cx="12" cy="12" r="4"></circle><path d="M12 2.5V5"></path><path d="M12 19v2.5"></path><path d="M2.5 12H5"></path><path d="M19 12h2.5"></path><path d="m5.28 5.28 1.77 1.77"></path><path d="m16.95 16.95 1.77 1.77"></path><path d="m5.28 18.72 1.77-1.77"></path><path d="m16.95 7.05 1.77-1.77"></path></svg></span>
+</div>
+</a>
+<a href="#" style="min-width:0;min-height:0;background:#10151C;border:1px solid #27313D;border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:10px;color:#E6EBF0">
+<div style="flex:1;min-height:0;display:flex;gap:12px">
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
+<div style="display:flex;align-items:center;gap:8px"><span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border-radius:999px;white-space:nowrap;background:#1E2733;color:#A3AFBC">Ferry</span><span style="margin-left:auto;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border-radius:999px;white-space:nowrap;background:rgba(91,214,138,0.14);color:#5BD68A">Completed</span></div>
+<span style="margin-top:auto;font-size:16px;font-weight:600;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Ferry · EGLL → LFPG</span>
+<span style="font-size:13px;color:#7B8999;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Airbus A320neo</span>
+</div>
+<div style="width:88px;flex:none;background:#161D26;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#57C7DB;--sil-fill:#161D26"><div style="width:84px;height:70px"><svg viewBox="0 0 240 200" width="100%" height="100%" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M120 80 L32 124 L32 131 L84 119 L120 119 L156 119 L208 131 L208 124 L120 80 Z" style="fill:var(--sil-fill,#10151C)"></path><path d="M120 158 L87 178 L87 184 L120 184 L153 184 L153 178 L120 158 Z" style="fill:var(--sil-fill,#10151C)"></path><path d="M86 88 C86 84 98 84 98 88 L98 108 C98 112 86 112 86 108 Z" style="fill:var(--sil-fill,#10151C)"></path><path d="M154 88 C154 84 142 84 142 88 L142 108 C142 112 154 112 154 108 Z" style="fill:var(--sil-fill,#10151C)"></path><path d="M120 10 C115 10 110 18 110 30 L110 148 C110 160 114 176 117 190 L123 190 C126 176 130 160 130 148 L130 30 C130 18 125 10 120 10 Z" style="fill:var(--sil-fill,#10151C)"></path><path d="M120 23 L113 23 L115 28 L120 28 L125 28 L127 23 L120 23 Z" style="fill:var(--sil-fill,#10151C)"></path><path d="M120 146 L120 184"></path></svg></div></div>
+</div>
+<div style="height:1px;background:#27313D;flex:none"></div>
+<div style="display:flex;align-items:center;gap:12px;height:20px;flex:none">
+<span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:13px;color:#E6EBF0;white-space:nowrap">$3,900 · 260 XP</span>
+<span style="display:flex;align-items:center;gap:3px;flex:none"><span style="width:4px;height:14px;border-radius:1px;background:#F5B942;display:block"></span><span style="width:4px;height:14px;border-radius:1px;background:#394655;display:block"></span><span style="width:4px;height:14px;border-radius:1px;background:#394655;display:block"></span><span style="width:4px;height:14px;border-radius:1px;background:#394655;display:block"></span><span style="width:4px;height:14px;border-radius:1px;background:#394655;display:block"></span></span>
+<span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:13px;color:#A3AFBC;white-space:nowrap">1 h 05 m</span>
+<span style="margin-left:auto;display:flex;color:#7B8999"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Weather: cloudy"><path d="M6 19.5h11a4 4 0 0 0 0-8 5.6 5.6 0 0 0-11 .5A3.75 3.75 0 0 0 6 19.5z"></path></svg></span>
+</div>
+</a>
+</div>
+</div>
+<div style="flex:none;display:flex;flex-direction:column;gap:12px">
+<span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#7B8999">Flight school</span>
+<div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px">
+<a href="#" style="min-width:0;display:flex;align-items:center;gap:12px;height:64px;padding:0 16px;background:#10151C;border:1px solid #27313D;border-radius:6px;color:#E6EBF0">
+<span style="display:flex;color:#A3AFBC;flex:none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5c.9 0 1.5 1.1 1.5 2.5v3.5l8 5v2l-8-2.5V17.5l3 2v1.5l-4.5-1-4.5 1V19.5l3-2V13L2.5 15.5v-2l8-5V5c0-1.4.6-2.5 1.5-2.5z"></path></svg></span>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;align-items:center;gap:8px"><span style="min-width:0;font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Basic handling</span><span style="margin-left:auto;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:13px;color:#5BD68A;white-space:nowrap">8/8</span></div>
+<div style="height:6px;background:#27313D;border-radius:3px"><div style="height:6px;width:100%;background:#5BD68A;border-radius:3px"></div></div>
+</div>
+</a>
+<a href="#" style="min-width:0;display:flex;align-items:center;gap:12px;height:64px;padding:0 16px;background:#10151C;border:1px solid #27313D;border-radius:6px;color:#E6EBF0">
+<span style="display:flex;color:#A3AFBC;flex:none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.64 18.36A9 9 0 1 1 18.36 18.36"></path><path d="m12 12 4.5-5"></path><circle cx="12" cy="12" r="1.25"></circle></svg></span>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;align-items:center;gap:8px"><span style="min-width:0;font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Instrument rating</span><span style="margin-left:auto;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:13px;color:#A3AFBC;white-space:nowrap">3/6</span></div>
+<div style="height:6px;background:#27313D;border-radius:3px"><div style="height:6px;width:50%;background:#F5B942;border-radius:3px"></div></div>
+</div>
+</a>
+<a href="#" style="min-width:0;display:flex;align-items:center;gap:12px;height:64px;padding:0 16px;background:#10151C;border:1px solid #27313D;border-radius:6px;color:#E6EBF0">
+<span style="display:flex;color:#A3AFBC;flex:none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19.27 8.04 L17.28 7.28 L6.32 12.16 L3.73 10.03 L2.36 10.64 L3.12 13.59 L4.34 16.33 L8.91 14.29 L9.37 19.01 L11.66 18 L13.48 12.26 L18.5 10.02z"></path><path d="M2.5 21.5h19"></path></svg></span>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;align-items:center;gap:8px"><span style="min-width:0;font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Jet transition</span><span style="margin-left:auto;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:13px;color:#A3AFBC;white-space:nowrap">0/5</span></div>
+<div style="height:6px;background:#27313D;border-radius:3px"><div style="height:6px;width:0%;background:#F5B942;border-radius:3px"></div></div>
+</div>
+</a>
+<a href="#" style="min-width:0;display:flex;align-items:center;gap:12px;height:64px;padding:0 16px;background:#10151C;border:1px solid #27313D;border-radius:6px;color:#E6EBF0">
+<span style="display:flex;color:#A3AFBC;flex:none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5.5" r="2.75"></circle><path d="M12 8.25V21.5"></path><path d="M6 12.5H3a9 9 0 0 0 18 0h-3"></path><path d="M8.5 10h7"></path></svg></span>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;align-items:center;gap:8px"><span style="min-width:0;font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Carrier ops</span><span style="margin-left:auto;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:13px;color:#A3AFBC;white-space:nowrap">0/4</span></div>
+<div style="height:6px;background:#27313D;border-radius:3px"><div style="height:6px;width:0%;background:#F5B942;border-radius:3px"></div></div>
+</div>
+</a>
+</div>
+</div>
+</div>
+<section style="min-height:0;background:#10151C;border:1px solid #27313D;border-radius:6px;padding:20px;display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;align-items:center;gap:12px"><h2 style="margin:0;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:18px;letter-spacing:0.06em;text-transform:uppercase">Meridian 417</h2><span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border-radius:999px;white-space:nowrap;background:#1E2733;color:#A3AFBC">Scheduled</span></div>
+<p style="margin:0;font-size:14px;line-height:1.5;color:#A3AFBC">Operate Meridian 417 from Seattle to San Francisco with 142 passengers. Overcast at departure with rain moving in by 16Z; expect the ILS 28R at San Francisco.</p>
+<div style="display:flex;flex-direction:column;gap:8px">
+<span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#7B8999">Objectives</span>
+<div style="display:flex;flex-direction:column">
+<div style="display:flex;align-items:center;gap:12px;min-height:48px;border-bottom:1px solid #27313D;font-size:14px"><span style="display:flex;color:#5BD68A;flex:none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Done"><path d="m4.5 12.5 5 5 10-10"></path></svg></span><span style="min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Depart within <span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:13px">10</span> min of schedule</span></div>
+<div style="display:flex;align-items:center;gap:12px;min-height:48px;border-bottom:1px solid #27313D;font-size:14px"><span style="display:flex;color:#7B8999;flex:none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Pending"><path d="m4.5 12.5 5 5 10-10"></path></svg></span><span style="min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Cruise at <span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:13px">FL350</span></span></div>
+<div style="display:flex;align-items:center;gap:12px;min-height:48px;border-bottom:1px solid #27313D;font-size:14px"><span style="display:flex;color:#7B8999;flex:none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Pending"><path d="m4.5 12.5 5 5 10-10"></path></svg></span><span style="min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Touch down inside the TDZ</span></div>
+<div style="display:flex;align-items:center;gap:12px;min-height:48px;font-size:14px"><span style="display:flex;color:#7B8999;flex:none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Pending"><path d="m4.5 12.5 5 5 10-10"></path></svg></span><span style="min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Landing rate under <span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:13px">300</span> fpm</span></div>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px">
+<span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#7B8999">Rewards</span>
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px">
+<div style="min-width:0;display:flex;flex-direction:column;gap:4px"><span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#7B8999;white-space:nowrap">Payout</span><span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:22px;line-height:1.1;color:#E6EBF0;white-space:nowrap">$12,400</span></div>
+<div style="min-width:0;display:flex;flex-direction:column;gap:4px"><span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#7B8999;white-space:nowrap">Experience</span><span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:22px;line-height:1.1;color:#E6EBF0;white-space:nowrap">860<span style="font-size:13px;color:#7B8999;margin-left:4px">XP</span></span></div>
+<div style="min-width:0;display:flex;flex-direction:column;gap:4px"><span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#7B8999;white-space:nowrap">Seniority</span><span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:22px;line-height:1.1;color:#E6EBF0;white-space:nowrap">+1<span style="font-size:13px;color:#7B8999;margin-left:4px">Meridian</span></span></div>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px">
+<span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#7B8999">Requirements</span>
+<div style="display:flex;align-items:center;gap:12px;min-height:48px;font-size:14px"><span style="display:flex;color:#5BD68A;flex:none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4.5 12.5 5 5 10-10"></path></svg></span><span style="min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">737-800 type rating</span><span style="margin-left:auto;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border-radius:999px;white-space:nowrap;background:rgba(91,214,138,0.14);color:#5BD68A">Held</span></div>
+</div>
+<div style="margin-top:auto;display:flex;flex-direction:column;gap:12px">
+<div style="height:1px;background:#27313D"></div>
+<div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#7B8999">
+<span style="display:flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 19.5h11a4 4 0 0 0 0-8 5.6 5.6 0 0 0-11 .5A3.75 3.75 0 0 0 6 19.5z"></path></svg></span><span>Weather</span><span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;color:#57C7DB">Live</span>
+<span style="width:1px;height:14px;background:#27313D;display:block"></span>
+<span style="display:flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"></circle><path d="M12 7v5l3 2"></path></svg></span><span>Time</span><span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;color:#57C7DB">14:50Z</span>
+</div>
+</div>
+</section>
+</div>
+</main>
+<footer style="height:56px;flex:none;display:flex;align-items:center;gap:28px;padding:0 40px;border-top:1px solid #27313D;background:#0A0D12">
+<div style="display:flex;align-items:center;gap:10px;font-size:13px;color:#A3AFBC"><kbd style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:12px;min-width:26px;height:24px;padding:0 7px;display:inline-flex;align-items:center;justify-content:center;background:#161D26;border:1px solid #394655;border-bottom-width:2px;border-radius:3px;color:#E6EBF0">Esc</kbd>Back</div>
+<div style="display:flex;align-items:center;gap:10px;font-size:13px;color:#A3AFBC"><kbd style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:12px;min-width:26px;height:24px;padding:0 7px;display:inline-flex;align-items:center;justify-content:center;background:#161D26;border:1px solid #394655;border-bottom-width:2px;border-radius:3px;color:#E6EBF0">Tab</kbd>Next panel</div>
+<div style="margin-left:auto;display:flex;align-items:center;gap:28px">
+<div style="display:flex;align-items:center;gap:10px;font-size:13px;color:#A3AFBC"><kbd style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:12px;min-width:26px;height:24px;padding:0 7px;display:inline-flex;align-items:center;justify-content:center;background:#161D26;border:1px solid #394655;border-bottom-width:2px;border-radius:3px;color:#E6EBF0">Enter</kbd>Start</div>
+<button type="button" style="height:44px;padding:0 22px;background:transparent;color:#E6EBF0;border:1px solid #394655;border-radius:4px;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:16px;letter-spacing:0.08em;text-transform:uppercase;display:inline-flex;align-items:center;gap:10px;white-space:nowrap">Briefing</button>
+<button type="button" style="height:44px;padding:0 22px;background:#F5B942;color:#1A1200;border:0;border-radius:4px;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:16px;letter-spacing:0.08em;text-transform:uppercase;display:inline-flex;align-items:center;gap:10px;white-space:nowrap">Start mission <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.5 4.5 19.5 12 7.5 19.5z"></path></svg></button>
+</div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1600,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

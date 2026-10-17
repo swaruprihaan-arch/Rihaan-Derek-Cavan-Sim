@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CONTRAIL — Hangar</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+body{margin:0;background:#0A0D12}
+x-dc *{box-sizing:border-box}
+a{color:#E6EBF0;text-decoration:none}a:hover{color:#F5B942}
+button{font:inherit;color:inherit;cursor:pointer}
+input{font:inherit;color:inherit}
+input[type=range]{-webkit-appearance:none;appearance:none;height:4px;border-radius:2px;margin:0;padding:0;border:0;outline:none;background:#394655;flex:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:#E6EBF0;border:2px solid #0A0D12;box-shadow:0 0 0 1px #394655}
+input[type=checkbox],input[type=radio]{-webkit-appearance:none;appearance:none;width:18px;height:18px;margin:0;border:1px solid #394655;background:#161D26;position:relative;flex:none}
+input[type=checkbox]{border-radius:3px}
+input[type=radio]{border-radius:50%}
+input[type=checkbox]:checked,input[type=radio]:checked{background:#F5B942;border-color:#F5B942}
+input[type=checkbox]:checked::after{content:"";position:absolute;left:5px;top:1px;width:5px;height:10px;border:solid #1A1200;border-width:0 2px 2px 0;transform:rotate(45deg)}
+input[type=radio]:checked::after{content:"";position:absolute;left:4px;top:4px;width:8px;height:8px;border-radius:50%;background:#1A1200}
+:focus-visible{outline:2px solid #F5B942;outline-offset:2px}
+</style>
+</helmet>
+<div style="width:1600px;height:900px;background:#0A0D12;color:#E6EBF0;font-family:Barlow,'Helvetica Neue',Arial,sans-serif;font-size:15px;line-height:1.4;display:flex;flex-direction:column;overflow:hidden;position:relative">
+<header style="height:64px;flex:none;display:flex;align-items:center;gap:48px;padding:0 40px;border-bottom:1px solid #27313D;background:#0A0D12">
+<a href="#" aria-label="CONTRAIL home" style="display:flex;align-items:center;gap:12px;color:#E6EBF0">
+@@MARK@@
+<span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:700;font-size:26px;letter-spacing:0.2em;line-height:1">CONTRAIL</span>
+<span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:11px;color:#7B8999;letter-spacing:0.04em;margin-top:3px">v1.4.2</span>
+</a>
+<nav aria-label="Primary" style="display:flex;align-items:stretch;gap:36px;height:64px">
+<a href="#" style="display:flex;align-items:center;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:18px;letter-spacing:0.1em;text-transform:uppercase;color:#A3AFBC;border-top:2px solid transparent;border-bottom:2px solid transparent">Home</a>
+<a href="#" aria-current="page" style="display:flex;align-items:center;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:18px;letter-spacing:0.1em;text-transform:uppercase;color:#F5B942;border-top:2px solid transparent;border-bottom:2px solid #F5B942">Hangar</a>
+<a href="#" style="display:flex;align-items:center;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:18px;letter-spacing:0.1em;text-transform:uppercase;color:#A3AFBC;border-top:2px solid transparent;border-bottom:2px solid transparent">Fly</a>
+<a href="#" style="display:flex;align-items:center;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:18px;letter-spacing:0.1em;text-transform:uppercase;color:#A3AFBC;border-top:2px solid transparent;border-bottom:2px solid transparent">Missions</a>
+<a href="#" style="display:flex;align-items:center;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:18px;letter-spacing:0.1em;text-transform:uppercase;color:#A3AFBC;border-top:2px solid transparent;border-bottom:2px solid transparent">Settings</a>
+</nav>
+<div style="margin-left:auto;display:flex;align-items:center;gap:28px">
+<div style="display:flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:0.08em;color:#5BD68A"><span style="width:8px;height:8px;border-radius:50%;background:#5BD68A;display:block"></span>ONLINE</div>
+<div style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:14px;color:#A3AFBC">14:32Z</div>
+<a href="#" style="display:flex;align-items:center;gap:12px;color:#E6EBF0">
+<span style="width:34px;height:34px;border-radius:50%;background:#1E2733;border:1px solid #394655;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.06em">ML</span>
+<span style="display:flex;flex-direction:column;line-height:1.2"><span style="font-size:14px;font-weight:500">Capt. Mara Lindqvist</span><span style="font-size:12px;color:#7B8999">1,284 h logged</span></span>
+</a>
+</div>
+</header>
+<main style="flex:1;min-height:0;display:flex;flex-direction:column;padding:24px 40px 24px;gap:20px;overflow:hidden">
+<div style="display:flex;align-items:flex-end;gap:24px;flex:none">
+<div style="display:flex;flex-direction:column;gap:4px">
+<span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#7B8999">Hangar</span>
+<h1 style="margin:0;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:36px;letter-spacing:0.04em;text-transform:uppercase;line-height:1">Aircraft</h1>
+</div>
+<div style="margin-left:auto;display:flex;align-items:center;gap:12px">
+<div style="height:40px;background:#161D26;border:1px solid #27313D;border-radius:4px;padding:0 12px;display:flex;align-items:center;gap:10px;color:#7B8999">@@ICON:search:18@@<input type="text" placeholder="Search 43 aircraft" aria-label="Search aircraft" style="background:none;border:0;outline:none;color:#E6EBF0;font-size:14px;width:220px;padding:0"></div>
+<button type="button" aria-label="Sort" style="height:40px;padding:0 12px 0 14px;background:#161D26;border:1px solid #27313D;border-radius:4px;color:#E6EBF0;display:inline-flex;align-items:center;justify-content:space-between;gap:12px;min-width:160px;font-size:14px">Sort: Category <span style="color:#7B8999;display:flex">@@ICON:chevron-down:16@@</span></button>
+<button type="button" aria-label="Grid view" style="width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;background:#161D26;border:1px solid #F5B942;border-radius:4px;color:#F5B942;padding:0">@@ICON:grid@@</button>
+<button type="button" aria-label="List view" style="width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;background:#161D26;border:1px solid #27313D;border-radius:4px;color:#A3AFBC;padding:0">@@ICON:list@@</button>
+</div>
+</div>
+<section style="flex:1;min-height:0;background:#10151C;border:1px solid #27313D;border-radius:6px;padding:20px;display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;align-items:center;gap:12px"><h2 style="margin:0;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:18px;letter-spacing:0.06em;text-transform:uppercase">Panel title</h2><span style="margin-left:auto;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border-radius:999px;background:rgba(245,185,66,0.14);color:#F5B942">Selected</span></div>
+<div style="display:flex;align-items:center;gap:16px"><label for="rs" style="width:180px;font-size:14px;color:#E6EBF0">Render scale</label><input id="rs" type="range" min="50" max="200" value="120" style="width:260px;background:linear-gradient(to right,#F5B942 0 47%,#394655 47% 100%)"><span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:14px;color:#57C7DB;min-width:56px;text-align:right">120 %</span></div>
+<div style="display:flex;align-items:center;gap:16px"><span style="width:180px;font-size:14px">Volumetric clouds</span><button type="button" role="switch" aria-checked="true" aria-label="Volumetric clouds" style="width:44px;height:24px;border-radius:12px;background:#F5B942;border:0;position:relative;padding:0;flex:none"><span style="position:absolute;top:3px;left:23px;width:18px;height:18px;border-radius:50%;background:#1A1200;display:block"></span></button><button type="button" role="switch" aria-checked="false" aria-label="Motion blur" style="width:44px;height:24px;border-radius:12px;background:#394655;border:0;position:relative;padding:0;flex:none"><span style="position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#A3AFBC;display:block"></span></button></div>
+<div style="display:inline-flex;background:#161D26;border:1px solid #27313D;border-radius:4px;padding:3px;gap:2px;align-self:flex-start"><button type="button" aria-pressed="false" style="height:32px;padding:0 14px;border:0;border-radius:3px;background:transparent;color:#A3AFBC;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.06em;text-transform:uppercase">Minimum</button><button type="button" aria-pressed="true" style="height:32px;padding:0 14px;border:0;border-radius:3px;background:#1E2733;color:#F5B942;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.06em;text-transform:uppercase">Planned</button><button type="button" aria-pressed="false" style="height:32px;padding:0 14px;border:0;border-radius:3px;background:transparent;color:#A3AFBC;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.06em;text-transform:uppercase">Full</button></div>
+<label style="display:flex;align-items:center;gap:12px;height:36px;font-size:14px"><input type="checkbox" checked> Show AI traffic</label>
+<div style="display:flex;gap:24px;align-items:center"><div style="color:#57C7DB;--sil-fill:#10151C;width:160px;height:133px">@@SIL:narrowbody@@</div><div style="--c-fuselage:#F2F4F6;--c-belly:#10264A;--c-cheat:#F5B942;--c-tail:#10264A;--c-engine:#F2F4F6;--c-logo:#F5B942;--c-wing:#C9D0D8;width:360px;height:124px">@@PROFILE:b737@@</div><div style="--c-upper:#7C838A;--c-lower:#9AA1A8;--c-radome:#5E6469;--c-fin:#7C838A;--c-stripe:#5E6469;--c-canopy:#8A7A3E;width:360px;height:124px">@@PROFILE:f16@@</div></div>
+</section>
+</main>
+<footer style="height:56px;flex:none;display:flex;align-items:center;gap:28px;padding:0 40px;border-top:1px solid #27313D;background:#0A0D12">
+<div style="display:flex;align-items:center;gap:10px;font-size:13px;color:#A3AFBC"><kbd style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:12px;min-width:26px;height:24px;padding:0 7px;display:inline-flex;align-items:center;justify-content:center;background:#161D26;border:1px solid #394655;border-bottom-width:2px;border-radius:3px;color:#E6EBF0">Esc</kbd>Back</div>
+<div style="display:flex;align-items:center;gap:10px;font-size:13px;color:#A3AFBC"><kbd style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:12px;min-width:26px;height:24px;padding:0 7px;display:inline-flex;align-items:center;justify-content:center;background:#161D26;border:1px solid #394655;border-bottom-width:2px;border-radius:3px;color:#E6EBF0">Tab</kbd>Next panel</div>
+<div style="margin-left:auto;display:flex;align-items:center;gap:28px">
+<div style="display:flex;align-items:center;gap:10px;font-size:13px;color:#A3AFBC"><kbd style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:12px;min-width:26px;height:24px;padding:0 7px;display:inline-flex;align-items:center;justify-content:center;background:#161D26;border:1px solid #394655;border-bottom-width:2px;border-radius:3px;color:#E6EBF0">Enter</kbd>Select</div>
+<button type="button" style="height:44px;padding:0 22px;background:transparent;color:#E6EBF0;border:1px solid #394655;border-radius:4px;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:16px;letter-spacing:0.08em;text-transform:uppercase;display:inline-flex;align-items:center;gap:10px;white-space:nowrap">Secondary</button>
+<button type="button" style="height:44px;padding:0 22px;background:#F5B942;color:#1A1200;border:0;border-radius:4px;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:16px;letter-spacing:0.08em;text-transform:uppercase;display:inline-flex;align-items:center;gap:10px;white-space:nowrap">Configure Boeing 737-800 @@ICON:arrow-right:18@@</button>
+</div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1600,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "contrail-simulator",
+  "private": true,
+  "scripts": {
+    "test": "node --test tests/*.test.cjs"
+  },
+  "devDependencies": {
+    "axe-core": "4.14.0",
+    "jsdom": "26.1.0",
+    "three": "0.160.0"
+  }
+}

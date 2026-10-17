@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CONTRAIL — In flight</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+body{margin:0;background:#0A0D12}
+x-dc *{box-sizing:border-box}
+a{color:#E6EBF0;text-decoration:none}a:hover{color:#F5B942}
+button{font:inherit;color:inherit;cursor:pointer}
+input{font:inherit;color:inherit}
+input[type=range]{-webkit-appearance:none;appearance:none;height:4px;border-radius:2px;margin:0;padding:0;border:0;outline:none;background:#394655;flex:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:#E6EBF0;border:2px solid #0A0D12;box-shadow:0 0 0 1px #394655}
+input[type=checkbox],input[type=radio]{-webkit-appearance:none;appearance:none;width:18px;height:18px;margin:0;border:1px solid #394655;background:#161D26;position:relative;flex:none}
+input[type=checkbox]{border-radius:3px}
+input[type=radio]{border-radius:50%}
+input[type=checkbox]:checked,input[type=radio]:checked{background:#F5B942;border-color:#F5B942}
+input[type=checkbox]:checked::after{content:"";position:absolute;left:5px;top:1px;width:5px;height:10px;border:solid #1A1200;border-width:0 2px 2px 0;transform:rotate(45deg)}
+input[type=radio]:checked::after{content:"";position:absolute;left:4px;top:4px;width:8px;height:8px;border-radius:50%;background:#1A1200}
+:focus-visible{outline:2px solid #F5B942;outline-offset:2px}
+</style>
+</helmet>
+<div style="width:1600px;height:900px;background:#0B1A33;color:#E6EBF0;font-family:Barlow,'Helvetica Neue',Arial,sans-serif;font-size:15px;line-height:1.4;display:flex;flex-direction:column;overflow:hidden;position:relative">
+<svg aria-hidden="true" viewBox="0 0 1600 900" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;display:block">
+<defs>
+<linearGradient id="sky" gradientUnits="userSpaceOnUse" x1="0" y1="-120" x2="0" y2="520"><stop offset="0" stop-color="#0B1A33"></stop><stop offset="1" stop-color="#5C7FA6"></stop></linearGradient>
+</defs>
+<g transform="rotate(-8 800 450)">
+<rect x="-400" y="-400" width="2400" height="920" fill="url(#sky)"></rect>
+<rect x="-400" y="520" width="2400" height="900" fill="#1C2416"></rect>
+<polygon points="-400,552 -180,536 40,546 260,530 500,544 700,532 940,548 1180,534 1400,546 1640,530 1860,542 2000,538 2000,612 -400,612" fill="#0A0D12" opacity="0.28"></polygon>
+<polygon points="-400,646 -120,616 160,638 420,608 660,634 900,612 1140,640 1380,616 1620,636 2000,610 2000,728 -400,728" fill="#0A0D12" opacity="0.44"></polygon>
+<polygon points="-400,796 -60,752 240,782 560,744 860,778 1160,748 1460,776 2000,746 2000,1420 -400,1420" fill="#0A0D12" opacity="0.6"></polygon>
+<rect x="-400" y="500" width="2400" height="40" fill="#B9C7D6" opacity="0.18"></rect>
+</g>
+</svg>
+<svg aria-hidden="true" viewBox="0 0 1600 900" preserveAspectRatio="none" fill="none" style="position:absolute;inset:0;width:100%;height:100%;display:block">
+<path d="M 56 -20 Q 136 450 56 920" stroke="#0A0D12" stroke-width="10" stroke-opacity="0.4" stroke-linecap="round"></path>
+<path d="M 1544 -20 Q 1464 450 1544 920" stroke="#0A0D12" stroke-width="10" stroke-opacity="0.4" stroke-linecap="round"></path>
+</svg>
+<svg role="img" aria-label="Head-up display: heading 268, 420 knots, altitude 12,500 feet, NAV and ILS modes" viewBox="0 0 760 560" fill="none" stroke="#7DF59A" stroke-width="2" style="position:absolute;left:420px;top:170px;width:760px;height:560px;display:block;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:14px">
+<g>
+<line x1="170" y1="44" x2="590" y2="44"></line>
+<line x1="184" y1="30" x2="184" y2="44"></line>
+<line x1="219" y1="37" x2="219" y2="44"></line>
+<line x1="254" y1="30" x2="254" y2="44"></line>
+<line x1="289" y1="37" x2="289" y2="44"></line>
+<line x1="324" y1="30" x2="324" y2="44"></line>
+<line x1="359" y1="37" x2="359" y2="44"></line>
+<line x1="394" y1="30" x2="394" y2="44"></line>
+<line x1="429" y1="37" x2="429" y2="44"></line>
+<line x1="464" y1="30" x2="464" y2="44"></line>
+<line x1="499" y1="37" x2="499" y2="44"></line>
+<line x1="534" y1="30" x2="534" y2="44"></line>
+<line x1="569" y1="37" x2="569" y2="44"></line>
+<polygon points="380,48 374,58 386,58" fill="#7DF59A" stroke="none"></polygon>
+<rect x="356" y="62" width="48" height="24"></rect>
+<rect x="40" y="266" width="72" height="28"></rect>
+<polygon points="112,274 126,280 112,286" fill="#7DF59A" stroke="none"></polygon>
+<line x1="128" y1="160" x2="128" y2="400"></line>
+<line x1="128" y1="400" x2="135" y2="400"></line>
+<line x1="128" y1="388" x2="135" y2="388"></line>
+<line x1="128" y1="376" x2="135" y2="376"></line>
+<line x1="128" y1="364" x2="142" y2="364"></line>
+<line x1="128" y1="352" x2="135" y2="352"></line>
+<line x1="128" y1="340" x2="135" y2="340"></line>
+<line x1="128" y1="328" x2="135" y2="328"></line>
+<line x1="128" y1="316" x2="135" y2="316"></line>
+<line x1="128" y1="304" x2="142" y2="304"></line>
+<line x1="128" y1="292" x2="135" y2="292"></line>
+<line x1="128" y1="280" x2="135" y2="280"></line>
+<line x1="128" y1="268" x2="135" y2="268"></line>
+<line x1="128" y1="256" x2="135" y2="256"></line>
+<line x1="128" y1="244" x2="142" y2="244"></line>
+<line x1="128" y1="232" x2="135" y2="232"></line>
+<line x1="128" y1="220" x2="135" y2="220"></line>
+<line x1="128" y1="208" x2="135" y2="208"></line>
+<line x1="128" y1="196" x2="135" y2="196"></line>
+<line x1="128" y1="184" x2="142" y2="184"></line>
+<line x1="128" y1="172" x2="135" y2="172"></line>
+<line x1="128" y1="160" x2="135" y2="160"></line>
+<line x1="632" y1="160" x2="632" y2="400"></line>
+<line x1="618" y1="400" x2="632" y2="400"></line>
+<line x1="625" y1="388" x2="632" y2="388"></line>
+<line x1="625" y1="376" x2="632" y2="376"></line>
+<line x1="625" y1="364" x2="632" y2="364"></line>
+<line x1="625" y1="352" x2="632" y2="352"></line>
+<line x1="618" y1="340" x2="632" y2="340"></line>
+<line x1="625" y1="328" x2="632" y2="328"></line>
+<line x1="625" y1="316" x2="632" y2="316"></line>
+<line x1="625" y1="304" x2="632" y2="304"></line>
+<line x1="625" y1="292" x2="632" y2="292"></line>
+<line x1="618" y1="280" x2="632" y2="280"></line>
+<line x1="625" y1="268" x2="632" y2="268"></line>
+<line x1="625" y1="256" x2="632" y2="256"></line>
+<line x1="625" y1="244" x2="632" y2="244"></line>
+<line x1="625" y1="232" x2="632" y2="232"></line>
+<line x1="618" y1="220" x2="632" y2="220"></line>
+<line x1="625" y1="208" x2="632" y2="208"></line>
+<line x1="625" y1="196" x2="632" y2="196"></line>
+<line x1="625" y1="184" x2="632" y2="184"></line>
+<line x1="625" y1="172" x2="632" y2="172"></line>
+<line x1="618" y1="160" x2="632" y2="160"></line>
+<polygon points="648,274 634,280 648,286" fill="#7DF59A" stroke="none"></polygon>
+<rect x="648" y="266" width="72" height="28"></rect>
+<circle cx="380" cy="312" r="7"></circle>
+<line x1="387" y1="312" x2="405" y2="312"></line>
+<line x1="373" y1="312" x2="355" y2="312"></line>
+<line x1="380" y1="305" x2="380" y2="295"></line>
+<path d="M 251 503.4 A 258 258 0 0 0 509 503.4"></path>
+<line x1="251.0" y1="503.4" x2="245.0" y2="513.8"></line>
+<line x1="291.8" y1="522.4" x2="289.0" y2="530.0"></line>
+<line x1="335.2" y1="534.1" x2="333.8" y2="542.0"></line>
+<line x1="380.0" y1="538.0" x2="380.0" y2="550.0"></line>
+<line x1="424.8" y1="534.1" x2="426.2" y2="542.0"></line>
+<line x1="468.2" y1="522.4" x2="471.0" y2="530.0"></line>
+<line x1="509.0" y1="503.4" x2="515.0" y2="513.8"></line>
+<polygon points="380,532 374,522 386,522" fill="#7DF59A" stroke="none" transform="rotate(-8 380 280)"></polygon>
+</g>
+<g fill="#7DF59A" stroke="none">
+<text x="184" y="25" text-anchor="middle">24</text>
+<text x="254" y="25" text-anchor="middle">25</text>
+<text x="324" y="25" text-anchor="middle">26</text>
+<text x="394" y="25" text-anchor="middle">27</text>
+<text x="464" y="25" text-anchor="middle">28</text>
+<text x="534" y="25" text-anchor="middle">29</text>
+<text x="380" y="79" text-anchor="middle">268</text>
+<text x="720" y="25" text-anchor="end">14:52:08Z</text>
+<text x="76" y="285" text-anchor="middle">420</text>
+<text x="150" y="369">350</text>
+<text x="150" y="309">400</text>
+<text x="150" y="249">450</text>
+<text x="150" y="189">500</text>
+<text x="40" y="428">M 0.72</text>
+<text x="40" y="450">G 1.2</text>
+<text x="610" y="405" text-anchor="end">11,500</text>
+<text x="610" y="345" text-anchor="end">12,000</text>
+<text x="610" y="225" text-anchor="end">13,000</text>
+<text x="610" y="165" text-anchor="end">13,500</text>
+<text x="684" y="285" text-anchor="middle">12,500</text>
+<text x="720" y="428" text-anchor="end">R 11,340</text>
+<text x="40" y="526">NAV</text>
+<text x="40" y="548">ILS</text>
+<text x="720" y="548" text-anchor="end">WPT 03 · 41 nm</text>
+</g>
+<g transform="rotate(-8 380 280)">
+<line x1="240" y1="350" x2="356" y2="350"></line>
+<line x1="404" y1="350" x2="520" y2="350"></line>
+<line x1="356" y1="290" x2="276" y2="290"></line>
+<line x1="404" y1="290" x2="484" y2="290"></line>
+<line x1="276" y1="290" x2="276" y2="298"></line>
+<line x1="484" y1="290" x2="484" y2="298"></line>
+<line x1="356" y1="230" x2="276" y2="230"></line>
+<line x1="404" y1="230" x2="484" y2="230"></line>
+<line x1="276" y1="230" x2="276" y2="238"></line>
+<line x1="484" y1="230" x2="484" y2="238"></line>
+<line x1="356" y1="410" x2="276" y2="410" stroke-dasharray="8 6"></line>
+<line x1="404" y1="410" x2="484" y2="410" stroke-dasharray="8 6"></line>
+<line x1="276" y1="410" x2="276" y2="402"></line>
+<line x1="484" y1="410" x2="484" y2="402"></line>
+<line x1="356" y1="470" x2="276" y2="470" stroke-dasharray="8 6"></line>
+<line x1="404" y1="470" x2="484" y2="470" stroke-dasharray="8 6"></line>
+<line x1="276" y1="470" x2="276" y2="462"></line>
+<line x1="484" y1="470" x2="484" y2="462"></line>
+<g fill="#7DF59A" stroke="none">
+<text x="266" y="295" text-anchor="end">5</text>
+<text x="494" y="295">5</text>
+<text x="266" y="235" text-anchor="end">10</text>
+<text x="494" y="235">10</text>
+<text x="266" y="415" text-anchor="end">-5</text>
+<text x="494" y="415">-5</text>
+<text x="266" y="475" text-anchor="end">-10</text>
+<text x="494" y="475">-10</text>
+</g>
+</g>
+</svg>
+<nav aria-label="Flight tools" style="position:absolute;top:16px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:4px;padding:6px;background:rgba(10,13,18,0.88);border:1px solid #27313D;border-radius:999px">
+<button type="button" aria-label="Camera" style="width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:0;border-radius:4px;color:#A3AFBC;padding:0;flex:none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.5 18.5a2 2 0 0 1-2 2h-15a2 2 0 0 1-2-2V8.5a2 2 0 0 1 2-2h3l1.75-2.5h5.5l1.75 2.5h3a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="3.5"></circle></svg></button>
+<button type="button" aria-label="Map" style="width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:0;border-radius:4px;color:#A3AFBC;padding:0;flex:none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6.5 9 3.5l6 3 6.5-3v14L15 20.5l-6-3-6.5 3z"></path><path d="M9 3.5v14"></path><path d="M15 6.5v14"></path></svg></button>
+<button type="button" aria-label="ATC" style="width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:0;border-radius:4px;color:#A3AFBC;padding:0;flex:none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.5 14.5V11a6.5 6.5 0 0 1 13 0v3.5"></path><rect x="3.5" y="14.5" width="4" height="5.5" rx="1.5"></rect><rect x="16.5" y="14.5" width="4" height="5.5" rx="1.5"></rect><path d="M18.5 20v.5a1.5 1.5 0 0 1-1.5 1.5h-4"></path></svg></button>
+<button type="button" aria-label="Checklist" style="width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:0;border-radius:4px;color:#A3AFBC;padding:0;flex:none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 4.5h2a1.5 1.5 0 0 1 1.5 1.5v14a1.5 1.5 0 0 1-1.5 1.5H6A1.5 1.5 0 0 1 4.5 20V6A1.5 1.5 0 0 1 6 4.5h2"></path><rect x="8" y="2.5" width="8" height="4" rx="1"></rect><path d="m8.5 12.5 2 2 4.5-4.5"></path><path d="M8.5 17h7"></path></svg></button>
+<button type="button" aria-label="Weather" style="width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:0;border-radius:4px;color:#A3AFBC;padding:0;flex:none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 19.5h11a4 4 0 0 0 0-8 5.6 5.6 0 0 0-11 .5A3.75 3.75 0 0 0 6 19.5z"></path></svg></button>
+<button type="button" aria-label="Fuel" style="width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:0;border-radius:4px;color:#A3AFBC;padding:0;flex:none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 21.5h12"></path><path d="M4 21.5V5a2 2 0 0 1 2-2h5a2 2 0 0 1 2 2v16.5"></path><path d="M6.5 10V6.5h4V10"></path><path d="M13 11.5h2.5a1.5 1.5 0 0 1 1.5 1.5v4a2 2 0 0 0 4 0V9.5l-2.5-3"></path></svg></button>
+<button type="button" aria-label="Failures" style="width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:0;border-radius:4px;color:#A3AFBC;padding:0;flex:none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 6.5l-3 3-3-3 3-3a5 5 0 0 0-6.4 6.4L3.9 17.1a2 2 0 0 0 2.9 2.9l7.2-7.2a5 5 0 0 0 6.5-6.3z"></path></svg></button>
+<div aria-hidden="true" style="width:1px;height:24px;background:#394655;flex:none"></div>
+<button type="button" aria-label="Replay" style="width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:0;border-radius:4px;color:#A3AFBC;padding:0;flex:none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 12A8.5 8.5 0 1 0 6 6L3.5 8.5"></path><path d="M3.5 3.5v5h5"></path><path d="M10.5 9.25v5.5l4.5-2.75z"></path></svg></button>
+<button type="button" aria-label="Multiplayer" style="width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:0;border-radius:4px;color:#A3AFBC;padding:0;flex:none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="7.5" r="3.5"></circle><path d="M2.5 20.5V19a4 4 0 0 1 4-4h5a4 4 0 0 1 4 4v1.5"></path><path d="M16 4.3a3.5 3.5 0 0 1 0 6.4"></path><path d="M18.5 15.2a4 4 0 0 1 3 3.8v1.5"></path></svg></button>
+<div aria-hidden="true" style="width:1px;height:24px;background:#394655;flex:none"></div>
+<button type="button" aria-label="Quick panel" aria-pressed="true" style="width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;background:rgba(245,185,66,0.14);border:0;border-radius:4px;color:#F5B942;padding:0;flex:none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h9"></path><path d="M18 6h3"></path><circle cx="15" cy="6" r="2.25"></circle><path d="M3 12h3"></path><path d="M12 12h9"></path><circle cx="9" cy="12" r="2.25"></circle><path d="M3 18h10"></path><path d="M19 18h2"></path><circle cx="16" cy="18" r="2.25"></circle></svg></button>
+<button type="button" aria-label="Pause" style="width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:0;border-radius:4px;color:#A3AFBC;padding:0;flex:none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5.5" y="4.5" width="4.5" height="15" rx="1"></rect><rect x="14" y="4.5" width="4.5" height="15" rx="1"></rect></svg></button>
+</nav>
+<aside aria-label="Quick panel" style="position:absolute;top:72px;right:24px;bottom:24px;width:380px;background:rgba(16,21,28,0.94);border:1px solid #27313D;border-radius:6px;padding:20px;display:flex;flex-direction:column;gap:16px;overflow:hidden">
+<div style="display:flex;align-items:center;gap:12px;flex:none">
+<h2 style="margin:0;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:18px;letter-spacing:0.06em;text-transform:uppercase">Quick panel</h2>
+<button type="button" aria-label="Close quick panel" style="margin-left:auto;width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;background:#161D26;border:1px solid #27313D;border-radius:4px;color:#A3AFBC;padding:0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 6 12 12"></path><path d="M18 6 6 18"></path></svg></button>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;flex:none">
+<span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#7B8999">Camera</span>
+<div style="display:flex;background:#161D26;border:1px solid #27313D;border-radius:4px;padding:3px;gap:2px"><button type="button" aria-pressed="false" style="flex:1;height:32px;padding:0 8px;border:0;border-radius:3px;background:transparent;color:#A3AFBC;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap">Cockpit</button><button type="button" aria-pressed="true" style="flex:1;height:32px;padding:0 8px;border:0;border-radius:3px;background:#1E2733;color:#F5B942;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap">HUD</button><button type="button" aria-pressed="false" style="flex:1;height:32px;padding:0 8px;border:0;border-radius:3px;background:transparent;color:#A3AFBC;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap">External</button><button type="button" aria-pressed="false" style="flex:1;height:32px;padding:0 8px;border:0;border-radius:3px;background:transparent;color:#A3AFBC;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap">Chase</button></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;flex:none">
+<span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#7B8999">Time</span>
+<div style="display:flex;align-items:center;gap:12px;height:24px"><span style="display:flex;color:#A3AFBC;flex:none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2.5V5"></path><path d="M12 19v2.5"></path><path d="M2.5 12H5"></path><path d="M19 12h2.5"></path><path d="m5.28 5.28 1.77 1.77"></path><path d="m16.95 16.95 1.77 1.77"></path><path d="m5.28 18.72 1.77-1.77"></path><path d="m16.95 7.05 1.77-1.77"></path></svg></span><input type="range" min="0" max="1440" value="472" aria-label="Time of day" style="flex:1;min-width:0;background:linear-gradient(to right,#F5B942 0 33%,#394655 33% 100%)"><span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:14px;color:#57C7DB;white-space:nowrap;flex:none">14:52Z · 07:52 PDT</span></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;flex:none">
+<span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#7B8999">Weather</span>
+<button type="button" aria-label="Weather source" style="height:40px;padding:0 12px 0 14px;background:#161D26;border:1px solid #27313D;border-radius:4px;color:#E6EBF0;display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;font-size:14px">Live · few clouds <span style="color:#7B8999;display:flex"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6.5 9.5 5.5 5.5 5.5-5.5"></path></svg></span></button>
+<div style="display:flex;align-items:center;gap:12px;height:24px"><span style="display:flex;color:#A3AFBC;flex:none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h9a2.25 2.25 0 1 0-2.25-2.25"></path><path d="M3 12.5h14a2.75 2.75 0 1 0-2.75-2.75"></path><path d="M3 17h7.5a2 2 0 1 1-2 2"></path></svg></span><input type="range" min="0" max="100" value="42" aria-label="Wind speed" style="flex:1;min-width:0;background:linear-gradient(to right,#F5B942 0 42%,#394655 42% 100%)"><span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:14px;color:#57C7DB;white-space:nowrap;flex:none">Wind 260° / 42 kt</span></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;flex:none">
+<span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#7B8999">Sim</span>
+<div style="display:flex;align-items:center;gap:12px;height:40px">
+<span style="font-size:15px">Rate</span>
+<div style="display:inline-flex;background:#161D26;border:1px solid #27313D;border-radius:4px;padding:3px;gap:2px;margin-left:auto"><button type="button" aria-pressed="true" style="height:32px;padding:0 14px;border:0;border-radius:3px;background:#1E2733;color:#F5B942;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap">×1</button><button type="button" aria-pressed="false" style="height:32px;padding:0 14px;border:0;border-radius:3px;background:transparent;color:#A3AFBC;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap">×2</button><button type="button" aria-pressed="false" style="height:32px;padding:0 14px;border:0;border-radius:3px;background:transparent;color:#A3AFBC;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap">×4</button><button type="button" aria-pressed="false" style="height:32px;padding:0 14px;border:0;border-radius:3px;background:transparent;color:#A3AFBC;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap">×8</button></div>
+</div>
+<div style="display:flex;flex-direction:column">
+<div style="display:flex;align-items:center;gap:16px;min-height:44px;border-bottom:1px solid #27313D"><span style="font-size:15px;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">HUD symbology</span><button type="button" role="switch" aria-checked="true" aria-label="HUD symbology" style="width:44px;height:24px;border-radius:12px;background:#F5B942;border:0;position:relative;padding:0;flex:none"><span style="position:absolute;top:3px;left:23px;background:#1A1200;width:18px;height:18px;border-radius:50%;display:block"></span></button></div>
+<div style="display:flex;align-items:center;gap:16px;min-height:44px;border-bottom:1px solid #27313D"><span style="font-size:15px;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Aircraft labels</span><button type="button" role="switch" aria-checked="false" aria-label="Aircraft labels" style="width:44px;height:24px;border-radius:12px;background:#394655;border:0;position:relative;padding:0;flex:none"><span style="position:absolute;top:3px;left:3px;background:#A3AFBC;width:18px;height:18px;border-radius:50%;display:block"></span></button></div>
+<div style="display:flex;align-items:center;gap:16px;min-height:44px;border-bottom:1px solid #27313D"><span style="font-size:15px;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Flight path guides</span><button type="button" role="switch" aria-checked="false" aria-label="Flight path guides" style="width:44px;height:24px;border-radius:12px;background:#394655;border:0;position:relative;padding:0;flex:none"><span style="position:absolute;top:3px;left:3px;background:#A3AFBC;width:18px;height:18px;border-radius:50%;display:block"></span></button></div>
+<div style="display:flex;align-items:center;gap:16px;min-height:44px;border-bottom:1px solid #27313D"><span style="font-size:15px;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">AI traffic</span><button type="button" role="switch" aria-checked="true" aria-label="AI traffic" style="width:44px;height:24px;border-radius:12px;background:#F5B942;border:0;position:relative;padding:0;flex:none"><span style="position:absolute;top:3px;left:23px;background:#1A1200;width:18px;height:18px;border-radius:50%;display:block"></span></button></div>
+<div style="display:flex;align-items:center;gap:16px;min-height:44px"><span style="font-size:15px;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Pause on focus loss</span><button type="button" role="switch" aria-checked="true" aria-label="Pause on focus loss" style="width:44px;height:24px;border-radius:12px;background:#F5B942;border:0;position:relative;padding:0;flex:none"><span style="position:absolute;top:3px;left:23px;background:#1A1200;width:18px;height:18px;border-radius:50%;display:block"></span></button></div>
+</div>
+</div>
+<div style="margin-top:auto;display:flex;flex-direction:column;gap:12px;flex:none">
+<div style="display:flex;gap:12px">
+<button type="button" style="flex:1;height:44px;padding:0 22px;border-radius:4px;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:16px;letter-spacing:0.08em;text-transform:uppercase;display:inline-flex;align-items:center;justify-content:center;gap:10px;white-space:nowrap;background:transparent;color:#E6EBF0;border:1px solid #394655"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5.5" cy="18.5" r="3"></circle><circle cx="18.5" cy="5.5" r="3"></circle><path d="M8.5 18.5h6.5a3.25 3.25 0 0 0 0-6.5h-6a3.25 3.25 0 0 1 0-6.5h6.5"></path></svg> Flight plan</button>
+<button type="button" style="flex:1;height:44px;padding:0 12px;border-radius:4px;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:16px;letter-spacing:0.08em;text-transform:uppercase;display:inline-flex;align-items:center;justify-content:center;gap:10px;white-space:nowrap;background:transparent;color:#A3AFBC;border:0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3.5h11l4.5 4.5v12a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 20V5A1.5 1.5 0 0 1 5 3.5z"></path><path d="M7.5 21.5v-7h9v7"></path><path d="M7.5 3.5v5h7"></path></svg> Save flight</button>
+</div>
+<button type="button" style="height:44px;padding:0 12px;border-radius:4px;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:16px;letter-spacing:0.08em;text-transform:uppercase;display:inline-flex;align-items:center;justify-content:center;gap:10px;white-space:nowrap;background:transparent;color:#FF6B6B;border:0">Return to main menu</button>
+</div>
+</aside>
+<div style="position:absolute;left:24px;bottom:24px;height:40px;padding:0 16px 0 18px;display:flex;align-items:center;gap:16px;background:rgba(10,13,18,0.88);border:1px solid #27313D;border-radius:999px;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:13px;color:#A3AFBC;white-space:nowrap">
+<span>F-16C · AF 91-0372 · Low-Vis Grey · R-2508 NELLIS · FL125 · 420 KCAS</span>
+<span aria-hidden="true" style="width:1px;height:16px;background:#394655;display:block"></span>
+<span style="display:flex;align-items:center;gap:8px;color:#5BD68A;font-size:12px;letter-spacing:0.08em"><span style="width:8px;height:8px;border-radius:50%;background:#5BD68A;display:block"></span>REC</span>
+<span>Replay recording</span>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1600,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

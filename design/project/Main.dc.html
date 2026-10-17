@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CONTRAIL — Main menu</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+body{margin:0;background:#0A0D12}
+x-dc *{box-sizing:border-box}
+a{color:#E6EBF0;text-decoration:none}a:hover{color:#F5B942}
+button{font:inherit;color:inherit;cursor:pointer}
+input{font:inherit;color:inherit}
+input[type=range]{-webkit-appearance:none;appearance:none;height:4px;border-radius:2px;margin:0;padding:0;border:0;outline:none;background:#394655;flex:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:#E6EBF0;border:2px solid #0A0D12;box-shadow:0 0 0 1px #394655}
+input[type=checkbox],input[type=radio]{-webkit-appearance:none;appearance:none;width:18px;height:18px;margin:0;border:1px solid #394655;background:#161D26;position:relative;flex:none}
+input[type=checkbox]{border-radius:3px}
+input[type=radio]{border-radius:50%}
+input[type=checkbox]:checked,input[type=radio]:checked{background:#F5B942;border-color:#F5B942}
+input[type=checkbox]:checked::after{content:"";position:absolute;left:5px;top:1px;width:5px;height:10px;border:solid #1A1200;border-width:0 2px 2px 0;transform:rotate(45deg)}
+input[type=radio]:checked::after{content:"";position:absolute;left:4px;top:4px;width:8px;height:8px;border-radius:50%;background:#1A1200}
+:focus-visible{outline:2px solid #F5B942;outline-offset:2px}
+</style>
+</helmet>
+<div style="width:1600px;height:900px;background:#0A0D12;color:#E6EBF0;font-family:Barlow,'Helvetica Neue',Arial,sans-serif;font-size:15px;line-height:1.4;display:flex;flex-direction:column;overflow:hidden;position:relative">
+<header style="height:64px;flex:none;display:flex;align-items:center;gap:48px;padding:0 40px;border-bottom:1px solid #27313D;background:#0A0D12">
+<a href="#" aria-label="CONTRAIL home" style="display:flex;align-items:center;gap:12px;color:#E6EBF0">
+<svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="23.6 6.6 21.48 17.21 20.42 9.78 12.99 8.72" fill="currentColor" stroke-linejoin="miter"></polygon><path d="M12.64 11.2 L4.15 19.68"></path><path d="M19 17.56 L14.76 21.8"></path></svg>
+<span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:700;font-size:26px;letter-spacing:0.2em;line-height:1">CONTRAIL</span>
+<span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:11px;color:#7B8999;letter-spacing:0.04em;margin-top:3px">v1.4.2</span>
+</a>
+<nav aria-label="Primary" style="display:flex;align-items:stretch;gap:36px;height:64px">
+<a href="#" aria-current="page" style="display:flex;align-items:center;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:18px;letter-spacing:0.1em;text-transform:uppercase;color:#F5B942;border-top:2px solid transparent;border-bottom:2px solid #F5B942">Home</a>
+<a href="#" style="display:flex;align-items:center;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:18px;letter-spacing:0.1em;text-transform:uppercase;color:#A3AFBC;border-top:2px solid transparent;border-bottom:2px solid transparent">Hangar</a>
+<a href="#" style="display:flex;align-items:center;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:18px;letter-spacing:0.1em;text-transform:uppercase;color:#A3AFBC;border-top:2px solid transparent;border-bottom:2px solid transparent">Fly</a>
+<a href="#" style="display:flex;align-items:center;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:18px;letter-spacing:0.1em;text-transform:uppercase;color:#A3AFBC;border-top:2px solid transparent;border-bottom:2px solid transparent">Missions</a>
+<a href="#" style="display:flex;align-items:center;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:18px;letter-spacing:0.1em;text-transform:uppercase;color:#A3AFBC;border-top:2px solid transparent;border-bottom:2px solid transparent">Settings</a>
+</nav>
+<div style="margin-left:auto;display:flex;align-items:center;gap:28px">
+<div style="display:flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:0.08em;color:#5BD68A"><span style="width:8px;height:8px;border-radius:50%;background:#5BD68A;display:block"></span>ONLINE</div>
+<div style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:14px;color:#A3AFBC">14:32Z</div>
+<a href="#" style="display:flex;align-items:center;gap:12px;color:#E6EBF0">
+<span style="width:34px;height:34px;border-radius:50%;background:#1E2733;border:1px solid #394655;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.06em">ML</span>
+<span style="display:flex;flex-direction:column;line-height:1.2"><span style="font-size:14px;font-weight:500">Capt. Mara Lindqvist</span><span style="font-size:12px;color:#7B8999">1,284 h logged</span></span>
+</a>
+</div>
+</header>
+<main style="flex:1;min-height:0;display:flex;flex-direction:column;padding:24px 40px 24px;gap:20px;overflow:hidden">
+<section aria-label="Last flight" style="height:380px;flex:none;position:relative;overflow:hidden;background:#10151C;border:1px solid #27313D;border-radius:6px">
+<svg aria-hidden="true" viewBox="0 0 1518 378" width="100%" height="100%" preserveAspectRatio="none" style="position:absolute;inset:0;display:block">
+<defs>
+<linearGradient id="hero-sky" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#0B1526"></stop>
+<stop offset="1" stop-color="#2A3A5E"></stop>
+</linearGradient>
+<filter id="hero-shadow" x="-20%" y="-300%" width="140%" height="700%">
+<feGaussianBlur stdDeviation="5"></feGaussianBlur>
+</filter>
+</defs>
+<rect x="0" y="0" width="1518" height="265" fill="url(#hero-sky)"></rect>
+<g fill="none" stroke="#FFFFFF" stroke-linecap="round">
+<path d="M 560,58 C 680,50 800,54 920,46" stroke-width="1.5" stroke-opacity="0.10"></path>
+<path d="M 980,96 C 1100,88 1230,94 1370,82" stroke-width="2" stroke-opacity="0.08"></path>
+<path d="M 1060,134 C 1160,128 1260,132 1350,124" stroke-width="1.5" stroke-opacity="0.07"></path>
+<path d="M 880,166 C 960,162 1040,164 1120,158" stroke-width="1" stroke-opacity="0.08"></path>
+<path d="M 1220,44 C 1310,38 1400,42 1490,34" stroke-width="1.5" stroke-opacity="0.06"></path>
+<path d="M 300,36 C 380,31 460,34 540,28" stroke-width="1" stroke-opacity="0.07"></path>
+</g>
+<rect x="0" y="265" width="1518" height="113" fill="#0A0D12"></rect>
+<rect x="0" y="262" width="1518" height="6" fill="#F5B942" fill-opacity="0.25"></rect>
+<ellipse cx="1170" cy="267" rx="290" ry="14" fill="#0A0D12" fill-opacity="0.35" filter="url(#hero-shadow)"></ellipse>
+</svg>
+<div aria-hidden="true" style="position:absolute;left:846px;top:54px;width:640px;height:220px;--c-fuselage:#F2F4F6;--c-belly:#10264A;--c-cheat:#F5B942;--c-tail:#10264A;--c-engine:#F2F4F6;--c-logo:#F5B942;--c-wing:#C9D0D8"><svg viewBox="0 0 640 220" width="100%" height="100%" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+<path d="M 382,90 L 388,66 L 392,66 L 396,90 Z" style="fill:var(--c-wing)" stroke="#0A0D12" stroke-opacity="0.35" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"></path>
+<path d="M 436,92 C 484,89 505,85 517,72 L 564,21 C 565,20 566,20 568,20 L 602,20 C 605,20 607,22 606,24 L 597,106 L 436,106 Z" style="fill:var(--c-tail)"></path>
+<path d="M 546,82 L 568,48 L 590,82 L 578,82 L 568,66 L 558,82 Z" style="fill:var(--c-logo)"></path>
+<path d="M 436,92 C 484,89 505,85 517,72 L 564,21 C 565,20 566,20 568,20 L 602,20 C 605,20 607,22 606,24 L 597,106 L 436,106 Z" style="fill:none" stroke="#0A0D12" stroke-opacity="0.35" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"></path>
+<path d="M 196,89 L 199,82 L 206,82 L 209,89 Z" style="fill:#2B2F36"></path>
+<path d="M 398,89 L 401,83 L 407,83 L 410,89 Z" style="fill:#2B2F36"></path>
+<rect x="108" y="150" width="4" height="56" style="fill:#2B2F36"></rect>
+<rect x="100" y="152" width="4" height="18" rx="1" style="fill:#2B2F36"></rect>
+<circle cx="110" cy="206" r="6" style="fill:#2B2F36"></circle>
+<circle cx="110" cy="206" r="2" style="fill:#6B727B"></circle>
+<rect x="336" y="150" width="5" height="54" style="fill:#2B2F36"></rect>
+<circle cx="343" cy="204" r="8" style="fill:#1F2328"></circle>
+<circle cx="338" cy="204" r="8" style="fill:#2B2F36"></circle>
+<circle cx="338" cy="204" r="2.5" style="fill:#6B727B"></circle>
+<path d="M 250,146 L 372,198 L 398,202 L 372,164 L 372,146 Z" style="fill:var(--c-wing)" stroke="#0A0D12" stroke-opacity="0.35" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"></path>
+<path d="M 374,199 C 379,194 383,186 386,177 L 394,175 C 396,183 397,192 399,202 Z" style="fill:var(--c-wing)" stroke="#0A0D12" stroke-opacity="0.35" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"></path>
+<path d="M 374,199 C 379,194 383,186 386,177 L 394,175 C 396,183 397,192 399,202 Z" style="fill:#0A0D12;fill-opacity:0.12"></path>
+<path d="M 40,128 C 44,114 62,97 100,92 C 112,90 122,88 134,88 L 440,88 C 500,88 560,97 597,101 C 600,101 602,103 602,104 C 602,105 600,107 597,107 L 545,126 C 512,139 470,152 420,152 L 110,152 C 70,152 50,138 40,128 Z" style="fill:var(--c-belly)"></path>
+<path d="M 40,128 C 44,114 62,97 100,92 C 112,90 122,88 134,88 L 440,88 C 500,88 560,97 597,101 C 600,101 602,103 602,104 C 602,105 600,107 597,107 L 545,126 Z" style="fill:var(--c-fuselage)"></path>
+<path d="M 40,128 L 43,125 L 553,123 L 537,129 L 43,131 Z" style="fill:var(--c-cheat)"></path>
+<rect x="130" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="143" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="156" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="169" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="182" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="195" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="208" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="221" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="234" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="247" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="260" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="273" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="286" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="299" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="312" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="325" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="338" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="351" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="364" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="377" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="390" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="403" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="416" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="429" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="442" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="455" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="468" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="481" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<path d="M 72,113 L 76,103 L 87,99 L 90,110 Z" style="fill:#0A0D12;fill-opacity:0.7"></path>
+<path d="M 92,109 L 93,98 L 107,94 L 107,106 Z" style="fill:#0A0D12;fill-opacity:0.7"></path>
+<rect x="104" y="100" width="12" height="30" rx="2" style="fill:none;stroke:#0A0D12;stroke-opacity:0.35;stroke-width:1"></rect>
+<rect x="498" y="101" width="12" height="30" rx="2" style="fill:none;stroke:#0A0D12;stroke-opacity:0.35;stroke-width:1"></rect>
+<rect x="297" y="104" width="8" height="14" rx="1.5" style="fill:none;stroke:#0A0D12;stroke-opacity:0.35;stroke-width:1"></rect>
+<rect x="323" y="104" width="8" height="14" rx="1.5" style="fill:none;stroke:#0A0D12;stroke-opacity:0.35;stroke-width:1"></rect>
+<path d="M 40,128 C 44,114 62,97 100,92 C 112,90 122,88 134,88 L 440,88 C 500,88 560,97 597,101 C 600,101 602,103 602,104 C 602,105 600,107 597,107 L 545,126 C 512,139 470,152 420,152 L 110,152 C 70,152 50,138 40,128 Z" style="fill:none" stroke="#0A0D12" stroke-opacity="0.35" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"></path>
+<path d="M 586,24 L 592,104" style="fill:none;stroke:#0A0D12;stroke-opacity:0.2;stroke-width:1"></path>
+<path d="M 42,126 C 46,113 62,97 100,92 C 112,90 122,88 134,88 L 440,88 C 500,88 560,97 597,101 M 482,88 C 498,86 507,83 517,72 L 564,21 L 602,20 M 240,153 L 312,153" style="fill:none;stroke:#FFFFFF;stroke-opacity:0.16;stroke-width:1" stroke-linecap="round"></path>
+<path d="M 518,128 L 586,146 L 604,138 L 584,110 Z" style="fill:var(--c-fuselage)" stroke="#0A0D12" stroke-opacity="0.35" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"></path>
+<path d="M 326,160 L 346,165 L 346,177 L 326,182 Z" style="fill:#2B2F36"></path>
+<path d="M 238,152 L 312,153 C 324,154 331,161 331,169 L 331,177 C 331,184 325,189 316,190 L 240,194 C 230,194 226,187 226,179 L 226,164 C 226,156 231,152 238,152 Z" style="fill:var(--c-engine)" stroke="#0A0D12" stroke-opacity="0.35" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"></path>
+<path d="M 238,152 C 231,152 226,156 226,164 L 226,179 C 226,187 230,194 240,194 L 240,189 C 234,189 231,185 231,179 L 231,164 C 231,158 234,157 238,157 Z" style="fill:#2B2F36"></path>
+</svg></div>
+<div style="position:relative;width:760px;height:378px;padding:32px;display:flex;flex-direction:column;align-items:flex-start;gap:32px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#7B8999">Last flight · <span style="color:#F5B942">Paused</span></span>
+<h1 aria-label="KSEA to KSFO" style="margin:0;display:flex;align-items:center;gap:16px;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:56px;letter-spacing:0.04em;line-height:1"><span>KSEA</span><span style="display:flex;color:#F5B942"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12h15"></path><path d="m13 5.5 6.5 6.5-6.5 6.5"></path></svg></span><span>KSFO</span></h1>
+<span style="font-size:15px;color:#A3AFBC">Boeing 737-800 · N737CT · Meridian Air · Signature</span>
+</div>
+<div style="display:flex;align-items:flex-start;gap:40px">
+<div style="display:flex;flex-direction:column;gap:4px">
+<span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#7B8999">Position</span>
+<span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:22px;line-height:1.1;color:#E6EBF0">FL350</span>
+<span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:12px;color:#7B8999">42.9°N 122.6°W</span>
+</div>
+<div style="display:flex;flex-direction:column;gap:4px">
+<span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#7B8999">Remaining</span>
+<span style="display:flex;align-items:baseline;gap:8px;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:22px;line-height:1.1;color:#E6EBF0"><span>128<span style="font-size:13px;color:#7B8999;margin-left:4px">nm</span></span><span style="color:#7B8999">·</span><span>00:34</span></span>
+</div>
+<div style="display:flex;flex-direction:column;gap:4px">
+<span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#7B8999">Fuel on board</span>
+<span style="display:flex;align-items:baseline;gap:8px;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:22px;line-height:1.1;color:#E6EBF0"><span>9,840<span style="font-size:13px;color:#7B8999;margin-left:4px">lb</span></span><span style="color:#7B8999">·</span><span>2 h 20 m</span></span>
+</div>
+</div>
+<div style="margin-top:auto;display:flex;align-items:center;gap:12px">
+<button type="button" style="height:44px;padding:0 22px;background:#F5B942;color:#1A1200;border:0;border-radius:4px;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:16px;letter-spacing:0.08em;text-transform:uppercase;display:inline-flex;align-items:center;gap:10px;white-space:nowrap"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.5 4.5 19.5 12 7.5 19.5z"></path></svg>Resume flight</button>
+<button type="button" style="height:44px;padding:0 12px;background:transparent;color:#A3AFBC;border:0;border-radius:4px;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:16px;letter-spacing:0.08em;text-transform:uppercase;display:inline-flex;align-items:center;gap:10px;white-space:nowrap">Discard</button>
+</div>
+</div>
+</section>
+<nav aria-label="Quick actions" style="height:150px;flex:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px">
+<a href="#" style="min-width:0;background:#10151C;border:1px solid #27313D;border-radius:6px;outline:2px solid #F5B942;outline-offset:-2px;padding:20px;display:flex;align-items:stretch;gap:16px;color:#E6EBF0">
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:space-between">
+<span style="display:flex;color:#F5B942"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19.27 8.04 L17.28 7.28 L6.32 12.16 L3.73 10.03 L2.36 10.64 L3.12 13.59 L4.34 16.33 L8.91 14.29 L9.37 19.01 L11.66 18 L13.48 12.26 L18.5 10.02z"></path><path d="M2.5 21.5h19"></path></svg></span>
+<span style="display:flex;flex-direction:column;gap:4px;min-width:0">
+<span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:22px;letter-spacing:0.04em;text-transform:uppercase;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">New flight</span>
+<span style="font-size:13px;color:#A3AFBC;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Plan a route or free-fly from any airport</span>
+</span>
+</div>
+<span style="align-self:center;display:flex;color:#7B8999"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9.5 6.5 5.5 5.5-5.5 5.5"></path></svg></span>
+</a>
+<a href="#" style="min-width:0;background:#10151C;border:1px solid #27313D;border-radius:6px;padding:20px;display:flex;align-items:stretch;gap:16px;color:#E6EBF0">
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:space-between">
+<span style="display:flex;color:#F5B942"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 20.5V12.5a8.5 8.5 0 0 1 17 0v8"></path><path d="M2.5 20.5h19"></path><path d="M8.5 20.5v-6.5h7v6.5"></path><path d="M12 14v6.5"></path></svg></span>
+<span style="display:flex;flex-direction:column;gap:4px;min-width:0">
+<span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:22px;letter-spacing:0.04em;text-transform:uppercase;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Hangar</span>
+<span style="font-size:13px;color:#A3AFBC;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">43 aircraft · 128 liveries</span>
+</span>
+</div>
+<span style="align-self:center;display:flex;color:#7B8999"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9.5 6.5 5.5 5.5-5.5 5.5"></path></svg></span>
+</a>
+<a href="#" style="min-width:0;background:#10151C;border:1px solid #27313D;border-radius:6px;padding:20px;display:flex;align-items:stretch;gap:16px;color:#E6EBF0">
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:space-between">
+<span style="display:flex;color:#F5B942"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3.5h10v6a5 5 0 0 1-10 0z"></path><path d="M7 5.5H5a2 2 0 0 0 0 4h2"></path><path d="M17 5.5h2a2 2 0 0 1 0 4h-2"></path><path d="M12 14.5V18"></path><path d="M8 20.5h8l-1-2.5H9z"></path></svg></span>
+<span style="display:flex;flex-direction:column;gap:4px;min-width:0">
+<span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:22px;letter-spacing:0.04em;text-transform:uppercase;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Missions &amp; training</span>
+<span style="font-size:13px;color:#A3AFBC;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">3 new contracts · 12 available</span>
+</span>
+</div>
+<span style="align-self:center;display:flex;color:#7B8999"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9.5 6.5 5.5 5.5-5.5 5.5"></path></svg></span>
+</a>
+<a href="#" style="min-width:0;background:#10151C;border:1px solid #27313D;border-radius:6px;padding:20px;display:flex;align-items:stretch;gap:16px;color:#E6EBF0">
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:space-between">
+<span style="display:flex;color:#F5B942"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"></circle><path d="M2.5 12h19"></path><path d="M12 2.5a14.5 14.5 0 0 1 3.8 9.5 14.5 14.5 0 0 1-3.8 9.5 14.5 14.5 0 0 1-3.8-9.5A14.5 14.5 0 0 1 12 2.5z"></path></svg></span>
+<span style="display:flex;flex-direction:column;gap:4px;min-width:0">
+<span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:22px;letter-spacing:0.04em;text-transform:uppercase;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Live world</span>
+<span style="font-size:13px;color:#A3AFBC;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">1,942 pilots online · live weather &amp; traffic</span>
+</span>
+</div>
+<span style="align-self:center;display:flex;color:#7B8999"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9.5 6.5 5.5 5.5-5.5 5.5"></path></svg></span>
+</a>
+</nav>
+<div style="flex:1;min-height:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:minmax(0,1fr);gap:24px">
+<section style="min-height:0;min-width:0;background:#10151C;border:1px solid #27313D;border-radius:6px;padding:20px;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;align-items:center;gap:12px;flex:none"><h2 style="margin:0;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:18px;letter-spacing:0.06em;text-transform:uppercase;line-height:1.2">Pilot log</h2><a href="#" style="margin-left:auto;display:flex;align-items:center;gap:4px;font-size:13px;color:#A3AFBC;white-space:nowrap">View logbook <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9.5 6.5 5.5 5.5-5.5 5.5"></path></svg></a></div>
+<div style="flex:1;min-height:0;display:flex;flex-direction:column">
+<div style="flex:1;min-height:0;display:flex;align-items:center;gap:12px;font-size:13px">
+<span style="width:52px;flex:none;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;color:#7B8999;white-space:nowrap">15 OCT</span>
+<span style="width:124px;flex:none;display:flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;color:#E6EBF0;white-space:nowrap">KLAX<span style="display:flex;color:#7B8999"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12h15"></path><path d="m13 5.5 6.5 6.5-6.5 6.5"></path></svg></span>KSEA</span>
+<span style="flex:1;min-width:0;color:#A3AFBC;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">A320neo</span>
+<span style="width:68px;flex:none;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;color:#E6EBF0;white-space:nowrap">2 h 41 m</span>
+<span style="width:72px;flex:none;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;color:#E6EBF0;text-align:right;white-space:nowrap">−145 fpm</span>
+</div>
+<div style="flex:1;min-height:0;display:flex;align-items:center;gap:12px;font-size:13px;border-top:1px solid #27313D">
+<span style="width:52px;flex:none;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;color:#7B8999;white-space:nowrap">14 OCT</span>
+<span style="width:124px;flex:none;display:flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;color:#E6EBF0;white-space:nowrap">KLSV<span style="color:#7B8999">local</span></span>
+<span style="flex:1;min-width:0;color:#A3AFBC;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">F-16C</span>
+<span style="width:68px;flex:none;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;color:#E6EBF0;white-space:nowrap">1 h 12 m</span>
+<span style="width:72px;flex:none;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;color:#E6EBF0;text-align:right;white-space:nowrap">−210 fpm</span>
+</div>
+<div style="flex:1;min-height:0;display:flex;align-items:center;gap:12px;font-size:13px;border-top:1px solid #27313D">
+<span style="width:52px;flex:none;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;color:#7B8999;white-space:nowrap">12 OCT</span>
+<span style="width:124px;flex:none;display:flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;color:#E6EBF0;white-space:nowrap">EGLL<span style="display:flex;color:#7B8999"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12h15"></path><path d="m13 5.5 6.5 6.5-6.5 6.5"></path></svg></span>EHAM</span>
+<span style="flex:1;min-width:0;color:#A3AFBC;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">737-800</span>
+<span style="width:68px;flex:none;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;color:#E6EBF0;white-space:nowrap">0 h 58 m</span>
+<span style="width:72px;flex:none;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;color:#E6EBF0;text-align:right;white-space:nowrap">−98 fpm</span>
+</div>
+</div>
+</section>
+<section style="min-height:0;min-width:0;background:#10151C;border:1px solid #27313D;border-radius:6px;padding:20px;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;align-items:center;gap:12px;flex:none"><h2 style="margin:0;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:18px;letter-spacing:0.06em;text-transform:uppercase;line-height:1.2">Live weather <span style="color:#7B8999">· Favourites</span></h2></div>
+<div style="flex:1;min-height:0;display:flex;flex-direction:column">
+<div style="flex:1;min-height:0;display:flex;align-items:center;gap:12px;font-size:14px">
+<span style="display:flex;flex:none;color:#A3AFBC"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 19.5h11a4 4 0 0 0 0-8 5.6 5.6 0 0 0-11 .5A3.75 3.75 0 0 0 6 19.5z"></path></svg></span>
+<span style="width:44px;flex:none;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:14px;color:#57C7DB;white-space:nowrap">KSEA</span>
+<span style="flex:1;min-width:0;color:#E6EBF0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Seattle–Tacoma Intl</span>
+<span style="flex:none;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:13px;color:#A3AFBC;white-space:nowrap">12 °C · 220°/14 kt · OVC018</span>
+</div>
+<div style="flex:1;min-height:0;display:flex;align-items:center;gap:12px;font-size:14px;border-top:1px solid #27313D">
+<span style="display:flex;flex:none;color:#A3AFBC"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2.5V5"></path><path d="M12 19v2.5"></path><path d="M2.5 12H5"></path><path d="M19 12h2.5"></path><path d="m5.28 5.28 1.77 1.77"></path><path d="m16.95 16.95 1.77 1.77"></path><path d="m5.28 18.72 1.77-1.77"></path><path d="m16.95 7.05 1.77-1.77"></path></svg></span>
+<span style="width:44px;flex:none;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:14px;color:#57C7DB;white-space:nowrap">KSFO</span>
+<span style="flex:1;min-width:0;color:#E6EBF0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">San Francisco Intl</span>
+<span style="flex:none;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:13px;color:#A3AFBC;white-space:nowrap">17 °C · 280°/10 kt · FEW020</span>
+</div>
+<div style="flex:1;min-height:0;display:flex;align-items:center;gap:12px;font-size:14px;border-top:1px solid #27313D">
+<span style="display:flex;flex:none;color:#A3AFBC"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 19.5h11a4 4 0 0 0 0-8 5.6 5.6 0 0 0-11 .5A3.75 3.75 0 0 0 6 19.5z"></path></svg></span>
+<span style="width:44px;flex:none;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:14px;color:#57C7DB;white-space:nowrap">EGLL</span>
+<span style="flex:1;min-width:0;color:#E6EBF0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">London Heathrow</span>
+<span style="flex:none;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:13px;color:#A3AFBC;white-space:nowrap">11 °C · 240°/12 kt · BKN025</span>
+</div>
+</div>
+</section>
+<section style="min-height:0;min-width:0;background:#10151C;border:1px solid #27313D;border-radius:6px;padding:20px;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;align-items:center;gap:12px;flex:none"><h2 style="margin:0;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:18px;letter-spacing:0.06em;text-transform:uppercase;line-height:1.2">What's new <span style="color:#7B8999">· 1.4.2</span></h2></div>
+<div style="flex:1;min-height:0;display:flex;flex-direction:column">
+<div style="flex:1;min-height:0;display:flex;align-items:center;gap:12px;font-size:14px">
+<span style="width:6px;height:6px;border-radius:999px;background:#F5B942;flex:none;display:block"></span>
+<span style="flex:1;min-width:0;color:#E6EBF0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Volumetric cloud shadows and new cirrus model</span>
+</div>
+<div style="flex:1;min-height:0;display:flex;align-items:center;gap:12px;font-size:14px;border-top:1px solid #27313D">
+<span style="width:6px;height:6px;border-radius:999px;background:#F5B942;flex:none;display:block"></span>
+<span style="flex:1;min-width:0;color:#E6EBF0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">F-16C Block 50 is now study-level</span>
+</div>
+<div style="flex:1;min-height:0;display:flex;align-items:center;gap:12px;font-size:14px;border-top:1px solid #27313D">
+<span style="width:6px;height:6px;border-radius:999px;background:#F5B942;flex:none;display:block"></span>
+<span style="flex:1;min-width:0;color:#E6EBF0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Livery editor: decal layers and 8K export</span>
+</div>
+</div>
+</section>
+</div>
+</main>
+<footer style="height:56px;flex:none;display:flex;align-items:center;gap:28px;padding:0 40px;border-top:1px solid #27313D;background:#0A0D12">
+<div style="display:flex;align-items:center;gap:10px;font-size:13px;color:#A3AFBC"><kbd style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:12px;min-width:26px;height:24px;padding:0 7px;display:inline-flex;align-items:center;justify-content:center;background:#161D26;border:1px solid #394655;border-bottom-width:2px;border-radius:3px;color:#E6EBF0">Esc</kbd>Quit to desktop</div>
+<div style="display:flex;align-items:center;gap:10px;font-size:13px;color:#A3AFBC"><kbd style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:12px;min-width:26px;height:24px;padding:0 7px;display:inline-flex;align-items:center;justify-content:center;background:#161D26;border:1px solid #394655;border-bottom-width:2px;border-radius:3px;color:#E6EBF0">Tab</kbd>Next panel</div>
+<div style="margin-left:auto;display:flex;align-items:center;gap:28px">
+<div style="display:flex;align-items:center;gap:10px;font-size:13px;color:#A3AFBC"><kbd style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:12px;min-width:26px;height:24px;padding:0 7px;display:inline-flex;align-items:center;justify-content:center;background:#161D26;border:1px solid #394655;border-bottom-width:2px;border-radius:3px;color:#E6EBF0">N</kbd>New flight</div>
+<div style="display:flex;align-items:center;gap:10px;font-size:13px;color:#A3AFBC"><kbd style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:12px;min-width:26px;height:24px;padding:0 7px;display:inline-flex;align-items:center;justify-content:center;background:#161D26;border:1px solid #394655;border-bottom-width:2px;border-radius:3px;color:#E6EBF0">Enter</kbd>Resume</div>
+<button type="button" style="height:44px;padding:0 22px;background:#F5B942;color:#1A1200;border:0;border-radius:4px;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:16px;letter-spacing:0.08em;text-transform:uppercase;display:inline-flex;align-items:center;gap:10px;white-space:nowrap">New flight <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12h15"></path><path d="m13 5.5 6.5 6.5-6.5 6.5"></path></svg></button>
+</div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1600,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

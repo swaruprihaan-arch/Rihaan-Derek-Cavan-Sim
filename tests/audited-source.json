@@ -1,0 +1,16 @@
+{
+  "result": "37 tests passed",
+  "source_sha256": {
+    "app.js": "f998ff1492304a31a14ae21b46a1297cb3a58b87cd78a62d0ab5c790cabe6706",
+    "art.js": "dfb3d4386674d19cb85413ced1f5de40e70ad1d55d1948200312946787c4cbfa",
+    "data.js": "ec29735443467f25898daef05c661cf786aefebc72158872da85eee99d81ab6c",
+    "ext.js": "9816dcbc96f26c762b04ab883ed325be082895adf879797d70449ed1b3576332",
+    "index.html": "fc667451c4ad23717513222a1649cb87436f2bd97b1ab9d49166454dd2b0940c",
+    "keypad.js": "57f0829ccc650bfc54456a57ce670797ce2b97890c63d8df93ad187e8b4b189e",
+    "polish.css": "e794d227dfa74fa1ae79e917e59e4fa22ee1027bd4e23e7b34b61efd4fe74a6e",
+    "portal.css": "4e0bb2304cb9fa55fd4e101f7df64ba73a3dac0cae2107cbe998d75fb7940df0",
+    "portal.js": "2d3cfcb31eef543d6b264fe45c4a6aa067768c0f2c34dca6e25ccadd86aa11cf",
+    "sim.js": "72c7dc152d1e5d0854ff75439b7dc31a4551acccf4c005638df6fd7922d4d9a4",
+    "style.css": "2a3e1ca0ad66e374f0779fa51a6f26c264637dbef0301b45ebf1249c662d9889"
+  }
+}

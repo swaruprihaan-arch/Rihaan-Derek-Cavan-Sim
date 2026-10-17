@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CONTRAIL — Livery editor</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+body{margin:0;background:#0A0D12}
+x-dc *{box-sizing:border-box}
+a{color:#E6EBF0;text-decoration:none}a:hover{color:#F5B942}
+button{font:inherit;color:inherit;cursor:pointer}
+input{font:inherit;color:inherit}
+input[type=range]{-webkit-appearance:none;appearance:none;height:4px;border-radius:2px;margin:0;padding:0;border:0;outline:none;background:#394655;flex:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:#E6EBF0;border:2px solid #0A0D12;box-shadow:0 0 0 1px #394655}
+input[type=checkbox],input[type=radio]{-webkit-appearance:none;appearance:none;width:18px;height:18px;margin:0;border:1px solid #394655;background:#161D26;position:relative;flex:none}
+input[type=checkbox]{border-radius:3px}
+input[type=radio]{border-radius:50%}
+input[type=checkbox]:checked,input[type=radio]:checked{background:#F5B942;border-color:#F5B942}
+input[type=checkbox]:checked::after{content:"";position:absolute;left:5px;top:1px;width:5px;height:10px;border:solid #1A1200;border-width:0 2px 2px 0;transform:rotate(45deg)}
+input[type=radio]:checked::after{content:"";position:absolute;left:4px;top:4px;width:8px;height:8px;border-radius:50%;background:#1A1200}
+:focus-visible{outline:2px solid #F5B942;outline-offset:2px}
+</style>
+</helmet>
+<div style="width:1600px;height:900px;background:#0A0D12;color:#E6EBF0;font-family:Barlow,'Helvetica Neue',Arial,sans-serif;font-size:15px;line-height:1.4;display:flex;flex-direction:column;overflow:hidden;position:relative">
+<header style="height:64px;flex:none;display:flex;align-items:center;gap:48px;padding:0 40px;border-bottom:1px solid #27313D;background:#0A0D12">
+<a href="#" aria-label="CONTRAIL home" style="display:flex;align-items:center;gap:12px;color:#E6EBF0">
+<svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="23.6 6.6 21.48 17.21 20.42 9.78 12.99 8.72" fill="currentColor" stroke-linejoin="miter"></polygon><path d="M12.64 11.2 L4.15 19.68"></path><path d="M19 17.56 L14.76 21.8"></path></svg>
+<span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:700;font-size:26px;letter-spacing:0.2em;line-height:1">CONTRAIL</span>
+<span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:11px;color:#7B8999;letter-spacing:0.04em;margin-top:3px">v1.4.2</span>
+</a>
+<nav aria-label="Primary" style="display:flex;align-items:stretch;gap:36px;height:64px">
+<a href="#" style="display:flex;align-items:center;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:18px;letter-spacing:0.1em;text-transform:uppercase;color:#A3AFBC;border-top:2px solid transparent;border-bottom:2px solid transparent">Home</a>
+<a href="#" aria-current="page" style="display:flex;align-items:center;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:18px;letter-spacing:0.1em;text-transform:uppercase;color:#F5B942;border-top:2px solid transparent;border-bottom:2px solid #F5B942">Hangar</a>
+<a href="#" style="display:flex;align-items:center;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:18px;letter-spacing:0.1em;text-transform:uppercase;color:#A3AFBC;border-top:2px solid transparent;border-bottom:2px solid transparent">Fly</a>
+<a href="#" style="display:flex;align-items:center;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:18px;letter-spacing:0.1em;text-transform:uppercase;color:#A3AFBC;border-top:2px solid transparent;border-bottom:2px solid transparent">Missions</a>
+<a href="#" style="display:flex;align-items:center;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:18px;letter-spacing:0.1em;text-transform:uppercase;color:#A3AFBC;border-top:2px solid transparent;border-bottom:2px solid transparent">Settings</a>
+</nav>
+<div style="margin-left:auto;display:flex;align-items:center;gap:28px">
+<div style="display:flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:0.08em;color:#5BD68A"><span style="width:8px;height:8px;border-radius:50%;background:#5BD68A;display:block"></span>ONLINE</div>
+<div style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:14px;color:#A3AFBC">14:32Z</div>
+<a href="#" style="display:flex;align-items:center;gap:12px;color:#E6EBF0">
+<span style="width:34px;height:34px;border-radius:50%;background:#1E2733;border:1px solid #394655;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.06em">ML</span>
+<span style="display:flex;flex-direction:column;line-height:1.2"><span style="font-size:14px;font-weight:500">Capt. Mara Lindqvist</span><span style="font-size:12px;color:#7B8999">1,284 h logged</span></span>
+</a>
+</div>
+</header>
+<main style="flex:1;min-height:0;display:flex;flex-direction:column;padding:24px 40px 24px;gap:20px;overflow:hidden">
+<div style="display:flex;align-items:flex-end;gap:24px;flex:none">
+<div style="display:flex;flex-direction:column;gap:4px">
+<span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#7B8999">Livery editor / Boeing 737-800</span>
+<h1 style="margin:0;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:36px;letter-spacing:0.04em;text-transform:uppercase;line-height:1">Meridian Air · Signature — Copy</h1>
+</div>
+<div style="margin-left:auto;display:flex;align-items:center;gap:12px">
+<button type="button" aria-label="Undo" style="width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;background:#161D26;border:1px solid #27313D;border-radius:4px;color:#A3AFBC;padding:0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 4.5 3.5 9.5l5 5"></path><path d="M3.5 9.5h10a5 5 0 0 1 0 10H9"></path></svg></button>
+<button type="button" aria-label="Redo" disabled style="width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;background:#161D26;border:1px solid #27313D;border-radius:4px;color:#7B8999;padding:0;cursor:default"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15.5 4.5 5 5-5 5"></path><path d="M20.5 9.5h-10a5 5 0 0 0 0 10H15"></path></svg></button>
+<div style="display:flex;align-items:center;gap:8px;padding:0 8px;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:13px;color:#A3AFBC;white-space:nowrap"><span style="width:8px;height:8px;border-radius:50%;background:#F5B942;display:block"></span>Unsaved · 14 changes</div>
+<button type="button" style="height:44px;padding:0 22px;background:transparent;color:#E6EBF0;border:1px solid #394655;border-radius:4px;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:16px;letter-spacing:0.08em;text-transform:uppercase;display:inline-flex;align-items:center;gap:10px;white-space:nowrap"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5v12"></path><path d="m6.5 10 5.5 5.5 5.5-5.5"></path><path d="M3.5 17.5V19a2 2 0 0 0 2 2h13a2 2 0 0 0 2-2v-1.5"></path></svg> Export 4K</button>
+</div>
+</div>
+<div style="flex:1;min-height:0;display:flex;gap:24px">
+<section style="width:280px;flex:none;min-height:0;background:#10151C;border:1px solid #27313D;border-radius:6px;padding:12px;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;align-items:center;gap:12px;padding:0 8px 0 4px"><h2 style="margin:0;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:18px;letter-spacing:0.06em;text-transform:uppercase">Layers</h2><span style="margin-left:auto;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:13px;color:#7B8999">8</span></div>
+<div style="flex:none;display:flex;flex-direction:column;gap:2px">
+<div style="display:flex;align-items:center;gap:8px;height:40px;flex:none;padding:0 8px 0 6px;border-radius:4px">
+<button type="button" aria-label="Show Registration text" aria-pressed="true" style="width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:0;border-radius:3px;color:#A3AFBC;padding:0;flex:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 12s3.5-6.5 9.5-6.5 9.5 6.5 9.5 6.5-3.5 6.5-9.5 6.5S2.5 12 2.5 12z"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
+<button type="button" aria-pressed="false" style="flex:1;min-width:0;height:40px;display:flex;align-items:center;gap:8px;background:transparent;border:0;padding:0;text-align:left;color:#E6EBF0;font-size:14px"><span style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Registration text</span><span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.04em;color:#7B8999;flex:none">text</span></button>
+</div>
+<div style="display:flex;align-items:center;gap:8px;height:40px;flex:none;padding:0 8px 0 6px;border-radius:4px">
+<button type="button" aria-label="Show Tail logo" aria-pressed="true" style="width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:0;border-radius:3px;color:#A3AFBC;padding:0;flex:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 12s3.5-6.5 9.5-6.5 9.5 6.5 9.5 6.5-3.5 6.5-9.5 6.5S2.5 12 2.5 12z"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
+<button type="button" aria-pressed="false" style="flex:1;min-width:0;height:40px;display:flex;align-items:center;gap:8px;background:transparent;border:0;padding:0;text-align:left;color:#E6EBF0;font-size:14px"><span style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Tail logo</span><span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.04em;color:#7B8999;flex:none">decal</span></button>
+</div>
+<div style="display:flex;align-items:center;gap:8px;height:40px;flex:none;padding:0 8px 0 6px;border-radius:4px;background:#1E2733">
+<button type="button" aria-label="Show Cheatline" aria-pressed="true" style="width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:0;border-radius:3px;color:#A3AFBC;padding:0;flex:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 12s3.5-6.5 9.5-6.5 9.5 6.5 9.5 6.5-3.5 6.5-9.5 6.5S2.5 12 2.5 12z"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
+<button type="button" aria-pressed="true" style="flex:1;min-width:0;height:40px;display:flex;align-items:center;gap:8px;background:transparent;border:0;padding:0;text-align:left;color:#F5B942;font-size:14px;font-weight:500"><span style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Cheatline</span><span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.04em;color:#A3AFBC;flex:none;font-weight:400">stripe</span></button>
+</div>
+<div style="display:flex;align-items:center;gap:8px;height:40px;flex:none;padding:0 8px 0 6px;border-radius:4px">
+<button type="button" aria-label="Show Belly" aria-pressed="true" style="width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:0;border-radius:3px;color:#A3AFBC;padding:0;flex:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 12s3.5-6.5 9.5-6.5 9.5 6.5 9.5 6.5-3.5 6.5-9.5 6.5S2.5 12 2.5 12z"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
+<button type="button" aria-pressed="false" style="flex:1;min-width:0;height:40px;display:flex;align-items:center;gap:8px;background:transparent;border:0;padding:0;text-align:left;color:#E6EBF0;font-size:14px"><span style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Belly</span><span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.04em;color:#7B8999;flex:none">fill</span></button>
+</div>
+<div style="display:flex;align-items:center;gap:8px;height:40px;flex:none;padding:0 8px 0 6px;border-radius:4px">
+<button type="button" aria-label="Show Fuselage base" aria-pressed="true" style="width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:0;border-radius:3px;color:#A3AFBC;padding:0;flex:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 12s3.5-6.5 9.5-6.5 9.5 6.5 9.5 6.5-3.5 6.5-9.5 6.5S2.5 12 2.5 12z"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
+<button type="button" aria-pressed="false" style="flex:1;min-width:0;height:40px;display:flex;align-items:center;gap:8px;background:transparent;border:0;padding:0;text-align:left;color:#E6EBF0;font-size:14px"><span style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Fuselage base</span><span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.04em;color:#7B8999;flex:none">fill</span></button>
+</div>
+<div style="display:flex;align-items:center;gap:8px;height:40px;flex:none;padding:0 8px 0 6px;border-radius:4px">
+<button type="button" aria-label="Show Engine nacelles" aria-pressed="true" style="width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:0;border-radius:3px;color:#A3AFBC;padding:0;flex:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 12s3.5-6.5 9.5-6.5 9.5 6.5 9.5 6.5-3.5 6.5-9.5 6.5S2.5 12 2.5 12z"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
+<button type="button" aria-pressed="false" style="flex:1;min-width:0;height:40px;display:flex;align-items:center;gap:8px;background:transparent;border:0;padding:0;text-align:left;color:#E6EBF0;font-size:14px"><span style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Engine nacelles</span><span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.04em;color:#7B8999;flex:none">fill</span></button>
+</div>
+<div style="display:flex;align-items:center;gap:8px;height:40px;flex:none;padding:0 8px 0 6px;border-radius:4px">
+<button type="button" aria-label="Show Wings" aria-pressed="true" style="width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:0;border-radius:3px;color:#A3AFBC;padding:0;flex:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 12s3.5-6.5 9.5-6.5 9.5 6.5 9.5 6.5-3.5 6.5-9.5 6.5S2.5 12 2.5 12z"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
+<button type="button" aria-pressed="false" style="flex:1;min-width:0;height:40px;display:flex;align-items:center;gap:8px;background:transparent;border:0;padding:0;text-align:left;color:#E6EBF0;font-size:14px"><span style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Wings</span><span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.04em;color:#7B8999;flex:none">fill</span></button>
+</div>
+<div style="display:flex;align-items:center;gap:8px;height:40px;flex:none;padding:0 8px 0 6px;border-radius:4px">
+<button type="button" aria-label="Show Weathering" aria-pressed="true" style="width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:0;border-radius:3px;color:#A3AFBC;padding:0;flex:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 12s3.5-6.5 9.5-6.5 9.5 6.5 9.5 6.5-3.5 6.5-9.5 6.5S2.5 12 2.5 12z"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
+<button type="button" aria-pressed="false" style="flex:1;min-width:0;height:40px;display:flex;align-items:center;gap:8px;background:transparent;border:0;padding:0;text-align:left;color:#E6EBF0;font-size:14px"><span style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Weathering</span><span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.04em;color:#7B8999;flex:none">effect</span></button>
+</div>
+</div>
+<div style="height:1px;background:#27313D;flex:none"></div>
+<div style="display:flex;align-items:center;gap:8px;flex:none">
+<button type="button" aria-label="Add layer" style="width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;background:#161D26;border:1px solid #27313D;border-radius:4px;color:#A3AFBC;padding:0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg></button>
+<button type="button" aria-label="Duplicate layer" style="width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;background:#161D26;border:1px solid #27313D;border-radius:4px;color:#A3AFBC;padding:0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="1.5"></rect><path d="M5.5 15h-1A1.5 1.5 0 0 1 3 13.5v-9A1.5 1.5 0 0 1 4.5 3h9A1.5 1.5 0 0 1 15 4.5v1"></path></svg></button>
+<button type="button" aria-label="Delete layer" style="width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;background:#161D26;border:1px solid #27313D;border-radius:4px;color:#A3AFBC;padding:0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 6.5h17"></path><path d="M8.5 6.5v-2A1.5 1.5 0 0 1 10 3h4a1.5 1.5 0 0 1 1.5 1.5v2"></path><path d="m5.5 6.5.9 13a1.5 1.5 0 0 0 1.5 1.5h8.2a1.5 1.5 0 0 0 1.5-1.5l.9-13"></path><path d="M10 11v6"></path><path d="M14 11v6"></path></svg></button>
+</div>
+<div style="height:1px;background:#27313D;flex:none"></div>
+<div style="flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column;gap:8px;padding:0 8px 0 4px">
+<span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#7B8999;flex:none">History</span>
+<div style="display:flex;flex-direction:column">
+<div style="display:flex;align-items:center;min-height:32px;flex:none"><span style="min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:12px;color:#7B8999">Cheatline colour → #57C7DB</span></div>
+<div style="display:flex;align-items:center;min-height:32px;flex:none"><span style="min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:12px;color:#7B8999">Offset 58 → 62 %</span></div>
+<div style="display:flex;align-items:center;min-height:32px;flex:none"><span style="min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:12px;color:#7B8999">Taper 24 → 20 %</span></div>
+<div style="display:flex;align-items:center;min-height:32px;flex:none"><span style="min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:12px;color:#7B8999">Registration size 44 → 48</span></div>
+</div>
+</div>
+</section>
+<section style="flex:1;min-width:0;min-height:0;background:#0A0D12;border:1px solid #27313D;border-radius:6px;display:flex;flex-direction:column;overflow:hidden">
+<div style="flex:1;min-height:0;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center">
+<svg aria-hidden="true" style="position:absolute;left:0;top:0;width:100%;height:100%;display:block" fill="none"><path d="M25.5 0V600 M65.5 0V600 M105.5 0V600 M145.5 0V600 M185.5 0V600 M225.5 0V600 M265.5 0V600 M305.5 0V600 M345.5 0V600 M385.5 0V600 M425.5 0V600 M465.5 0V600 M505.5 0V600 M545.5 0V600 M585.5 0V600 M625.5 0V600 M665.5 0V600 M705.5 0V600 M745.5 0V600 M785.5 0V600 M825.5 0V600 M0 18.5H860 M0 58.5H860 M0 98.5H860 M0 138.5H860 M0 178.5H860 M0 218.5H860 M0 258.5H860 M0 298.5H860 M0 338.5H860 M0 378.5H860 M0 418.5H860 M0 458.5H860 M0 498.5H860 M0 538.5H860 M0 578.5H860" stroke="#161D26" stroke-width="1"></path></svg>
+<div style="position:relative;width:820px;height:282px;flex:none">
+<div style="--c-fuselage:#F2F4F6;--c-belly:#10264A;--c-cheat:#57C7DB;--c-tail:#10264A;--c-engine:#F2F4F6;--c-logo:#F5B942;--c-wing:#C9D0D8;width:820px;height:282px"><svg viewBox="0 0 640 220" width="100%" height="100%" role="img" aria-label="Boeing 737-800 side profile, Meridian Air Signature livery with the cheatline recoloured cyan" xmlns="http://www.w3.org/2000/svg">
+<path d="M 382,90 L 388,66 L 392,66 L 396,90 Z" style="fill:var(--c-wing)" stroke="#0A0D12" stroke-opacity="0.35" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"></path>
+<path d="M 436,92 C 484,89 505,85 517,72 L 564,21 C 565,20 566,20 568,20 L 602,20 C 605,20 607,22 606,24 L 597,106 L 436,106 Z" style="fill:var(--c-tail)"></path>
+<path d="M 546,82 L 568,48 L 590,82 L 578,82 L 568,66 L 558,82 Z" style="fill:var(--c-logo)"></path>
+<path d="M 436,92 C 484,89 505,85 517,72 L 564,21 C 565,20 566,20 568,20 L 602,20 C 605,20 607,22 606,24 L 597,106 L 436,106 Z" style="fill:none" stroke="#0A0D12" stroke-opacity="0.35" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"></path>
+<path d="M 196,89 L 199,82 L 206,82 L 209,89 Z" style="fill:#2B2F36"></path>
+<path d="M 398,89 L 401,83 L 407,83 L 410,89 Z" style="fill:#2B2F36"></path>
+<rect x="108" y="150" width="4" height="56" style="fill:#2B2F36"></rect>
+<rect x="100" y="152" width="4" height="18" rx="1" style="fill:#2B2F36"></rect>
+<circle cx="110" cy="206" r="6" style="fill:#2B2F36"></circle>
+<circle cx="110" cy="206" r="2" style="fill:#6B727B"></circle>
+<rect x="336" y="150" width="5" height="54" style="fill:#2B2F36"></rect>
+<circle cx="343" cy="204" r="8" style="fill:#1F2328"></circle>
+<circle cx="338" cy="204" r="8" style="fill:#2B2F36"></circle>
+<circle cx="338" cy="204" r="2.5" style="fill:#6B727B"></circle>
+<path d="M 250,146 L 372,198 L 398,202 L 372,164 L 372,146 Z" style="fill:var(--c-wing)" stroke="#0A0D12" stroke-opacity="0.35" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"></path>
+<path d="M 374,199 C 379,194 383,186 386,177 L 394,175 C 396,183 397,192 399,202 Z" style="fill:var(--c-wing)" stroke="#0A0D12" stroke-opacity="0.35" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"></path>
+<path d="M 374,199 C 379,194 383,186 386,177 L 394,175 C 396,183 397,192 399,202 Z" style="fill:#0A0D12;fill-opacity:0.12"></path>
+<path d="M 40,128 C 44,114 62,97 100,92 C 112,90 122,88 134,88 L 440,88 C 500,88 560,97 597,101 C 600,101 602,103 602,104 C 602,105 600,107 597,107 L 545,126 C 512,139 470,152 420,152 L 110,152 C 70,152 50,138 40,128 Z" style="fill:var(--c-belly)"></path>
+<path d="M 40,128 C 44,114 62,97 100,92 C 112,90 122,88 134,88 L 440,88 C 500,88 560,97 597,101 C 600,101 602,103 602,104 C 602,105 600,107 597,107 L 545,126 Z" style="fill:var(--c-fuselage)"></path>
+<path d="M 40,128 L 43,125 L 553,123 L 537,129 L 43,131 Z" style="fill:var(--c-cheat)"></path>
+<rect x="130" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="143" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="156" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="169" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="182" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="195" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="208" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="221" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="234" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="247" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="260" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="273" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="286" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="299" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="312" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="325" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="338" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="351" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="364" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="377" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="390" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="403" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="416" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="429" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="442" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="455" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="468" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<rect x="481" y="109" width="4" height="6" rx="1.2" style="fill:#0A0D12;fill-opacity:0.55"></rect>
+<path d="M 72,113 L 76,103 L 87,99 L 90,110 Z" style="fill:#0A0D12;fill-opacity:0.7"></path>
+<path d="M 92,109 L 93,98 L 107,94 L 107,106 Z" style="fill:#0A0D12;fill-opacity:0.7"></path>
+<rect x="104" y="100" width="12" height="30" rx="2" style="fill:none;stroke:#0A0D12;stroke-opacity:0.35;stroke-width:1"></rect>
+<rect x="498" y="101" width="12" height="30" rx="2" style="fill:none;stroke:#0A0D12;stroke-opacity:0.35;stroke-width:1"></rect>
+<rect x="297" y="104" width="8" height="14" rx="1.5" style="fill:none;stroke:#0A0D12;stroke-opacity:0.35;stroke-width:1"></rect>
+<rect x="323" y="104" width="8" height="14" rx="1.5" style="fill:none;stroke:#0A0D12;stroke-opacity:0.35;stroke-width:1"></rect>
+<path d="M 40,128 C 44,114 62,97 100,92 C 112,90 122,88 134,88 L 440,88 C 500,88 560,97 597,101 C 600,101 602,103 602,104 C 602,105 600,107 597,107 L 545,126 C 512,139 470,152 420,152 L 110,152 C 70,152 50,138 40,128 Z" style="fill:none" stroke="#0A0D12" stroke-opacity="0.35" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"></path>
+<path d="M 586,24 L 592,104" style="fill:none;stroke:#0A0D12;stroke-opacity:0.2;stroke-width:1"></path>
+<path d="M 42,126 C 46,113 62,97 100,92 C 112,90 122,88 134,88 L 440,88 C 500,88 560,97 597,101 M 482,88 C 498,86 507,83 517,72 L 564,21 L 602,20 M 240,153 L 312,153" style="fill:none;stroke:#FFFFFF;stroke-opacity:0.16;stroke-width:1" stroke-linecap="round"></path>
+<path d="M 518,128 L 586,146 L 604,138 L 584,110 Z" style="fill:var(--c-fuselage)" stroke="#0A0D12" stroke-opacity="0.35" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"></path>
+<path d="M 326,160 L 346,165 L 346,177 L 326,182 Z" style="fill:#2B2F36"></path>
+<path d="M 238,152 L 312,153 C 324,154 331,161 331,169 L 331,177 C 331,184 325,189 316,190 L 240,194 C 230,194 226,187 226,179 L 226,164 C 226,156 231,152 238,152 Z" style="fill:var(--c-engine)" stroke="#0A0D12" stroke-opacity="0.35" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"></path>
+<path d="M 238,152 C 231,152 226,156 226,164 L 226,179 C 226,187 230,194 240,194 L 240,189 C 234,189 231,185 231,179 L 231,164 C 231,158 234,157 238,157 Z" style="fill:#2B2F36"></path>
+</svg></div>
+<svg aria-hidden="true" width="820" height="282" style="position:absolute;left:0;top:0;display:block" fill="none">
+<rect x="45.5" y="151.5" width="669" height="22" stroke="#F5B942" stroke-width="1" stroke-dasharray="5 3"></rect>
+<rect x="41.5" y="147.5" width="8" height="8" fill="#F5B942" stroke="#0A0D12" stroke-width="1"></rect>
+<rect x="710.5" y="147.5" width="8" height="8" fill="#F5B942" stroke="#0A0D12" stroke-width="1"></rect>
+<rect x="41.5" y="169.5" width="8" height="8" fill="#F5B942" stroke="#0A0D12" stroke-width="1"></rect>
+<rect x="710.5" y="169.5" width="8" height="8" fill="#F5B942" stroke="#0A0D12" stroke-width="1"></rect>
+</svg>
+</div>
+</div>
+<div style="height:57px;flex:none;display:flex;align-items:center;gap:16px;padding:0 12px;border-top:1px solid #27313D;background:#10151C">
+<div style="display:flex;align-items:center;gap:8px">
+<span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#7B8999">View</span>
+<div style="display:inline-flex;background:#161D26;border:1px solid #27313D;border-radius:4px;padding:3px;gap:2px"><button type="button" aria-pressed="true" style="height:32px;padding:0 14px;border:0;border-radius:3px;background:#1E2733;color:#F5B942;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.06em;text-transform:uppercase">Side</button><button type="button" aria-pressed="false" style="height:32px;padding:0 14px;border:0;border-radius:3px;background:transparent;color:#A3AFBC;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.06em;text-transform:uppercase">Top</button><button type="button" aria-pressed="false" style="height:32px;padding:0 14px;border:0;border-radius:3px;background:transparent;color:#A3AFBC;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.06em;text-transform:uppercase">3D</button></div>
+</div>
+<div style="display:flex;align-items:center;gap:8px">
+<button type="button" aria-label="Zoom out" style="width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;background:#161D26;border:1px solid #27313D;border-radius:4px;color:#A3AFBC;padding:0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path></svg></button>
+<span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:14px;color:#E6EBF0;min-width:56px;text-align:center">100 %</span>
+<button type="button" aria-label="Zoom in" style="width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;background:#161D26;border:1px solid #27313D;border-radius:4px;color:#A3AFBC;padding:0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg></button>
+</div>
+<div style="display:flex;align-items:center;gap:8px">
+<span style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#7B8999">Light</span>
+<div style="display:inline-flex;background:#161D26;border:1px solid #27313D;border-radius:4px;padding:3px;gap:2px"><button type="button" aria-pressed="true" style="height:32px;padding:0 14px;border:0;border-radius:3px;background:#1E2733;color:#F5B942;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.06em;text-transform:uppercase">Hangar</button><button type="button" aria-pressed="false" style="height:32px;padding:0 14px;border:0;border-radius:3px;background:transparent;color:#A3AFBC;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.06em;text-transform:uppercase">Noon</button><button type="button" aria-pressed="false" style="height:32px;padding:0 14px;border:0;border-radius:3px;background:transparent;color:#A3AFBC;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.06em;text-transform:uppercase">Dusk</button></div>
+</div>
+<div style="margin-left:auto;display:flex;align-items:center;gap:8px">
+<button type="button" aria-label="Show grid" aria-pressed="true" style="width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;background:#161D26;border:1px solid #F5B942;border-radius:4px;color:#F5B942;padding:0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="1"></rect><rect x="13.5" y="3" width="7.5" height="7.5" rx="1"></rect><rect x="3" y="13.5" width="7.5" height="7.5" rx="1"></rect><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1"></rect></svg></button>
+<button type="button" aria-label="Rotate view" style="width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;background:#161D26;border:1px solid #27313D;border-radius:4px;color:#A3AFBC;padding:0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 12A8.5 8.5 0 1 1 18 6l2.5 2.5"></path><path d="M20.5 3.5v5h-5"></path><circle cx="12" cy="12" r="1.25"></circle></svg></button>
+</div>
+</div>
+</section>
+<div style="width:340px;flex:none;min-height:0;position:relative;overflow:hidden">
+<div style="display:flex;flex-direction:column;gap:12px;padding-right:12px">
+<section style="flex:none;background:#10151C;border:1px solid #27313D;border-radius:6px;padding:20px;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;align-items:center;gap:12px"><h2 style="margin:0;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:18px;letter-spacing:0.06em;text-transform:uppercase">Cheatline</h2><span style="margin-left:auto;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border-radius:999px;background:#1E2733;color:#A3AFBC">Stripe</span></div>
+<div style="display:flex;align-items:center;gap:8px">
+<button type="button" aria-label="Cheatline colour #57C7DB" style="width:32px;height:32px;border-radius:4px;background:#57C7DB;border:1px solid #27313D;padding:0;flex:none"></button>
+<input type="text" value="#57C7DB" aria-label="Cheatline colour hex" style="height:40px;padding:0 12px;background:#161D26;border:1px solid #27313D;border-radius:4px;color:#E6EBF0;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:14px;flex:1;min-width:0">
+<button type="button" aria-label="Pick colour from canvas" style="width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;background:#161D26;border:1px solid #27313D;border-radius:4px;color:#A3AFBC;padding:0;flex:none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3.5 20.5 1-3.5 8.5-8.5 3 3-8.5 8.5z"></path><path d="m14.5 6.5 2-2a2.12 2.12 0 0 1 3 3l-2 2"></path><path d="m11.5 7.5 5 5"></path></svg></button>
+</div>
+<div style="display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:8px;padding:2px 0">
+<button type="button" aria-label="Cyan #57C7DB" aria-pressed="true" style="height:28px;border-radius:4px;background:#57C7DB;border:1px solid #27313D;padding:0;outline:2px solid #F5B942;outline-offset:2px"></button>
+<button type="button" aria-label="Amber #F5B942" aria-pressed="false" style="height:28px;border-radius:4px;background:#F5B942;border:1px solid #27313D;padding:0"></button>
+<button type="button" aria-label="Navy #10264A" aria-pressed="false" style="height:28px;border-radius:4px;background:#10264A;border:1px solid #27313D;padding:0"></button>
+<button type="button" aria-label="Red #B8322B" aria-pressed="false" style="height:28px;border-radius:4px;background:#B8322B;border:1px solid #27313D;padding:0"></button>
+<button type="button" aria-label="Teal #0E7C86" aria-pressed="false" style="height:28px;border-radius:4px;background:#0E7C86;border:1px solid #27313D;padding:0"></button>
+<button type="button" aria-label="White #F4F6F8" aria-pressed="false" style="height:28px;border-radius:4px;background:#F4F6F8;border:1px solid #27313D;padding:0"></button>
+<button type="button" aria-label="Black #111417" aria-pressed="false" style="height:28px;border-radius:4px;background:#111417;border:1px solid #27313D;padding:0"></button>
+<button type="button" aria-label="Silver #B9BFC7" aria-pressed="false" style="height:28px;border-radius:4px;background:#B9BFC7;border:1px solid #27313D;padding:0"></button>
+<button type="button" aria-label="Orange #F28C28" aria-pressed="false" style="height:28px;border-radius:4px;background:#F28C28;border:1px solid #27313D;padding:0"></button>
+</div>
+<div style="display:flex;flex-direction:column">
+<div style="display:flex;align-items:center;gap:8px;min-height:32px"><label for="sl-thick" style="width:80px;flex:none;font-size:14px;line-height:1.2;color:#E6EBF0">Thickness</label><input id="sl-thick" type="range" min="1" max="20" value="6" style="width:142px;background:linear-gradient(to right,#F5B942 0 26%,#394655 26% 100%)"><span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:14px;line-height:1.2;color:#57C7DB;min-width:48px;text-align:right">6 px</span></div>
+<div style="display:flex;align-items:center;gap:8px;min-height:32px"><label for="sl-offset" style="width:80px;flex:none;font-size:14px;line-height:1.2;color:#E6EBF0">Offset</label><input id="sl-offset" type="range" min="0" max="100" value="62" style="width:142px;background:linear-gradient(to right,#F5B942 0 62%,#394655 62% 100%)"><span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:14px;line-height:1.2;color:#57C7DB;min-width:48px;text-align:right">62 %</span></div>
+<div style="display:flex;align-items:center;gap:8px;min-height:32px"><label for="sl-taper" style="width:80px;flex:none;font-size:14px;line-height:1.2;color:#E6EBF0">Taper</label><input id="sl-taper" type="range" min="0" max="100" value="20" style="width:142px;background:linear-gradient(to right,#F5B942 0 20%,#394655 20% 100%)"><span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:14px;line-height:1.2;color:#57C7DB;min-width:48px;text-align:right">20 %</span></div>
+<div style="display:flex;align-items:center;gap:8px;min-height:32px"><label for="sl-opacity" style="width:80px;flex:none;font-size:14px;line-height:1.2;color:#E6EBF0">Opacity</label><input id="sl-opacity" type="range" min="0" max="100" value="100" style="width:142px;background:linear-gradient(to right,#F5B942 0 100%,#394655 100% 100%)"><span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:14px;line-height:1.2;color:#57C7DB;min-width:48px;text-align:right">100 %</span></div>
+</div>
+<button type="button" aria-label="Blend mode" style="height:40px;padding:0 12px 0 14px;background:#161D26;border:1px solid #27313D;border-radius:4px;color:#E6EBF0;display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;font-size:14px">Blend: Normal <span style="color:#7B8999;display:flex"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6.5 9.5 5.5 5.5 5.5-5.5"></path></svg></span></button>
+</section>
+<section style="flex:none;background:#10151C;border:1px solid #27313D;border-radius:6px;padding:20px;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;align-items:center;gap:12px"><h2 style="margin:0;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:18px;letter-spacing:0.06em;text-transform:uppercase">Finish</h2></div>
+<div style="display:flex;flex-direction:column">
+<div style="display:flex;align-items:center;gap:8px;min-height:32px"><label for="sl-gloss" style="width:80px;flex:none;font-size:14px;line-height:1.2;color:#E6EBF0">Gloss</label><input id="sl-gloss" type="range" min="0" max="100" value="60" style="width:142px;background:linear-gradient(to right,#F5B942 0 60%,#394655 60% 100%)"><span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:14px;line-height:1.2;color:#57C7DB;min-width:48px;text-align:right">60 %</span></div>
+<div style="display:flex;align-items:center;gap:8px;min-height:32px"><label for="sl-weather" style="width:80px;flex:none;font-size:14px;line-height:1.2;color:#E6EBF0">Weathering</label><input id="sl-weather" type="range" min="0" max="100" value="35" style="width:142px;background:linear-gradient(to right,#F5B942 0 35%,#394655 35% 100%)"><span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:14px;line-height:1.2;color:#57C7DB;min-width:48px;text-align:right">35 %</span></div>
+</div>
+<div style="display:flex;align-items:center;gap:8px;height:24px"><span style="font-size:14px">Panel lines</span><button type="button" role="switch" aria-checked="true" aria-label="Panel lines" style="margin-left:auto;width:44px;height:24px;border-radius:12px;background:#F5B942;border:0;position:relative;padding:0;flex:none"><span style="position:absolute;top:3px;left:23px;width:18px;height:18px;border-radius:50%;background:#1A1200;display:block"></span></button></div>
+<div style="display:flex;align-items:center;gap:8px"><span style="font-size:14px">Decals</span><div style="margin-left:auto;display:inline-flex;background:#161D26;border:1px solid #27313D;border-radius:4px;padding:3px;gap:2px"><button type="button" aria-pressed="false" style="height:32px;padding:0 14px;border:0;border-radius:3px;background:transparent;color:#A3AFBC;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.06em;text-transform:uppercase">2K</button><button type="button" aria-pressed="true" style="height:32px;padding:0 14px;border:0;border-radius:3px;background:#1E2733;color:#F5B942;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.06em;text-transform:uppercase">4K</button><button type="button" aria-pressed="false" style="height:32px;padding:0 14px;border:0;border-radius:3px;background:transparent;color:#A3AFBC;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:14px;letter-spacing:0.06em;text-transform:uppercase">8K</button></div></div>
+</section>
+<section style="flex:none;background:#10151C;border:1px solid #27313D;border-radius:6px;padding:20px;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;align-items:center;gap:12px"><h2 style="margin:0;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:18px;letter-spacing:0.06em;text-transform:uppercase">Registration</h2></div>
+<div style="display:flex;align-items:center;gap:8px">
+<input type="text" value="N737CT" aria-label="Registration" style="height:40px;padding:0 12px;background:#161D26;border:1px solid #27313D;border-radius:4px;color:#E6EBF0;font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:14px;width:88px;flex:none">
+<button type="button" aria-label="Registration font" style="height:40px;padding:0 10px 0 12px;background:#161D26;border:1px solid #27313D;border-radius:4px;color:#E6EBF0;display:flex;align-items:center;justify-content:space-between;gap:8px;flex:1;min-width:0;font-size:14px"><span style="min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Font: Placard Condensed</span><span style="color:#7B8999;display:flex;flex:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6.5 9.5 5.5 5.5 5.5-5.5"></path></svg></span></button>
+</div>
+<div style="display:flex;align-items:center;gap:8px;min-height:32px"><label for="sl-size" style="width:80px;flex:none;font-size:14px;line-height:1.2;color:#E6EBF0">Size</label><input id="sl-size" type="range" min="12" max="96" value="48" style="width:142px;background:linear-gradient(to right,#F5B942 0 43%,#394655 43% 100%)"><span style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:14px;line-height:1.2;color:#57C7DB;min-width:48px;text-align:right">48</span></div>
+</section>
+</div>
+<div aria-hidden="true" style="position:absolute;top:0;right:0;width:4px;height:100%;background:#27313D;border-radius:2px"><div style="width:4px;height:85%;background:#7B8999;border-radius:2px"></div></div>
+</div>
+</div>
+</main>
+<footer style="height:56px;flex:none;display:flex;align-items:center;gap:28px;padding:0 40px;border-top:1px solid #27313D;background:#0A0D12">
+<div style="display:flex;align-items:center;gap:10px;font-size:13px;color:#A3AFBC"><kbd style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:12px;min-width:26px;height:24px;padding:0 7px;display:inline-flex;align-items:center;justify-content:center;background:#161D26;border:1px solid #394655;border-bottom-width:2px;border-radius:3px;color:#E6EBF0">Esc</kbd>Back</div>
+<div style="display:flex;align-items:center;gap:10px;font-size:13px;color:#A3AFBC"><kbd style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:12px;min-width:26px;height:24px;padding:0 7px;display:inline-flex;align-items:center;justify-content:center;background:#161D26;border:1px solid #394655;border-bottom-width:2px;border-radius:3px;color:#E6EBF0">Ctrl+Z</kbd>Undo</div>
+<div style="display:flex;align-items:center;gap:10px;font-size:13px;color:#A3AFBC"><kbd style="font-family:'IBM Plex Mono',Menlo,Consolas,monospace;font-size:12px;min-width:26px;height:24px;padding:0 7px;display:inline-flex;align-items:center;justify-content:center;background:#161D26;border:1px solid #394655;border-bottom-width:2px;border-radius:3px;color:#E6EBF0">Space</kbd>Pan</div>
+<div style="margin-left:auto;display:flex;align-items:center;gap:28px">
+<button type="button" style="height:44px;padding:0 12px;background:transparent;color:#FF6B6B;border:0;border-radius:4px;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:16px;letter-spacing:0.08em;text-transform:uppercase;display:inline-flex;align-items:center;gap:10px;white-space:nowrap">Discard changes</button>
+<button type="button" style="height:44px;padding:0 22px;background:#F5B942;color:#1A1200;border:0;border-radius:4px;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:16px;letter-spacing:0.08em;text-transform:uppercase;display:inline-flex;align-items:center;gap:10px;white-space:nowrap"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3.5h11l4.5 4.5v12a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 20V5A1.5 1.5 0 0 1 5 3.5z"></path><path d="M7.5 21.5v-7h9v7"></path><path d="M7.5 3.5v5h7"></path></svg> Save livery</button>
+</div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1600,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
